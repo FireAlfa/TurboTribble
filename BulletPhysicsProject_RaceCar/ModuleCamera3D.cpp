@@ -1,9 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
-#include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
-#include "PhysVehicle3D.h"
-#include "ModulePlayer.h"
 
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -101,7 +98,7 @@ update_status ModuleCamera3D::Update(float dt)
 			Position = Reference + Z * length(Position);
 		}
 	}
-	else if (App->player->map == true)
+	/*else if (App->player->map == true)
 	{
 		vec3 newPos(0, 0, 0);
 		float speed = 400.0f * dt;
@@ -141,7 +138,7 @@ update_status ModuleCamera3D::Update(float dt)
 		Position += C * vec3(0, 7, -15);
 
 		LookAt(vec3(temp.getX(), temp.getY(), temp.getZ()));
-	}
+	}*/
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
