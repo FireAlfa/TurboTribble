@@ -42,7 +42,7 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC false
-#define TITLE "3D Physics Playground"
+#define TITLE "Turbo Tribble"
 
 
 #define PERF_START(timer) timer.Start()
