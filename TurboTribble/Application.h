@@ -1,15 +1,20 @@
 #pragma once
 
-#include "p2List.h"
+#include <vector>
+
 #include "Globals.h"
 #include "Timer.h"
 #include "PerfTimer.h"
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleAudio.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
+
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl.h"
+#include "imgui/imgui_impl_opengl3.h"
+#include "SDL/include/SDL_opengl.h"
 
 
 class Application
@@ -17,7 +22,6 @@ class Application
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleAudio* audio;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 
@@ -35,7 +39,7 @@ private:
 	float frameRateCap;
 	float screenTicksCap;
 
-	p2List<Module*> list_modules;
+	std::vector<Module*> list_modules;
 
 public:
 

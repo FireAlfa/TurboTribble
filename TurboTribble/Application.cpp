@@ -6,7 +6,6 @@ Application::Application()
 
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, true);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 
@@ -17,7 +16,6 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(input);
-	AddModule(audio);
 	
 	// Scenes
 
@@ -37,12 +35,10 @@ Application::Application()
 
 Application::~Application()
 {
-	p2List_item<Module*>* item = list_modules.getLast();
-
-	while(item != NULL)
+	for (int i = list_modules.size() - 1; i >= 0; --i)
 	{
-		delete item->data;
-		item = item->prev;
+		delete list_modules[i];
+		list_modules[i] = nullptr;
 	}
 
 	list_modules.clear();
@@ -50,7 +46,7 @@ Application::~Application()
 
 void Application::AddModule(Module* mod)
 {
-	list_modules.add(mod);
+	list_modules.push_back(mod);
 }
 
 bool Application::Init()
@@ -60,14 +56,12 @@ bool Application::Init()
 	bool ret = true;
 
 	// Call Init() in all modules
-	p2List_item<Module*>* item = list_modules.getFirst();
-
-	while(item != NULL && ret == true)
+	for (unsigned int i = 0; i >= list_modules.size() && ret == true; ++i)
 	{
-		ret = item->data->Init();
-		item = item->next;
+		ret = list_modules[i]->Init();
 	}
 
+	//TODO No sé que es lo del perf timer
 	frameRateCap = 50;
 	screenTicksCap = 1000 / frameRateCap;
 
@@ -76,15 +70,16 @@ bool Application::Init()
 
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
-	item = list_modules.getFirst();
+	//LOG("Application Start --------------");
+	
+
 
 	fpsMSeconds = SDL_GetTicks();
 
-	while(item != NULL && ret == true)
+	// Call Start() in all modules
+	for (unsigned int i = 0; i >= list_modules.size() && ret == true; ++i)
 	{
-		ret = item->data->Start();
-		item = item->next;
+		ret = list_modules[i]->Start();
 	}
 
 	
@@ -99,31 +94,25 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 
-	p2List_item<Module*>* item = list_modules.getFirst();
-
 	dt = dtTimer.ReadSec();
 	dtTimer.Start();
 
-	while (item != NULL && ret == UPDATE_CONTINUE)
+	// Call PreUpdate() in all modules
+	for (unsigned int i = 0; i >= list_modules.size() && ret == UPDATE_CONTINUE; ++i)
 	{
-		ret = item->data->PreUpdate(dt);
-		item = item->next;
+		ret = list_modules[i]->PreUpdate(dt);
 	}
 
-	item = list_modules.getFirst();
-
-	while (item != NULL && ret == UPDATE_CONTINUE)
+	// Call Update() in all modules
+	for (unsigned int i = 0; i >= list_modules.size() && ret == UPDATE_CONTINUE; ++i)
 	{
-		ret = item->data->Update(dt);
-		item = item->next;
+		ret = list_modules[i]->Update(dt);
 	}
 
-	item = list_modules.getFirst();
-
-	while (item != NULL && ret == UPDATE_CONTINUE)
+	// Call PostUpdate() in all modules
+	for (unsigned int i = 0; i >= list_modules.size() && ret == UPDATE_CONTINUE; ++i)
 	{
-		ret = item->data->PostUpdate(dt);
-		item = item->next;
+		ret = list_modules[i]->PostUpdate(dt);
 	}
 
 	FinishUpdate();
@@ -169,12 +158,10 @@ void Application::FinishUpdate()
 bool Application::CleanUp()
 {
 	bool ret = true;
-	p2List_item<Module*>* item = list_modules.getLast();
 
-	while(item != NULL && ret == true)
+	for (int i = list_modules.size() - 1; i >= 0 && ret == true; --i)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		ret = list_modules[i]->CleanUp();
 	}
 	return ret;
 }
