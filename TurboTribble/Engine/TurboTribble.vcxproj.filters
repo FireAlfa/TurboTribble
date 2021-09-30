@@ -27,9 +27,6 @@
     <ClInclude Include="Source\Application.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PerfTimer.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
@@ -93,9 +90,6 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Log.cpp">
-      <Filter>Sources\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PerfTimer.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">

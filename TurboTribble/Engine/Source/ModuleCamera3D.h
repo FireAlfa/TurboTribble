@@ -25,8 +25,6 @@ private:
 public:
 	
 	vec3 X, Y, Z, Position, Reference;
-	int newX = 0;
-	int newZ = 0;
 
 private:
 

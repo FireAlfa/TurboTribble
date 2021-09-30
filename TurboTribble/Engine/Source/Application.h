@@ -1,19 +1,16 @@
 #pragma once
 
 #include <vector>
+#include <list>
 
 #include "Globals.h"
 #include "Timer.h"
-#include "PerfTimer.h"
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl2.h"
 #include "SDL/include/SDL_opengl.h"
 
 
@@ -25,26 +22,17 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 
+	std::vector<Module*> modulesList;
+
 private:
 
-	PerfTimer pTimer;
-	uint64 frameCount = 0;
-	Timer startupTime;
-	Timer dtTimer;
-	float dt = 0.0f;
-	float secondsSinceStartup;
-	float fpsMSeconds;
-	float fpsCounter;
-	float fpsPreUpdate;
-	float frameRateCap;
-	float screenTicksCap;
-
-	std::vector<Module*> list_modules;
+	Timer msTimer;
+	float dt;
 
 public:
 
-	float fps = 0.0f;
-	bool debug = false;
+	int maxFPS;
+	int screenRefresh;
 
 public:
 
@@ -55,9 +43,14 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	float GetDeltaTime() const { return dt; }
+	float GetFrameRate() const { return 1.0f / dt; }
+
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+
+//exter Application* app;

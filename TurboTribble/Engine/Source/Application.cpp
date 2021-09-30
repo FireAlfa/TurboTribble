@@ -2,8 +2,6 @@
 
 Application::Application()
 {
-	PERF_START(pTimer);
-
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	renderer3D = new ModuleRenderer3D(this);
@@ -26,63 +24,39 @@ Application::Application()
 	// Renderer last!
 	AddModule(renderer3D);
 
-
-	bool debug = false;
-
-
-	PERF_PEEK(pTimer);
 }
 
 Application::~Application()
 {
-	for (int i = list_modules.size() - 1; i >= 0; --i)
+	for (int i = modulesList.size() - 1; i >= 0; --i)
 	{
-		delete list_modules[i];
-		list_modules[i] = nullptr;
+		delete modulesList[i];
+		modulesList[i] = nullptr;
 	}
 
-	list_modules.clear();
+	modulesList.clear();
 }
 
-void Application::AddModule(Module* mod)
-{
-	list_modules.push_back(mod);
-}
 
 bool Application::Init()
 {
-	PERF_START(pTimer);
-
 	bool ret = true;
 
+	int i = 0;
+
 	// Call Init() in all modules
-	for (unsigned int i = 0; i >= list_modules.size() && ret == true; ++i)
+	for (unsigned int i = 0; i < modulesList.size() && ret == true; i++)
 	{
-		ret = list_modules[i]->Init();
+		ret = modulesList[i]->Init();
 	}
 
-	//TODO No sé que es lo del perf timer
-	frameRateCap = 50;
-	screenTicksCap = 1000 / frameRateCap;
-
-
-	PERF_PEEK(pTimer);
-
-
-	// After all Init calls we call Start() in all modules
-	//LOG("Application Start --------------");
-	
-
-
-	fpsMSeconds = SDL_GetTicks();
 
 	// Call Start() in all modules
-	for (unsigned int i = 0; i >= list_modules.size() && ret == true; ++i)
+	for (unsigned int i = 0; i < modulesList.size() && ret == true; ++i)
 	{
-		ret = list_modules[i]->Start();
+		ret = modulesList[i]->Start();
 	}
 
-	
 
 	return ret;
 }
@@ -94,28 +68,26 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 
-	dt = dtTimer.ReadSec();
-	dtTimer.Start();
 
 	// Call PreUpdate() in all modules
-	for (unsigned int i = 0; i >= list_modules.size() && ret == UPDATE_CONTINUE; ++i)
+	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
 	{
-		ret = list_modules[i]->PreUpdate(dt);
+		ret = modulesList[i]->PreUpdate(dt);
 	}
-
 	// Call Update() in all modules
-	for (unsigned int i = 0; i >= list_modules.size() && ret == UPDATE_CONTINUE; ++i)
+	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
 	{
-		ret = list_modules[i]->Update(dt);
+		ret = modulesList[i]->Update(dt);
 	}
-
 	// Call PostUpdate() in all modules
-	for (unsigned int i = 0; i >= list_modules.size() && ret == UPDATE_CONTINUE; ++i)
+	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
 	{
-		ret = list_modules[i]->PostUpdate(dt);
+		ret = modulesList[i]->PostUpdate(dt);
 	}
 
 	FinishUpdate();
+
+
 	return ret;
 }
 
@@ -123,32 +95,24 @@ update_status Application::Update()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	secondsSinceStartup = startupTime.ReadSec();
-	fpsPreUpdate = SDL_GetTicks();
+	dt = (float)msTimer.Read() / 1000.0f;
+	msTimer.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	uint32 lastFrameMs = 0;
-	uint32 framesOnLastUpdate = 0;
-
-	frameCount++;
-	float averageFps = frameCount / secondsSinceStartup;
-
-	++fpsCounter;
-	float fpsPostUpdate = SDL_GetTicks() - fpsPreUpdate;
-
-	if (fpsMSeconds < SDL_GetTicks() - 1000)
+	if (maxFPS == 0 || renderer3D->vSync || maxFPS > screenRefresh)
 	{
-		fpsMSeconds = SDL_GetTicks();
-		fps = fpsCounter;
-		fpsCounter = 0;
+		Uint32 last_frame_ms = msTimer.Read();
+		float wait_time = (1000.f / (float)screenRefresh) - (float)last_frame_ms;
+		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
 	}
-
-	if (fpsPostUpdate < screenTicksCap)
+	else if (maxFPS > 0)
 	{
-		SDL_Delay(screenTicksCap - fpsPostUpdate);
+		Uint32 last_frame_ms = msTimer.Read();
+		float wait_time = (1000.f / (float)maxFPS) - (float)last_frame_ms;
+		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
 	}
 
 }
@@ -159,9 +123,16 @@ bool Application::CleanUp()
 {
 	bool ret = true;
 
-	for (int i = list_modules.size() - 1; i >= 0 && ret == true; --i)
+	// Call CleanUp() in all modules
+	for (int i = modulesList.size() - 1; i >= 0 && ret == true; --i)
 	{
-		ret = list_modules[i]->CleanUp();
+		ret = modulesList[i]->CleanUp();
 	}
 	return ret;
+}
+
+
+void Application::AddModule(Module* mod)
+{
+	modulesList.push_back(mod);
 }

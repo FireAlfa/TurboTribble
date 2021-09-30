@@ -23,9 +23,10 @@ public:
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
+	SDL_GLContext glContext;
 
 	//The surface contained by the window
-	SDL_Surface* screen_surface;
+	SDL_Surface* screenSurface;
 };
 
 #endif // __ModuleWindow_H__
