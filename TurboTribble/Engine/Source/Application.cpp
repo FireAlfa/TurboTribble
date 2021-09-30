@@ -57,6 +57,17 @@ bool Application::Init()
 		ret = modulesList[i]->Start();
 	}
 
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	
+	// Setup Platform/Renderer bindings
+	ImGui_ImplSDL2_InitForOpenGL(window->window, window->glContext);
+	ImGui_ImplOpenGL2_Init();
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	io = ImGui::GetIO();
+	(void)io;
 
 	return ret;
 }
@@ -79,11 +90,32 @@ update_status Application::Update()
 	{
 		ret = modulesList[i]->Update(dt);
 	}
+
+	// ImGui
+
+	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	// Render your GUI
+	ImGui::Begin("Demo window");
+	ImGui::Button("Hello!");
+	ImGui::End();
+
+	ImGui::ShowDemoWindow();
+
+	ImGui::Render();
+	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+
 	// Call PostUpdate() in all modules
 	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
 	{
 		ret = modulesList[i]->PostUpdate(dt);
 	}
+
+	SDL_GL_SwapWindow(window->window);
 
 	FinishUpdate();
 

@@ -11,6 +11,9 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl.h"
+#include "imgui/imgui_impl_opengl2.h"
 #include "SDL/include/SDL_opengl.h"
 
 
@@ -51,6 +54,8 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	ImGuiIO io;
 };
 
 //exter Application* app;
