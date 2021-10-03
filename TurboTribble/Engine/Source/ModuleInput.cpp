@@ -1,8 +1,13 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleInput.h"
+#include "Application.h"
+
+#include "ModuleRenderer3D.h"
+
+#include "Log.h"
 
 #define MAX_KEYS 300
+
+
 
 ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

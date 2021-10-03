@@ -1,6 +1,8 @@
 #include <stdlib.h>
+
 #include "Application.h"
-#include "Globals.h"
+#include "Log.h"
+
 
 
 enum main_states

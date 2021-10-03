@@ -1,8 +1,11 @@
-#pragma once
+#ifndef __MODULEINPUT_H__
+#define __MODULEINPUT_H__
+
 #include "Module.h"
-#include "Globals.h"
 
 #define MAX_MOUSE_BUTTONS 5
+
+
 
 enum KEY_STATE
 {
@@ -15,7 +18,7 @@ enum KEY_STATE
 class ModuleInput : public Module
 {
 public:
-	
+
 	ModuleInput(Application* app, bool start_enabled = true);
 	~ModuleInput();
 
@@ -68,3 +71,5 @@ private:
 	int mouse_y_motion;
 	//int mouse_z_motion;
 };
+
+#endif // !__MODULEINPUT_H__

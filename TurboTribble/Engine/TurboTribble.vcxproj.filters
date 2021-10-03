@@ -19,6 +19,9 @@
     <Filter Include="Sources\imgui">
       <UniqueIdentifier>{a8a127ff-081d-443e-969f-4370e9069c80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\Editor">
+      <UniqueIdentifier>{a87923a3-38bb-4e8c-8c29-c9bc06b2074a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Globals.h">
@@ -81,6 +84,12 @@
     <ClInclude Include="Source\glmath.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ModuleEditor.h">
+      <Filter>Sources\Modules\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Log.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -139,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="Source\glmath.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleEditor.cpp">
+      <Filter>Sources\Modules\Editor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

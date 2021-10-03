@@ -1,11 +1,19 @@
 #include "Application.h"
 
+#include "ModuleWindow.h"
+#include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
+#include "ModuleEditor.h"
+
+
 Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
+	editor = new ModuleEditor(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -14,12 +22,12 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(input);
-	
-	// Scenes
-
 
 	// Camera
 	AddModule(camera);
+	
+	// Editor
+	AddModule(editor);
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -57,17 +65,6 @@ bool Application::Init()
 		ret = modulesList[i]->Start();
 	}
 
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	
-	// Setup Platform/Renderer bindings
-	ImGui_ImplSDL2_InitForOpenGL(window->window, window->glContext);
-	ImGui_ImplOpenGL2_Init();
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	io = ImGui::GetIO();
-	(void)io;
 
 	return ret;
 }
@@ -90,25 +87,6 @@ update_status Application::Update()
 	{
 		ret = modulesList[i]->Update(dt);
 	}
-
-	// ImGui
-
-	ImGui_ImplOpenGL2_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
-	// Render your GUI
-	ImGui::Begin("Demo window");
-	ImGui::Button("Hello!");
-	ImGui::End();
-
-	ImGui::ShowDemoWindow();
-
-	ImGui::Render();
-	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-
-
 	// Call PostUpdate() in all modules
 	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
 	{

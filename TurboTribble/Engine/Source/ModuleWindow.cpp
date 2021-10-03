@@ -1,6 +1,8 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleWindow.h"
+#include "Application.h"
+
+#include "Log.h"
+
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -21,8 +23,8 @@ bool ModuleWindow::Init()
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
 	{
-		printf("Error: %s\n", SDL_GetError());
-		return -1;
+		LOG("Error: %s\n", SDL_GetError());
+		return 0;
 	}
 	else
 	{

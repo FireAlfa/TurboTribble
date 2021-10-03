@@ -1,14 +1,19 @@
-#pragma once
+#ifndef __MODULERENDERER3D_H__
+#define __MODULERENDERER3D_H__
+
 #include "Module.h"
-#include "Globals.h"
+
 #include "glmath.h"
 #include "Light.h"
 
 #define MAX_LIGHTS 8
 
+
+
 class ModuleRenderer3D : public Module
 {
 public:
+
 	ModuleRenderer3D(Application* app, bool start_enabled = true);
 	~ModuleRenderer3D();
 
@@ -27,3 +32,4 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	bool vSync;
 };
+#endif // !__MODULERENDERER3D_H__

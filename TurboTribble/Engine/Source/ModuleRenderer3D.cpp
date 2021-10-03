@@ -1,5 +1,11 @@
 #include "Globals.h"
 #include "Application.h"
+
+#include "ModuleWindow.h"
+#include "ModuleCamera3D.h"
+
+#include "Globals.h"
+#include "Log.h"
 #include "Primitive.h"
 #include "ModuleRenderer3D.h"
 #include "SDL\include\SDL_opengl.h"
@@ -8,6 +14,8 @@
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+
+
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -129,7 +137,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	update_status ret;
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
