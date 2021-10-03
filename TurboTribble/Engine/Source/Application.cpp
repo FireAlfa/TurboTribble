@@ -93,7 +93,6 @@ update_status Application::Update()
 		ret = modulesList[i]->PostUpdate(dt);
 	}
 
-	SDL_GL_SwapWindow(window->window);
 
 	FinishUpdate();
 

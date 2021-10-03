@@ -21,9 +21,5 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
-
-public:
-
-	ImGuiIO io;
 };
 #endif // !__MODULEEDITOR_H__

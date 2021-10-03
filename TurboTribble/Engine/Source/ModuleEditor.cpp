@@ -31,8 +31,7 @@ bool ModuleEditor::Start()
 	ImGui_ImplOpenGL2_Init();
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
-	io = ImGui::GetIO();
-	(void)io;
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	return ret;
 }
@@ -52,8 +51,11 @@ update_status ModuleEditor::Update(float dt)
 	ImGui::ShowDemoWindow();
 
 	ImGui::Render();
-	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+	SDL_GL_SwapWindow(App->window->window);
+
 
 
 	return UPDATE_CONTINUE;
