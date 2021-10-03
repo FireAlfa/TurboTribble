@@ -21,5 +21,11 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+
+private:
+	bool showDemo;
+	bool showConsole;
+	bool showConfig;
+	bool showAbout;
 };
 #endif // !__MODULEEDITOR_H__

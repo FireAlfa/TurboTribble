@@ -33,6 +33,12 @@ bool ModuleEditor::Start()
 	ImGui::StyleColorsDark();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
+	// Flags
+	bool showDemo = false;
+	bool showConsole = false;
+	bool showConfig = false;
+	bool showAbout = false;
+
 	return ret;
 }
 
@@ -43,12 +49,89 @@ update_status ModuleEditor::Update(float dt)
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	// Render your GUI
-	ImGui::Begin("Demo window");
-	ImGui::Button("Hello!");
-	ImGui::End();
+	// Demo Window
+	if(showDemo)ImGui::ShowDemoWindow();
 
-	ImGui::ShowDemoWindow();
+	// Menu Bar
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View"))
+		{
+			if (ImGui::MenuItem("Console", "1", showConsole))
+			{
+				showConsole = !showConsole;
+			}
+			if (ImGui::MenuItem("Configuration", "4", showConfig))
+			{
+				showConfig = !showConfig;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Help"))
+		{
+			if (ImGui::MenuItem("Gui Demo", 0, showDemo))
+			{
+				showDemo = !showDemo;
+			}
+			if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/wiki", 0, 0, SW_SHOW); }
+			if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/releases", 0, 0, SW_SHOW); }
+			if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/issues", 0, 0, SW_SHOW); }
+			if (ImGui::MenuItem("About")) { showAbout = !showAbout; }
+			
+			ImGui::EndMenu();
+		}
+
+		ImGui::EndMainMenuBar();
+	}
+
+	if (showConsole)
+	{
+		ImGui::Begin("Console");
+		ImGui::Text("This is the console");
+		ImGui::End();
+	}
+
+	if (showConfig)
+	{
+		ImGui::Begin("Configuration");
+		ImGui::Text("Options");
+		if (ImGui::CollapsingHeader("Application"))
+		{
+
+		}
+		if (ImGui::CollapsingHeader("Window"))
+		{
+
+		}
+		if (ImGui::CollapsingHeader("File System"))
+		{
+
+		}
+		if (ImGui::CollapsingHeader("Input"))
+		{
+
+		}
+		if (ImGui::CollapsingHeader("Hardware"))
+		{
+
+		}
+		ImGui::End();
+	}
+
+
+	if (showAbout)
+	{
+
+		ImGui::Begin("About Turbo Tribble Engine");
+		ImGui::Text("Version 0.0 - WIP");
+		ImGui::Text("By Òscar Canales & Carles Garriga. Students of CITM");
+		ImGui::End();
+	}
 
 	ImGui::Render();
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
