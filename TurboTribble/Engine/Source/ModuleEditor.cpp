@@ -31,7 +31,6 @@ bool ModuleEditor::Start()
 	ImGui_ImplOpenGL2_Init();
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	// Flags
 	bool showDemo = false;
@@ -81,7 +80,7 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/wiki", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/releases", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/issues", 0, 0, SW_SHOW); }
-			if (ImGui::MenuItem("About")) { showAbout = !showAbout; }
+			if (ImGui::MenuItem("About")) { showAbout = !showAbout, SW_SHOW; }
 			
 			ImGui::EndMenu();
 		}
@@ -129,7 +128,7 @@ update_status ModuleEditor::Update(float dt)
 
 		ImGui::Begin("About Turbo Tribble Engine");
 		ImGui::Text("Version 0.0 - WIP");
-		ImGui::Text("By Òscar Canales & Carles Garriga. Students of CITM");
+		ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM");
 		ImGui::End();
 	}
 

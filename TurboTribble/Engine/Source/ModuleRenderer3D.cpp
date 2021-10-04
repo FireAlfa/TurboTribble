@@ -137,17 +137,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	// Axis and grid
-	{
-		Plane p(0, 1, 0, 0);
-		p.axis = true;
-		p.Render();
-	}
-
-
+	Plane p(0, 0, 0, 0);
+	p.axis = true;
+	p.Render();
 	return UPDATE_CONTINUE;
 }
 

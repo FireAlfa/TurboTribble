@@ -82,7 +82,7 @@ bool ModuleWindow::Init()
 
 
 
-		window = SDL_CreateWindow("Dear ImGui SDL2+OpenGL example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+		window = SDL_CreateWindow("Turbo Tribble Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
 		glContext = SDL_GL_CreateContext(window);
 		SDL_GL_MakeCurrent(window, glContext);
 
