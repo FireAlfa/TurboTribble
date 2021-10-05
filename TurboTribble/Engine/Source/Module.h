@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 
+
 class Application;
 
 class Module
@@ -49,4 +50,5 @@ public:
 		return true;
 	}
 };
+
 #endif // !__MODULE_H__

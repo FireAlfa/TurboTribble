@@ -1,13 +1,11 @@
-#include "ModuleWindow.h"
+#include "Globals.h"
 #include "Application.h"
-
-#include "Log.h"
-
+#include "ModuleWindow.h"
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	window = NULL;
-	screenSurface = NULL;
+	screen_surface = NULL;
 }
 
 // Destructor
@@ -21,72 +19,45 @@ bool ModuleWindow::Init()
 	LOG("Init SDL window & surface");
 	bool ret = true;
 
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		LOG("Error: %s\n", SDL_GetError());
-		return 0;
+		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		ret = false;
 	}
 	else
 	{
-		// Get Screen Refresh of monitor
-		SDL_DisplayMode current;
-		for (int i = 0; i < SDL_GetNumVideoDisplays(); ++i) {
-
-			int should_be_zero = SDL_GetCurrentDisplayMode(i, &current);
-
-			if (should_be_zero != 0)
-				// In case of error...
-				SDL_Log("Could not get display mode for video display #%d: %s", i, SDL_GetError());
-			else
-				// On success, print the current display mode.
-				SDL_Log("Display #%d: current display mode is %dx%dpx @ %dhz.", i, current.w, current.h, current.refresh_rate);
-		}
-		App->screenRefresh = current.refresh_rate;
-
 		//Create window
 		int width = SCREEN_WIDTH * SCREEN_SIZE;
 		int height = SCREEN_HEIGHT * SCREEN_SIZE;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-		if (WIN_FULLSCREEN == true)
+		if(WIN_FULLSCREEN == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if (WIN_RESIZABLE == true)
+		if(WIN_RESIZABLE == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		if (WIN_BORDERLESS == true)
+		if(WIN_BORDERLESS == true)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if (WIN_FULLSCREEN_DESKTOP == true)
+		if(WIN_FULLSCREEN_DESKTOP == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
-		//window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
-		// Setup window
-		SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-
-
-
-		window = SDL_CreateWindow("Turbo Tribble Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
-		glContext = SDL_GL_CreateContext(window);
-		SDL_GL_MakeCurrent(window, glContext);
-
-		if (window == NULL)
+		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
@@ -94,10 +65,9 @@ bool ModuleWindow::Init()
 		else
 		{
 			//Get window surface
-			screenSurface = SDL_GetWindowSurface(window);
+			screen_surface = SDL_GetWindowSurface(window);
 		}
 	}
-
 
 	return ret;
 }

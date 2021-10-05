@@ -1,12 +1,5 @@
 #include "Globals.h"
 #include "Application.h"
-
-#include "ModuleWindow.h"
-#include "ModuleCamera3D.h"
-
-#include "Globals.h"
-#include "Log.h"
-#include "Primitive.h"
 #include "ModuleRenderer3D.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
@@ -14,8 +7,6 @@
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
-
-
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -42,7 +33,7 @@ bool ModuleRenderer3D::Init()
 	if(ret == true)
 	{
 		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(static_cast<int>(vSync)) < 0)
+		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
@@ -74,7 +65,6 @@ bool ModuleRenderer3D::Init()
 		
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT);
 
 		//Check for error
 		error = glGetError();
@@ -106,10 +96,6 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
-
-
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -137,10 +123,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	// Axis and grid
-	Plane p(0, 0, 0, 0);
-	p.axis = true;
-	p.Render();
+	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
 

@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
+    <ProjectGuid>{DD5F964D-9934-46F1-979E-42EB94827478}</ProjectGuid>
     <RootNamespace>SDLGame</RootNamespace>
     <ProjectName>TurboTribble</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -41,9 +41,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Source\External\ImGui;$(ProjectDir)Source\External\SDL\include</IncludePath>
-    <OutDir>..\Output\</OutDir>
-    <LibraryPath>$(ProjectDir)Source\External;$(LibraryPath)</LibraryPath>
+    <OutDir>..\Output</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -52,15 +50,14 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions); WINDOWS_IGNORE_PACKING_MISMATCH</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\ImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glut;$(ProjectDir)Source\External\SDL_mixer\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,45 +81,51 @@
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Color.h" />
-    <ClInclude Include="Source\External\imgui\imconfig.h" />
-    <ClInclude Include="Source\External\imgui\imgui.h" />
-    <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h" />
-    <ClInclude Include="Source\External\imgui\imgui_impl_sdl.h" />
-    <ClInclude Include="Source\External\imgui\imgui_internal.h" />
-    <ClInclude Include="Source\External\imgui\imstb_rectpack.h" />
-    <ClInclude Include="Source\External\imgui\imstb_textedit.h" />
-    <ClInclude Include="Source\External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Source\External\ImGui\imconfig.h" />
+    <ClInclude Include="Source\External\ImGui\imgui.h" />
+    <ClInclude Include="Source\External\ImGui\imgui_impl_opengl2.h" />
+    <ClInclude Include="Source\External\ImGui\imgui_impl_sdl.h" />
+    <ClInclude Include="Source\External\ImGui\imgui_internal.h" />
+    <ClInclude Include="Source\External\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Source\External\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Source\External\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Light.h" />
-    <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\ModuleAudio.h" />
     <ClInclude Include="Source\ModuleCamera3D.h" />
     <ClInclude Include="Source\ModuleEditor.h" />
     <ClInclude Include="Source\ModuleInput.h" />
     <ClInclude Include="Source\ModuleRenderer3D.h" />
+    <ClInclude Include="Source\ModuleSceneIntro.h" />
     <ClInclude Include="Source\ModuleWindow.h" />
+    <ClInclude Include="Source\p2DynArray.h" />
+    <ClInclude Include="Source\p2List.h" />
+    <ClInclude Include="Source\p2Point.h" />
     <ClInclude Include="Source\Primitive.h" />
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Color.cpp" />
-    <ClCompile Include="Source\External\imgui\imgui.cpp" />
-    <ClCompile Include="Source\External\imgui\imgui_demo.cpp" />
-    <ClCompile Include="Source\External\imgui\imgui_draw.cpp" />
-    <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp" />
-    <ClCompile Include="Source\External\imgui\imgui_impl_sdl.cpp" />
-    <ClCompile Include="Source\External\imgui\imgui_tables.cpp" />
-    <ClCompile Include="Source\External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\External\ImGui\imgui.cpp" />
+    <ClCompile Include="Source\External\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Source\External\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Source\External\ImGui\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="Source\External\ImGui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Source\External\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Source\External\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\ModuleAudio.cpp" />
     <ClCompile Include="Source\ModuleCamera3D.cpp" />
     <ClCompile Include="Source\ModuleEditor.cpp" />
     <ClCompile Include="Source\ModuleInput.cpp" />
     <ClCompile Include="Source\ModuleRenderer3D.cpp" />
+    <ClCompile Include="Source\ModuleSceneIntro.cpp" />
     <ClCompile Include="Source\ModuleWindow.cpp" />
     <ClCompile Include="Source\Primitive.cpp" />
     <ClCompile Include="Source\Timer.cpp" />

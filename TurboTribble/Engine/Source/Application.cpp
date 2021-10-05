@@ -1,16 +1,11 @@
 #include "Application.h"
 
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "ModuleEditor.h"
-
-
 Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
+	audio = new ModuleAudio(this, true);
+	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
@@ -21,127 +16,116 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
-	AddModule(input);
-
-	// Camera
 	AddModule(camera);
+	AddModule(input);
+	AddModule(audio);
 	
-	// Editor
+	// Scenes
+	AddModule(scene_intro);
 	AddModule(editor);
 
 	// Renderer last!
 	AddModule(renderer3D);
-
 }
 
 Application::~Application()
 {
-	for (int i = modulesList.size() - 1; i >= 0; --i)
+	p2List_item<Module*>* item = list_modules.getLast();
+
+	while(item != NULL)
 	{
-		delete modulesList[i];
-		modulesList[i] = nullptr;
+		delete item->data;
+		item = item->prev;
 	}
-
-	modulesList.clear();
 }
-
 
 bool Application::Init()
 {
 	bool ret = true;
 
-	int i = 0;
-
 	// Call Init() in all modules
-	for (unsigned int i = 0; i < modulesList.size() && ret == true; i++)
+	p2List_item<Module*>* item = list_modules.getFirst();
+
+	while(item != NULL && ret == true)
 	{
-		ret = modulesList[i]->Init();
+		ret = item->data->Init();
+		item = item->next;
 	}
 
+	// After all Init calls we call Start() in all modules
+	LOG("Application Start --------------");
+	item = list_modules.getFirst();
 
-	// Call Start() in all modules
-	for (unsigned int i = 0; i < modulesList.size() && ret == true; ++i)
+	while(item != NULL && ret == true)
 	{
-		ret = modulesList[i]->Start();
+		ret = item->data->Start();
+		item = item->next;
 	}
-
-
+	
+	ms_timer.Start();
 	return ret;
 }
 
+// ---------------------------------------------
+void Application::PrepareUpdate()
+{
+	dt = (float)ms_timer.Read() / 1000.0f;
+	ms_timer.Start();
+}
+
+// ---------------------------------------------
+void Application::FinishUpdate()
+{
+}
 
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
-
-
-	// Call PreUpdate() in all modules
-	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
+	
+	p2List_item<Module*>* item = list_modules.getFirst();
+	
+	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
-		ret = modulesList[i]->PreUpdate(dt);
-	}
-	// Call Update() in all modules
-	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
-	{
-		ret = modulesList[i]->Update(dt);
-	}
-	// Call PostUpdate() in all modules
-	for (unsigned int i = 0; i < modulesList.size() && ret == UPDATE_CONTINUE; ++i)
-	{
-		ret = modulesList[i]->PostUpdate(dt);
+		ret = item->data->PreUpdate(dt);
+		item = item->next;
 	}
 
+	item = list_modules.getFirst();
+
+	while(item != NULL && ret == UPDATE_CONTINUE)
+	{
+		ret = item->data->Update(dt);
+		item = item->next;
+	}
+
+	item = list_modules.getFirst();
+
+	while(item != NULL && ret == UPDATE_CONTINUE)
+	{
+		ret = item->data->PostUpdate(dt);
+		item = item->next;
+	}
 
 	FinishUpdate();
-
-
 	return ret;
 }
-
-
-// ---------------------------------------------
-void Application::PrepareUpdate()
-{
-	dt = (float)msTimer.Read() / 1000.0f;
-	msTimer.Start();
-}
-
-// ---------------------------------------------
-void Application::FinishUpdate()
-{
-	if (maxFPS == 0 || renderer3D->vSync || maxFPS > screenRefresh)
-	{
-		Uint32 last_frame_ms = msTimer.Read();
-		float wait_time = (1000.f / (float)screenRefresh) - (float)last_frame_ms;
-		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
-	}
-	else if (maxFPS > 0)
-	{
-		Uint32 last_frame_ms = msTimer.Read();
-		float wait_time = (1000.f / (float)maxFPS) - (float)last_frame_ms;
-		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
-	}
-
-}
-
-
 
 bool Application::CleanUp()
 {
 	bool ret = true;
+	p2List_item<Module*>* item = list_modules.getLast();
 
-	// Call CleanUp() in all modules
-	for (int i = modulesList.size() - 1; i >= 0 && ret == true; --i)
+	while(item != NULL && ret == true)
 	{
-		ret = modulesList[i]->CleanUp();
+		ret = item->data->CleanUp();
+		item = item->prev;
 	}
 	return ret;
 }
 
-
 void Application::AddModule(Module* mod)
 {
-	modulesList.push_back(mod);
+	list_modules.add(mod);
 }

@@ -1,5 +1,5 @@
-#ifndef __MODULEEDITOR_H__
-#define __MODULEEDITOR_H__
+#ifndef __MODULE_EDITOR_H__
+#define __MODULE_EDITOR_H__
 
 #include "Module.h"
 
@@ -28,4 +28,4 @@ private:
 	bool showConfig;
 	bool showAbout;
 };
-#endif // !__MODULEEDITOR_H__
+#endif // !__MODULE_EDITOR_H__

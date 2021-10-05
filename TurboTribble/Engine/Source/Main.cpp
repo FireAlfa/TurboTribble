@@ -1,9 +1,10 @@
 #include <stdlib.h>
-
 #include "Application.h"
-#include "Log.h"
+#include "Globals.h"
 
-
+#include "SDL/include/SDL.h"
+#pragma comment( lib, "SDL2.lib" )
+#pragma comment( lib, "SDL2main.lib" )
 
 enum main_states
 {
@@ -16,7 +17,7 @@ enum main_states
 
 int main(int argc, char ** argv)
 {
-	LOG("Starting TurboTribble Engine '%s'...", TITLE);
+	LOG("##### Starting '%s' Engine #####", TITLE);
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -82,6 +83,6 @@ int main(int argc, char ** argv)
 	}
 
 	delete App;
-	LOG("Exiting TurboTribble Engine '%s'...\n", TITLE);
+	LOG("Exiting game '%s'...\n", TITLE);
 	return main_return;
 }

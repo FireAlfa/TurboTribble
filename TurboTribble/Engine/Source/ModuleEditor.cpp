@@ -3,8 +3,6 @@
 
 #include "ModuleWindow.h"
 
-#include "Log.h"
-
 
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -49,7 +47,7 @@ update_status ModuleEditor::Update(float dt)
 	ImGui::NewFrame();
 
 	// Demo Window
-	if(showDemo)ImGui::ShowDemoWindow();
+	if (showDemo)ImGui::ShowDemoWindow();
 
 	// Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -81,7 +79,7 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/releases", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/issues", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("About")) { showAbout = !showAbout, SW_SHOW; }
-			
+
 			ImGui::EndMenu();
 		}
 
@@ -136,7 +134,7 @@ update_status ModuleEditor::Update(float dt)
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
-	SDL_GL_SwapWindow(App->window->window);
+	//SDL_GL_SwapWindow(App->window->window);
 
 
 

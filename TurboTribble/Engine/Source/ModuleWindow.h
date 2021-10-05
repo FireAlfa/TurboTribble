@@ -1,5 +1,5 @@
-#ifndef __MODULEWINDOW_H__
-#define __MODULEWINDOW_H__
+#ifndef __MODULE_WINDOW_H__
+#define __MODULE_WINDOW_H__
 
 #include "Module.h"
 #include "SDL/include/SDL.h"
@@ -28,7 +28,7 @@ public:
 	SDL_GLContext glContext;
 
 	//The surface contained by the window
-	SDL_Surface* screenSurface;
+	SDL_Surface* screen_surface;
 };
 
-#endif // __MODULEWINDOW_H__
+#endif // __MODULE_WINDOW_H__

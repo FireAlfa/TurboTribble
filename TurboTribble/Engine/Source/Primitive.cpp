@@ -5,7 +5,7 @@
 #include "Primitive.h"
 #include "glut/glut.h"
 
-#pragma comment (lib, "glut/glut32.lib")
+#pragma comment (lib, "glut32.lib")
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
@@ -261,9 +261,9 @@ void Plane::InnerRender() const
 {
 	glLineWidth(1.0f);
 
-	glBegin(GL_QUADS);
+	glBegin(GL_LINES);
 
-	float d = 1000.0f;
+	float d = 200.0f;
 
 	for(float i = -d; i <= d; i += 1.0f)
 	{
