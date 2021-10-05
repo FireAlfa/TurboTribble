@@ -8,19 +8,22 @@ class Timer
 {
 public:
 
-	// Constructor
+	// Constructor, calls Start()
 	Timer();
 
+	// Start the timer
 	void Start();
+	// Stop the timer
 	void Stop();
 
+	// Read the timer
 	Uint32 Read();
 
 private:
 
 	bool	running;
-	Uint32	started_at;
-	Uint32	stopped_at;
+	Uint32	startedAt;
+	Uint32	stoppedAt;
 };
 
 #endif //__TIMER_H__

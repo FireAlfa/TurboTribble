@@ -12,23 +12,25 @@ class ModuleWindow : public Module
 {
 public:
 
+	// Constructor
 	ModuleWindow(Application* app, bool start_enabled = true);
-
 	// Destructor
 	virtual ~ModuleWindow();
 
+	// Initialize the window, called before Render is available
 	bool Init();
+	// Called before quitting, destroys the window
 	bool CleanUp();
 
+	// Changes the title of the window
 	void SetTitle(const char* title);
 
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
-	SDL_GLContext glContext;
 
 	//The surface contained by the window
-	SDL_Surface* screen_surface;
+	SDL_Surface* screenSurface;
 };
 
 #endif // __MODULE_WINDOW_H__

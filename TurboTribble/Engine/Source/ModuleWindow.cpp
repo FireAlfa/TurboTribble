@@ -1,19 +1,21 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleWindow.h"
+#include "Application.h"
 
+
+
+// Constructor
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	window = NULL;
-	screen_surface = NULL;
+	screenSurface = NULL;
 }
-
 // Destructor
 ModuleWindow::~ModuleWindow()
 {
 }
 
-// Called before render is available
+
+// Initialize the window, called before Render is available
 bool ModuleWindow::Init()
 {
 	LOG("Init SDL window & surface");
@@ -65,13 +67,12 @@ bool ModuleWindow::Init()
 		else
 		{
 			//Get window surface
-			screen_surface = SDL_GetWindowSurface(window);
+			screenSurface = SDL_GetWindowSurface(window);
 		}
 	}
 
 	return ret;
 }
-
 // Called before quitting
 bool ModuleWindow::CleanUp()
 {
@@ -88,6 +89,8 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+
+// Changes the title of the window
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);

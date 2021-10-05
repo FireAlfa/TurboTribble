@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
 
 
 
@@ -25,7 +26,7 @@ bool ModuleEditor::Start()
 	ImGui::CreateContext();
 
 	// Setup Platform/Renderer bindings
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->glContext);
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->glContext);
 	ImGui_ImplOpenGL2_Init();
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -39,7 +40,7 @@ bool ModuleEditor::Start()
 	return ret;
 }
 
-update_status ModuleEditor::Update(float dt)
+UpdateStatus ModuleEditor::Update(float dt)
 {
 	// ImGui
 	ImGui_ImplOpenGL2_NewFrame();
@@ -54,7 +55,7 @@ update_status ModuleEditor::Update(float dt)
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
+			if (ImGui::MenuItem("Quit", "ESC")) return UpdateStatus::UPDATE_STOP;
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
@@ -138,7 +139,7 @@ update_status ModuleEditor::Update(float dt)
 
 
 
-	return UPDATE_CONTINUE;
+	return UpdateStatus::UPDATE_CONTINUE;
 }
 
 bool ModuleEditor::CleanUp()

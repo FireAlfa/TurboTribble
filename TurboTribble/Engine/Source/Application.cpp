@@ -1,24 +1,37 @@
 #include "Application.h"
 
+#include "Module.h"
+#include "ModuleWindow.h"
+#include "ModuleInput.h"
+#include "ModuleAudio.h" // TODO: Remove Audio
+#include "ModuleSceneIntro.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
+#include "ModuleEditor.h"
+
+
+
+// Application Constructor
 Application::Application()
 {
+	// Constructor called for every Module used
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, true);
+	audio = new ModuleAudio(this, true); // TODO: Remove Audio
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
 
-	// The order of calls is very important!
-	// Modules will Init() Start() and Update in this order
+	// The order in which we do AddModule is very important!
+	// Modules will Init() Start() and Update() in this order
 	// They will CleanUp() in reverse order
 
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(audio);
+	AddModule(audio); // TODO: Remove Audio
 	
 	// Scenes
 	AddModule(scene_intro);
@@ -27,10 +40,10 @@ Application::Application()
 	// Renderer last!
 	AddModule(renderer3D);
 }
-
+// Application Destructor
 Application::~Application()
 {
-	p2List_item<Module*>* item = list_modules.getLast();
+	p2List_item<Module*>* item = modulesList.getLast();
 
 	while(item != NULL)
 	{
@@ -39,12 +52,14 @@ Application::~Application()
 	}
 }
 
+
+// Initialization of the Application, this calls all Modules' Init() and Start()
 bool Application::Init()
 {
 	bool ret = true;
 
 	// Call Init() in all modules
-	p2List_item<Module*>* item = list_modules.getFirst();
+	p2List_item<Module*>* item = modulesList.getFirst();
 
 	while(item != NULL && ret == true)
 	{
@@ -54,7 +69,7 @@ bool Application::Init()
 
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
-	item = list_modules.getFirst();
+	item = modulesList.getFirst();
 
 	while(item != NULL && ret == true)
 	{
@@ -62,47 +77,34 @@ bool Application::Init()
 		item = item->next;
 	}
 	
-	ms_timer.Start();
+	msTimer.Start();
 	return ret;
 }
-
-// ---------------------------------------------
-void Application::PrepareUpdate()
+// Call PreUpdate(), Update() and PostUpdate() of all Modules
+UpdateStatus Application::Update()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
-}
-
-// ---------------------------------------------
-void Application::FinishUpdate()
-{
-}
-
-// Call PreUpdate, Update and PostUpdate on all modules
-update_status Application::Update()
-{
-	update_status ret = UPDATE_CONTINUE;
+	UpdateStatus ret = UpdateStatus::UPDATE_CONTINUE;
 	PrepareUpdate();
-	
-	p2List_item<Module*>* item = list_modules.getFirst();
-	
-	while(item != NULL && ret == UPDATE_CONTINUE)
+
+	p2List_item<Module*>* item = modulesList.getFirst();
+
+	while (item != NULL && ret == UpdateStatus::UPDATE_CONTINUE)
 	{
 		ret = item->data->PreUpdate(dt);
 		item = item->next;
 	}
 
-	item = list_modules.getFirst();
+	item = modulesList.getFirst();
 
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	while (item != NULL && ret == UpdateStatus::UPDATE_CONTINUE)
 	{
 		ret = item->data->Update(dt);
 		item = item->next;
 	}
 
-	item = list_modules.getFirst();
+	item = modulesList.getFirst();
 
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	while (item != NULL && ret == UpdateStatus::UPDATE_CONTINUE)
 	{
 		ret = item->data->PostUpdate(dt);
 		item = item->next;
@@ -111,13 +113,13 @@ update_status Application::Update()
 	FinishUpdate();
 	return ret;
 }
-
+// Call CleanUp() of all Modules
 bool Application::CleanUp()
 {
 	bool ret = true;
-	p2List_item<Module*>* item = list_modules.getLast();
+	p2List_item<Module*>* item = modulesList.getLast();
 
-	while(item != NULL && ret == true)
+	while (item != NULL && ret == true)
 	{
 		ret = item->data->CleanUp();
 		item = item->prev;
@@ -125,7 +127,21 @@ bool Application::CleanUp()
 	return ret;
 }
 
+
+// Called each loop before calling the Modules' Update() methods
+void Application::PrepareUpdate()
+{
+	dt = (float)msTimer.Read() / 1000.0f;
+	msTimer.Start();
+}
+// Called each loop after calling the Modules' Update() methods
+void Application::FinishUpdate()
+{
+}
+
+
+// Adds a Module to the Module vector
 void Application::AddModule(Module* mod)
 {
-	list_modules.add(mod);
+	modulesList.add(mod);
 }

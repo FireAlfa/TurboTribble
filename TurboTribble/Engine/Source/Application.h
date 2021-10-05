@@ -1,47 +1,76 @@
-#pragma once
+#ifndef __APPLICATION_H__
+#define __APPLICATION_H__
 
-#include "p2List.h"
+
+#include "Module.h"
 #include "Globals.h"
 #include "Timer.h"
 
-#include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleAudio.h"
-#include "ModuleSceneIntro.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "ModuleEditor.h"
+#include <vector>
+#include <list>
+#include "p2List.h" // TODO: Change to STL
+
+
+
+class ModuleWindow;
+class ModuleInput;
+class ModuleAudio; // TODO: Remove Audio
+class ModuleSceneIntro;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class ModuleEditor;
 
 class Application
 {
 public:
+
+	// ----- Modules -----
+	
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleAudio* audio;
+	ModuleAudio* audio; // TODO: Remove Audio
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
+	// -------------------
+
+	// Modules vector
+	p2List<Module*> modulesList; // TODO: Change to STL
 
 private:
 
-	Timer	ms_timer;
+	// ----- Variables used for FPS control -----
+
+	Timer	msTimer;
 	float	dt;
-	p2List<Module*> list_modules;
+	// ------------------------------------------
 
 public:
 
+	// Application Constructor
 	Application();
+	// Application Destructor
 	~Application();
 
+	// Initialization of the Application, this calls all Modules' Init() and Start()
 	bool Init();
-	update_status Update();
+	// Call PreUpdate(), Update() and PostUpdate() of all Modules
+	UpdateStatus Update();
+	// Call CleanUp() of all Modules
 	bool CleanUp();
+
 
 private:
 
-	void AddModule(Module* mod);
+	// Called each loop before calling the Modules' Update() methods
 	void PrepareUpdate();
+	// Called each loop after calling the Modules' Update() methods
 	void FinishUpdate();
+
+
+	// Adds a Module to the Module vector
+	void AddModule(Module* mod);
 };
+
+#endif // !__APPLICATION_H__

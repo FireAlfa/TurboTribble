@@ -13,8 +13,8 @@ public:
 	~ModuleRenderer3D();
 
 	bool Init();
-	update_status PreUpdate(float dt);
-	update_status PostUpdate(float dt);
+	UpdateStatus PreUpdate(float dt);
+	UpdateStatus PostUpdate(float dt);
 	bool CleanUp();
 
 	void OnResize(int width, int height);
@@ -22,7 +22,7 @@ public:
 public:
 
 	Light lights[MAX_LIGHTS];
-	SDL_GLContext context;
+	SDL_GLContext glContext;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 };
