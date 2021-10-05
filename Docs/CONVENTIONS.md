@@ -1,6 +1,6 @@
 ## C++ Coding Style Conventions
 
-Here it is a list with some of the conventions used in this project template:
+Here is a list with some of the conventions used in this project template:
 
 Code element | Convention | Example
 --- | :---: | ---
@@ -42,15 +42,17 @@ void SomeFunction()
  
   - Directories will be named using `TitleCase` : `Assets/Audio/Music`
   
-  - Files will be named using `snake_case`: `main_title.png`
+  - Code files will be named using `TitleCase` : `Main.cpp`
+  
+  - Non-code files will be named using `snake_case`: `main_title.png`
   
   _NOTE: Avoid any space or special character in the files/dir naming!_
   
   ### Directories Organization:
   
-Files should be organized by context and usage in the game, think about the loading requirements and put all the assets that need to be loaded at the same time together.
+Files should be organized by context and usage in the engine, think about the loading requirements and put all the assets that need to be loaded at the same time together.
 
-Here an example, note that some assets require to be loaded all at once while other assets require to be loaded only at initialization (gui, font).
+Here is an example, note that some assets require to be loaded all at once while other assets require to be loaded only at initialization (gui, font).
   
 ```
 Assets/Audio/Fx/long_jump.wav
@@ -64,4 +66,8 @@ Assets/Common/font_arial.ttf
 Assets/GUI/gui.png
 ```
 
-Use descriptive names for the files, it would be perfect if just reading the name of the file, it was possible to know what is that file and where it fits in the game.
+Use descriptive names for the files, it would be perfect if, just by reading the name of the file, it was possible to know what that file is and where it fits in the engine.
+
+---
+
+These conventions are based on the ones made by [Ray](https://github.com/raysan5). They can be seen in this [file](https://github.com/raysan5/game_project_template/blob/master/CONVENTIONS.md).
