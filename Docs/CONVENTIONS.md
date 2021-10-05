@@ -37,6 +37,10 @@ void SomeFunction()
  - Project uses **TABS** instead of 4 spaces.
 
  - Trailing spaces MUST be avoided!
+
+ - To avoid double declaration, the project uses #include guards (`#ifndef / #define / #endif`) instead of `#pragma once` for the Headers.
+ 
+ - The includes should be in the Source file unless it is absolutely necessary for them to be in the Header.
  
  ## Files and Directories Naming Conventions
  
