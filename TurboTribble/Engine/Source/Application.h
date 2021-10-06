@@ -14,7 +14,6 @@
 
 class ModuleWindow;
 class ModuleInput;
-class ModuleAudio; // TODO: Remove Audio
 class ModuleSceneIntro;
 class ModuleRenderer3D;
 class ModuleCamera3D;
@@ -28,7 +27,6 @@ public:
 	
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleAudio* audio; // TODO: Remove Audio
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;

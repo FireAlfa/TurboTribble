@@ -36,7 +36,7 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	// ---- Keyboard Camera Control -----
 
 	vec3 newPos(0, 0, 0);
-	float speed = 3.0f * dt;
+	float speed = 5.0f * dt;
 	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
 		speed = 8.0f * dt;
 
