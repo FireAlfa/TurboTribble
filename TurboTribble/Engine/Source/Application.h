@@ -8,7 +8,6 @@
 
 #include <vector>
 #include <list>
-#include "p2List.h" // TODO: Change to STL
 
 
 
@@ -34,7 +33,7 @@ public:
 	// -------------------
 
 	// Modules vector
-	p2List<Module*> modulesList; // TODO: Change to STL
+	std::vector<Module*> modulesList;
 
 private:
 

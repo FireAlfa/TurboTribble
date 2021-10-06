@@ -3,8 +3,6 @@
 
 #include "Module.h"
 
-#include "p2DynArray.h"
-
 
 
 class ModuleSceneIntro : public Module
