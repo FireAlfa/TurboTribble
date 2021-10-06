@@ -1,35 +1,33 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleSceneIntro.h"
-#include "Primitive.h"
+#include "Application.h"
 
-ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
+#include "Primitive.h"
+#include "ModuleCamera3D.h"
+
+
+
+// Constructor
+ModuleSceneIntro::ModuleSceneIntro(Application* app, bool startEnabled) : Module(app, startEnabled)
+{
+}
+// Destrucotr
+ModuleSceneIntro::~ModuleSceneIntro()
 {
 }
 
-ModuleSceneIntro::~ModuleSceneIntro()
-{}
 
-// Load assets
+// Load Scene
 bool ModuleSceneIntro::Start()
 {
-	LOG("Loading Intro assets");
+	LOG("Loading Scene");
 	bool ret = true;
 
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
+	// Set the initial camera position
+	app->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+	app->camera->LookAt(vec3(0, 0, 0));
 	return ret;
 }
-
-// Load assets
-bool ModuleSceneIntro::CleanUp()
-{
-	LOG("Unloading Intro scene");
-
-	return true;
-}
-
-// Update: draw background
+// Update: draw background Plane
 UpdateStatus ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
@@ -38,4 +36,10 @@ UpdateStatus ModuleSceneIntro::Update(float dt)
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
+// Unload Scene
+bool ModuleSceneIntro::CleanUp()
+{
+	LOG("Unloading Scene");
 
+	return true;
+}

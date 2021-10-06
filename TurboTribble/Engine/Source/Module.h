@@ -9,13 +9,16 @@ class Application;
 class Module
 {
 private:
+
 	bool enabled;
 
 public:
-	Application* App;
+	Application* app;
 
-	Module(Application* parent, bool start_enabled = true) : App(parent)
-	{}
+	Module(Application* parent, bool startEnabled = true) : app(parent)
+	{
+		enabled = startEnabled;
+	}
 
 	virtual ~Module()
 	{}

@@ -1,14 +1,15 @@
-
+#include "Primitive.h"
 #include "Globals.h"
+
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include "Primitive.h"
 #include "glut/glut.h"
-
 #pragma comment (lib, "glut32.lib")
 
+
+
 // ------------------------------------------------------------
-Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
+Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::PRIMITIVE_POINT)
 {}
 
 // ------------------------------------------------------------
@@ -102,12 +103,12 @@ void Primitive::Scale(float x, float y, float z)
 // CUBE ============================================
 Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 {
-	type = PrimitiveTypes::Primitive_Cube;
+	type = PrimitiveTypes::PRIMITIVE_CUBE;
 }
 
 Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
-	type = PrimitiveTypes::Primitive_Cube;
+	type = PrimitiveTypes::PRIMITIVE_CUBE;
 }
 
 void Cube::InnerRender() const
@@ -160,12 +161,12 @@ void Cube::InnerRender() const
 // SPHERE ============================================
 Sphere::Sphere() : Primitive(), radius(1.0f)
 {
-	type = PrimitiveTypes::Primitive_Sphere;
+	type = PrimitiveTypes::PRIMITIVE_SPHERE;
 }
 
 Sphere::Sphere(float radius) : Primitive(), radius(radius)
 {
-	type = PrimitiveTypes::Primitive_Sphere;
+	type = PrimitiveTypes::PRIMITIVE_SPHERE;
 }
 
 void Sphere::InnerRender() const
@@ -177,12 +178,12 @@ void Sphere::InnerRender() const
 // CYLINDER ============================================
 Cylinder::Cylinder() : Primitive(), radius(1.0f), height(1.0f)
 {
-	type = PrimitiveTypes::Primitive_Cylinder;
+	type = PrimitiveTypes::PRIMITIVE_CYLINDER;
 }
 
 Cylinder::Cylinder(float radius, float height) : Primitive(), radius(radius), height(height)
 {
-	type = PrimitiveTypes::Primitive_Cylinder;
+	type = PrimitiveTypes::PRIMITIVE_CYLINDER;
 }
 
 void Cylinder::InnerRender() const
@@ -224,12 +225,12 @@ void Cylinder::InnerRender() const
 // LINE ==================================================
 Line::Line() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
 {
-	type = PrimitiveTypes::Primitive_Line;
+	type = PrimitiveTypes::PRIMITIVE_LINE;
 }
 
 Line::Line(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
 {
-	type = PrimitiveTypes::Primitive_Line;
+	type = PrimitiveTypes::PRIMITIVE_LINE;
 }
 
 void Line::InnerRender() const
@@ -249,12 +250,12 @@ void Line::InnerRender() const
 // PLANE ==================================================
 Plane::Plane() : Primitive(), normal(0, 1, 0), constant(1)
 {
-	type = PrimitiveTypes::Primitive_Plane;
+	type = PrimitiveTypes::PRIMITIVE_PLANE;
 }
 
 Plane::Plane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
 {
-	type = PrimitiveTypes::Primitive_Plane;
+	type = PrimitiveTypes::PRIMITIVE_PLANE;
 }
 
 void Plane::InnerRender() const

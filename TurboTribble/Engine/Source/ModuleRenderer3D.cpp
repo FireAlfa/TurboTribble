@@ -1,21 +1,25 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleWindow.h"
+#include "Application.h"
+
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
+#include "ModuleWindow.h"
+#include "ModuleCamera3D.h"
+
+
+
+// Constructor
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
 }
-
 // Destructor
 ModuleRenderer3D::~ModuleRenderer3D()
-{}
+{
+}
 
 // Called before render is available
 bool ModuleRenderer3D::Init()
@@ -24,7 +28,7 @@ bool ModuleRenderer3D::Init()
 	bool ret = true;
 	
 	//Create context
-	glContext = SDL_GL_CreateContext(App->window->window);
+	glContext = SDL_GL_CreateContext(app->window->window);
 	if(glContext == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -102,33 +106,30 @@ bool ModuleRenderer3D::Init()
 
 	return ret;
 }
-
-// PreUpdate: clear buffer
+// Clear the buffer
 UpdateStatus ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(app->camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(app->camera->position.x, app->camera->position.y, app->camera->position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
-
-// PostUpdate present buffer to screen
+// Present the buffer to screen
 UpdateStatus ModuleRenderer3D::PostUpdate(float dt)
 {
-	SDL_GL_SwapWindow(App->window->window);
+	SDL_GL_SwapWindow(app->window->window);
 	return UpdateStatus::UPDATE_CONTINUE;
 }
-
-// Called before quitting
+// Called before quitting, destroys the renderer
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
@@ -139,14 +140,15 @@ bool ModuleRenderer3D::CleanUp()
 }
 
 
+// Control what happens when the window is resized
 void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+	projectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	glLoadMatrixf(&projectionMatrix);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

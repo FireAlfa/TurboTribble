@@ -3,29 +3,32 @@
 
 #include "Module.h"
 
-#include <vector>
-#include <gl/GL.h>
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl2.h"
-#include "SDL/include/SDL_opengl.h"
-
 
 
 class ModuleEditor : public Module
 {
 public:
-	ModuleEditor(Application* app, bool start_enabled = true);
+
+	// Constructor
+	ModuleEditor(Application* app, bool startEnabled = true);
+	// Destructor
 	~ModuleEditor();
 
+	// Load the Editor and create ImGui Context
 	bool Start();
+	// Main Update for ImGui windows
 	UpdateStatus Update(float dt);
+	// CleanUp Editor
 	bool CleanUp();
 
 private:
+
+	// ----- Flags to show specific windows -----
+
 	bool showDemo;
 	bool showConsole;
 	bool showConfig;
 	bool showAbout;
+	// ------------------------------------------
 };
 #endif // !__MODULE_EDITOR_H__

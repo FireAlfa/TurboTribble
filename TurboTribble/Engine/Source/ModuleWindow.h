@@ -2,18 +2,17 @@
 #define __MODULE_WINDOW_H__
 
 #include "Module.h"
+
 #include "SDL/include/SDL.h"
 
 
-
-class Application;
 
 class ModuleWindow : public Module
 {
 public:
 
 	// Constructor
-	ModuleWindow(Application* app, bool start_enabled = true);
+	ModuleWindow(Application* app, bool startEnabled = true);
 	// Destructor
 	virtual ~ModuleWindow();
 
@@ -21,6 +20,7 @@ public:
 	bool Init();
 	// Called before quitting, destroys the window
 	bool CleanUp();
+
 
 	// Changes the title of the window
 	void SetTitle(const char* title);

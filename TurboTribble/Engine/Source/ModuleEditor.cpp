@@ -1,21 +1,35 @@
 #include "ModuleEditor.h"
 #include "Application.h"
 
+#include <vector>
+#include <gl/GL.h>
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl.h"
+#include "imgui/imgui_impl_opengl2.h"
+#include "SDL/include/SDL_opengl.h"
+
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
 
 
-ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
+// Constructor
+ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
-
+	// Flags reset
+	showDemo = false;
+	showConsole = false;
+	showConfig = false;
+	showAbout = false;
 }
+// Destructor
 ModuleEditor::~ModuleEditor()
 {
 
 }
 
 
+// Load the Editor and create ImGui Context
 bool ModuleEditor::Start()
 {
 	LOG("### Loading Editor ###");
@@ -26,20 +40,15 @@ bool ModuleEditor::Start()
 	ImGui::CreateContext();
 
 	// Setup Platform/Renderer bindings
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->glContext);
+	ImGui_ImplSDL2_InitForOpenGL(app->window->window, app->renderer3D->glContext);
 	ImGui_ImplOpenGL2_Init();
+
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 
-	// Flags
-	bool showDemo = false;
-	bool showConsole = false;
-	bool showConfig = false;
-	bool showAbout = false;
-
 	return ret;
 }
-
+// Main Update for ImGui windows
 UpdateStatus ModuleEditor::Update(float dt)
 {
 	// ImGui
@@ -135,13 +144,9 @@ UpdateStatus ModuleEditor::Update(float dt)
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
-	//SDL_GL_SwapWindow(App->window->window);
-
-
-
 	return UpdateStatus::UPDATE_CONTINUE;
 }
-
+// CleanUp Editor
 bool ModuleEditor::CleanUp()
 {
 
