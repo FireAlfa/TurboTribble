@@ -21,6 +21,11 @@ ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, st
 	showConsole = false;
 	showConfig = false;
 	showAbout = false;
+	winActive = true;
+	fullscreen = false;
+	resizable = false;
+	borderless = false;
+	fullDesktop = false;
 }
 // Destructor
 ModuleEditor::~ModuleEditor()
@@ -114,11 +119,43 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::Text("Options");
 		if (ImGui::CollapsingHeader("Application"))
 		{
+			if (ImGui::InputText("App name", appName, 20, ImGuiInputTextFlags_EnterReturnsTrue)) { SDL_SetWindowTitle(app->window->window, appName); }
 
+			if (ImGui::InputText("Organization", orgName, 20, ImGuiInputTextFlags_EnterReturnsTrue));
+			
+			// TODO FPS stuff
+				//ImGui::PlotHistogram for the fps graphs
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
+			// Window active checkbox
+			if (ImGui::Checkbox("Active", &winActive));
+			
+			// Brightness
+			float brightnessVal = SDL_GetWindowBrightness(app->window->window);
+			if (ImGui::SliderFloat("Brightness", &brightnessVal, 0, 1)) { SDL_SetWindowBrightness(app->window->window, brightnessVal); }
 
+			// Width & Height
+			int width, height;
+			SDL_GetWindowSize(app->window->window, &width, &height);
+			if (ImGui::SliderInt("Width", &width, 640, 1920)) { SDL_SetWindowSize(app->window->window, width, height); }
+			if (ImGui::SliderInt("Height", &height, 480, 1080)) { SDL_SetWindowSize(app->window->window, width, height); }
+
+			// TODO Refresh rate well
+			ImGui::Text("Refresh rate:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "60");
+
+
+			// Window Checkboxes
+			if (ImGui::Checkbox("Fullscreen", &fullscreen)) { SDL_SetWindowFullscreen(app->window->window, fullscreen); }
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Resizable", &resizable)) {/* Do resizable stuff here*/}
+
+			if (ImGui::Checkbox("Borderless", &borderless)) { SDL_SetWindowBordered(app->window->window, (SDL_bool)borderless); }
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Full Desktop", &fullDesktop)) { SDL_SetWindowFullscreen(app->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP); }
+				
 		}
 		if (ImGui::CollapsingHeader("File System"))
 		{

@@ -3,8 +3,6 @@
 
 #include "Module.h"
 
-
-
 class ModuleEditor : public Module
 {
 public:
@@ -29,6 +27,16 @@ private:
 	bool showConsole;
 	bool showConfig;
 	bool showAbout;
+	bool winActive;
+	bool fullscreen;
+	bool resizable;
+	bool borderless;
+	bool fullDesktop;
 	// ------------------------------------------
+
+	// Configuration variables
+	char appName[20] = "";
+	char orgName[20] = "";
+	
 };
 #endif // !__MODULE_EDITOR_H__
