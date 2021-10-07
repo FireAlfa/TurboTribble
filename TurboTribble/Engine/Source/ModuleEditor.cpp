@@ -62,11 +62,13 @@ UpdateStatus ModuleEditor::Update(float dt)
 	// Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
+		// Menu Bar File Tab
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Quit", "ESC")) return UpdateStatus::UPDATE_STOP;
 			ImGui::EndMenu();
 		}
+		// Menu Bar View Tab
 		if (ImGui::BeginMenu("View"))
 		{
 			if (ImGui::MenuItem("Console", "1", showConsole))
@@ -79,6 +81,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 			}
 			ImGui::EndMenu();
 		}
+		// Menu Bar Help Tab
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("Gui Demo", 0, showDemo))
@@ -96,6 +99,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::EndMainMenuBar();
 	}
 
+	// GUI Console Window
 	if (showConsole)
 	{
 		ImGui::Begin("Console");
@@ -103,6 +107,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::End();
 	}
 
+	// GUI Console Window
 	if (showConfig)
 	{
 		ImGui::Begin("Configuration");
@@ -130,7 +135,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::End();
 	}
 
-
+	// GUI About Window
 	if (showAbout)
 	{
 
@@ -140,6 +145,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::End();
 	}
 
+	// ImGui Rendering
 	ImGui::Render();
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
