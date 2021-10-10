@@ -10,6 +10,7 @@
 
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleInput.h"
 
 
 
@@ -26,6 +27,12 @@ ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, st
 	resizable = false;
 	borderless = false;
 	fullDesktop = false;
+	fileSysActive = true;
+	inputActive = true;
+	hardwareActive = true;
+
+	appName = "Turbo Tribble";
+	orgName = "CITM UPC";
 }
 // Destructor
 ModuleEditor::~ModuleEditor()
@@ -119,9 +126,9 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::Text("Options");
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			if (ImGui::InputText("App name", appName, 20, ImGuiInputTextFlags_EnterReturnsTrue)) { SDL_SetWindowTitle(app->window->window, appName); }
+			if (ImGui::InputText("App name", appName, 20)) { SDL_SetWindowTitle(app->window->window, appName); }
 
-			if (ImGui::InputText("Organization", orgName, 20, ImGuiInputTextFlags_EnterReturnsTrue));
+			ImGui::InputText("Organization", orgName, 20);
 			
 			// TODO FPS stuff
 				//ImGui::PlotHistogram for the fps graphs
@@ -159,15 +166,83 @@ UpdateStatus ModuleEditor::Update(float dt)
 		}
 		if (ImGui::CollapsingHeader("File System"))
 		{
+			if (ImGui::Checkbox("Active", &fileSysActive));
 
+			ImGui::Text("Base Path:");
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", SDL_GetBasePath());
+			ImGui::Text("Read Path:");
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), ".");
+			ImGui::Text("Write Path:");
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), ".");
+			
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
+			if (ImGui::Checkbox("Active", &inputActive));
+
+			ImGui::Text("Mouse Position:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d, %d", app->input->GetMouseX(), app->input->GetMouseY());
+			ImGui::Text("Mouse Motion:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d, %d", app->input->GetMouseXMotion(), app->input->GetMouseYMotion());
+			ImGui::Text("Mouse Wheel:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", app->input->GetMouseZ());
+
+			//TODO Input LOG List
 
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
+			if (ImGui::Checkbox("Active:", &hardwareActive));
 
+			SDL_version versionSDL;
+			SDL_GetVersion(&versionSDL);
+			ImGui::Text("SDL Version:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d, %d, %d", versionSDL.major, versionSDL.minor, versionSDL.patch);
+			ImGui::Separator();
+			ImGui::Text("CPU:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %dKb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());;
+			ImGui::Text("System RAM:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1fGb", (float)SDL_GetSystemRAM());
+			ImGui::Text("Caps:");
+
+			if (SDL_HasRDTSC() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "RDTSC,"); }
+			if (SDL_HasMMX()   == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "MMX,");   }
+			if (SDL_HasSSE()   == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE,");   }
+			if (SDL_HasSSE2()  == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE2,");  }
+			if (SDL_HasSSE3()  == SDL_bool::SDL_TRUE) { ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE3,");					 }
+			if (SDL_HasSSE41() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41,"); }
+			if (SDL_HasSSE42() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE42,"); }
+			if (SDL_HasAVX()   == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX,");   }
+			if (SDL_HasAVX2()  == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX2,");  }
+
+			ImGui::Separator();
+			ImGui::Text("GPU:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_VENDOR));
+			ImGui::Text("Brand:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_RENDERER));
+
+			// TODO VRAM numbers
+			ImGui::Text("VRAM Budget:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d Mb");
+			ImGui::Text("VRAM Usage:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d Mb");
+			ImGui::Text("VRAM Avaliable:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d Mb");
+			ImGui::Text("VRAM Reserved:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d Mb");
+			
 		}
 		ImGui::End();
 	}

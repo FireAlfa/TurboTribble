@@ -32,11 +32,14 @@ private:
 	bool resizable;
 	bool borderless;
 	bool fullDesktop;
+	bool fileSysActive;
+	bool inputActive;
+	bool hardwareActive;
 	// ------------------------------------------
 
 	// Configuration variables
-	char appName[20] = "";
-	char orgName[20] = "";
+	char *appName = "";
+	char *orgName = "";
 	
 };
 #endif // !__MODULE_EDITOR_H__
