@@ -1,10 +1,9 @@
 #include "Primitive.h"
 #include "Globals.h"
 
+#include "glew.h"
 #include <gl/GL.h>
-#include <gl/GLU.h>
-#include "glut/glut.h"
-#pragma comment (lib, "glut32.lib")
+#pragma comment (lib, "glew32.lib")
 
 
 
@@ -171,7 +170,8 @@ Sphere::Sphere(float radius) : Primitive(), radius(radius)
 
 void Sphere::InnerRender() const
 {
-	glutSolidSphere(radius, 25, 25);
+	//glutSolidSphere(radius, 25, 25);
+	// TODO: Create method to draw Sphere without using glut
 }
 
 
