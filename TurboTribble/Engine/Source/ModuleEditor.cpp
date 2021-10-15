@@ -255,16 +255,37 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::Text("Turbo Tribble is a C++ Game Engine developed as a class project");
 		ImGui::Text("Version 0.0 - WIP");
 		ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM");
+		ImGui::Separator();
 		ImGui::Text("3rd Party Libraries used:");
-		ImGui::Text("- SLD 2.0.0");
-		ImGui::Text("- Glew 2.0.0");
-		ImGui::Text("- ImGui 1.85");
-		ImGui::Text("- MathGeoLib 1.5");
-		ImGui::Text("- OpenGL 2.1");
-		ImGui::Text("- Assimp 5.0.1 ");
+		ImGui::BulletText("SLD 2.0.0");
+		ImGui::BulletText("Glew 2.0.0");
+		ImGui::BulletText("ImGui 1.85");
+		ImGui::BulletText("MathGeoLib 1.5");
+		ImGui::BulletText("OpenGL 2.1");
+		ImGui::BulletText("Assimp 5.0.1 ");
+		ImGui::Separator();
 		ImGui::Text("License:");
-		ImGui::Text("MIT License ");
-		ImGui::Text("Copyright(c) 2021 Òscar Canales and Carles Garriga");
+		ImGui::Text("MIT License");
+		ImGui::TextWrapped(
+			"Copyright(c) 2021 Oscar Canales and Carles Garriga"
+			"Permission is hereby granted, free of charge, to any person obtaining a copy"
+			"of this softwareand associated documentation files(the Software), to deal"
+			"in the Software without restriction, including without limitation the rights"
+			"to use, copy, modify, merge, publish, distribute, sublicense, and /or sell"
+			"copies of the Software, and to permit persons to whom the Software is"
+			"furnished to do so, subject to the following conditions :"
+			
+			"The above copyright noticeand this permission notice shall be included in all"
+			"copies or substantial portions of the Software."
+
+			"THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR"
+			"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
+			"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE"
+			"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+			"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,"
+			"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE"
+			"SOFTWARE.");
+
 		ImGui::End();
 	}
 
