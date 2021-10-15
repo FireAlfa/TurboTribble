@@ -252,8 +252,19 @@ UpdateStatus ModuleEditor::Update(float dt)
 	{
 
 		ImGui::Begin("About Turbo Tribble Engine");
+		ImGui::Text("Turbo Tribble is a C++ Game Engine developed as a class project");
 		ImGui::Text("Version 0.0 - WIP");
 		ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM");
+		ImGui::Text("3rd Party Libraries used:");
+		ImGui::Text("- SLD 2.0.0");
+		ImGui::Text("- Glew 2.0.0");
+		ImGui::Text("- ImGui 1.85");
+		ImGui::Text("- MathGeoLib 1.5");
+		ImGui::Text("- OpenGL 2.1");
+		ImGui::Text("- Assimp 5.0.1 ");
+		ImGui::Text("License:");
+		ImGui::Text("MIT License ");
+		ImGui::Text("Copyright(c) 2021 Òscar Canales and Carles Garriga");
 		ImGui::End();
 	}
 

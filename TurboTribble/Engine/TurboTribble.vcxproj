@@ -50,7 +50,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\assimp\include;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\assimp\include;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\GLEW\include;$(ProjectDir)Source\External\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -89,6 +89,7 @@
     <ClInclude Include="Source\External\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Source\External\ImGui\imstb_textedit.h" />
     <ClInclude Include="Source\External\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source\External\json\include\json.hpp" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Light.h" />
