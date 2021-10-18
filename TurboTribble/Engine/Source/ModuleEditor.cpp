@@ -261,7 +261,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::BulletText("Glew 2.0.0");
 		ImGui::BulletText("ImGui 1.85");
 		ImGui::BulletText("MathGeoLib 1.5");
-		ImGui::BulletText("OpenGL 2.1");
+		ImGui::BulletText("OpenGL 3.1");
 		ImGui::BulletText("Assimp 5.0.1 ");
 		ImGui::Separator();
 		ImGui::Text("License:");
