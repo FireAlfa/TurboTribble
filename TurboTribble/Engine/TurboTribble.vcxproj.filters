@@ -75,9 +75,6 @@
     <ClInclude Include="Source\External\ImGui\imgui.h">
       <Filter>Sources\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\ImGui\imgui_impl_opengl2.h">
-      <Filter>Sources\ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\ImGui\imgui_impl_sdl.h">
       <Filter>Sources\ImGui</Filter>
     </ClInclude>
@@ -98,6 +95,12 @@
     </ClInclude>
     <ClInclude Include="Source\External\json\include\json.hpp">
       <Filter>Sources\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h">
+      <Filter>Sources\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>Sources\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +152,6 @@
     <ClCompile Include="Source\External\ImGui\imgui_draw.cpp">
       <Filter>Sources\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\External\ImGui\imgui_impl_opengl2.cpp">
-      <Filter>Sources\ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="Source\External\ImGui\imgui_impl_sdl.cpp">
       <Filter>Sources\ImGui</Filter>
     </ClCompile>
@@ -163,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="Source\ModuleEditor.cpp">
       <Filter>Sources\Modules\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Sources\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

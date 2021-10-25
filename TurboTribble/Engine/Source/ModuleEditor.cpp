@@ -5,7 +5,7 @@
 #include <gl/GL.h>
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl2.h"
+#include "imgui/imgui_impl_opengl3.h"
 #include "SDL/include/SDL_opengl.h"
 
 #include "ModuleWindow.h"
@@ -51,12 +51,30 @@ bool ModuleEditor::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
-	// Setup Platform/Renderer bindings
-	ImGui_ImplSDL2_InitForOpenGL(app->window->window, app->renderer3D->glContext);
-	ImGui_ImplOpenGL2_Init();
+	//ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
+
+	// Setup Platform/Renderer backends
+	ImGui_ImplSDL2_InitForOpenGL(app->window->window, app->renderer3D->glContext);
+	ImGui_ImplOpenGL3_Init("#version 130");
+
+	// Load Fonts
+	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
+	// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
+	// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
+	// - Read 'docs/FONTS.md' for more instructions and details.
+	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+	//io.Fonts->AddFontDefault();
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+	//IM_ASSERT(font != NULL);
 
 	return ret;
 }
@@ -64,12 +82,12 @@ bool ModuleEditor::Start()
 UpdateStatus ModuleEditor::Update(float dt)
 {
 	// ImGui
-	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
 	// Demo Window
-	if (showDemo)ImGui::ShowDemoWindow();
+	if (showDemo)ImGui::ShowDemoWindow(&showDemo);
 
 	// Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -96,10 +114,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		// Menu Bar Help Tab
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("Gui Demo", 0, showDemo))
-			{
-				showDemo = !showDemo;
-			}
+			if (ImGui::MenuItem("Gui Demo", 0, showDemo)) { showDemo = !showDemo; }
 			if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/wiki", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/releases", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/issues", 0, 0, SW_SHOW); }
@@ -289,16 +304,28 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::End();
 	}
 
-	// ImGui Rendering
-	ImGui::Render();
-	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
+
+// Render ImGui
+UpdateStatus ModuleEditor::PostUpdate(float dt)
+{
+	// ImGui Rendering
+	ImGui::Render();
+	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
+	return UpdateStatus::UPDATE_CONTINUE;
+}
+
 // CleanUp Editor
 bool ModuleEditor::CleanUp()
 {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 
 	return true;
 }

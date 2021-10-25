@@ -13,6 +13,7 @@ private:
 	bool enabled;
 
 public:
+
 	Application* app;
 
 	Module(Application* parent, bool startEnabled = true) : app(parent)

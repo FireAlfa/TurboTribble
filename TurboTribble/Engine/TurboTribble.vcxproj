@@ -83,7 +83,8 @@
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\External\ImGui\imconfig.h" />
     <ClInclude Include="Source\External\ImGui\imgui.h" />
-    <ClInclude Include="Source\External\ImGui\imgui_impl_opengl2.h" />
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="Source\External\ImGui\imgui_impl_sdl.h" />
     <ClInclude Include="Source\External\ImGui\imgui_internal.h" />
     <ClInclude Include="Source\External\ImGui\imstb_rectpack.h" />
@@ -109,7 +110,7 @@
     <ClCompile Include="Source\External\ImGui\imgui.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="Source\External\ImGui\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui_widgets.cpp" />

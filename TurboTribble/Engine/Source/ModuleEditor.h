@@ -16,6 +16,8 @@ public:
 	bool Start();
 	// Main Update for ImGui windows
 	UpdateStatus Update(float dt);
+	// Render ImGui
+	UpdateStatus PostUpdate(float dt);
 	// CleanUp Editor
 	bool CleanUp();
 
