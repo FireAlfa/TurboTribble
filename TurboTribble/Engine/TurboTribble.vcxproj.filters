@@ -25,7 +25,7 @@
     <Filter Include="Sources\Modules\Editor">
       <UniqueIdentifier>{3a95d047-de31-4de0-9d4b-9165e6b658a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\json">
+    <Filter Include="Sources\JSON Parser">
       <UniqueIdentifier>{45ecb5ad-1b26-4c8f-9696-8e5bb1ac9341}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -93,14 +93,14 @@
     <ClInclude Include="Source\ModuleEditor.h">
       <Filter>Sources\Modules\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\json\include\json.hpp">
-      <Filter>Sources\json</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h">
       <Filter>Sources\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl3_loader.h">
       <Filter>Sources\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\JSON Parser\json.hpp">
+      <Filter>Sources\JSON Parser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

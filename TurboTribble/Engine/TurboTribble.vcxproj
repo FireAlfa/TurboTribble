@@ -90,7 +90,7 @@
     <ClInclude Include="Source\External\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Source\External\ImGui\imstb_textedit.h" />
     <ClInclude Include="Source\External\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Source\External\json\include\json.hpp" />
+    <ClInclude Include="Source\External\JSON Parser\json.hpp" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Light.h" />
