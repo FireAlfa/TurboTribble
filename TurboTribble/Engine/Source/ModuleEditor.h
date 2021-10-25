@@ -3,6 +3,11 @@
 
 #include "Module.h"
 
+#include "SDL/include/SDL_version.h"
+#include <string>
+
+
+
 class ModuleEditor : public Module
 {
 public:
@@ -39,9 +44,20 @@ private:
 	bool hardwareActive;
 	// ------------------------------------------
 
-	// Configuration variables
+	// ----- Configuration variables -----
+
 	char *appName = "";
 	char *orgName = "";
+	// -----------------------------------
 	
+	// ----- About variables -----
+
+	SDL_version SDLCompiledVersion;
+	SDL_version SDLLinkedVersion;
+	const char* imGuiVersion;
+	int openGLMajorVersion = 0;
+	int openGLMinorVersion = 0;
+	SDL_version assimpVersion;
+	// ---------------------------
 };
 #endif // !__MODULE_EDITOR_H__

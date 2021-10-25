@@ -19,7 +19,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load Scene
 bool ModuleSceneIntro::Start()
 {
-	LOG("Loading Scene");
+	TTLOG("Loading Scene");
 	bool ret = true;
 
 	// Set the initial camera position
@@ -39,7 +39,7 @@ UpdateStatus ModuleSceneIntro::Update(float dt)
 // Unload Scene
 bool ModuleSceneIntro::CleanUp()
 {
-	LOG("Unloading Scene");
+	TTLOG("Unloading Scene");
 
 	return true;
 }

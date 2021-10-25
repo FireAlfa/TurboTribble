@@ -25,7 +25,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG("Creating 3D Renderer context");
+	TTLOG("Creating 3D Renderer context");
 	bool ret = true;
 	
 
@@ -43,7 +43,7 @@ bool ModuleRenderer3D::Init()
 	glContext = SDL_GL_CreateContext(app->window->window);
 	if(glContext == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		TTLOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	
@@ -54,7 +54,7 @@ bool ModuleRenderer3D::Init()
 
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			TTLOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -64,7 +64,7 @@ bool ModuleRenderer3D::Init()
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			TTLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -76,7 +76,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			TTLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -90,7 +90,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			TTLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -98,7 +98,7 @@ bool ModuleRenderer3D::Init()
 		GLenum err = glewInit();
 		
 		// Glew version
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		TTLOG("Using Glew %s", glewGetString(GLEW_VERSION));
 		
 
 		
@@ -126,10 +126,10 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 
-		LOG("Vendor: %s", glGetString(GL_VENDOR));
-		LOG("Renderer: %s", glGetString(GL_RENDERER));
-		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		TTLOG("Vendor: %s", glGetString(GL_VENDOR));
+		TTLOG("Renderer: %s", glGetString(GL_RENDERER));
+		TTLOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		TTLOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	}
 
 	// Projection matrix for
@@ -167,7 +167,7 @@ UpdateStatus ModuleRenderer3D::PostUpdate(float dt)
 // Called before quitting, destroys the renderer
 bool ModuleRenderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
+	TTLOG("Destroying 3D Renderer");
 
 	SDL_GL_DeleteContext(glContext);
 

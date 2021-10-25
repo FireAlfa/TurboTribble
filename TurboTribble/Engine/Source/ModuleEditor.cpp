@@ -1,12 +1,14 @@
 #include "ModuleEditor.h"
 #include "Application.h"
 
-#include <vector>
-#include <gl/GL.h>
+#include "glew.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "SDL/include/SDL_opengl.h"
+#include "Assimp/include/version.h"
+#include <vector>
+#include <gl/GL.h>
 
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
@@ -44,7 +46,7 @@ ModuleEditor::~ModuleEditor()
 // Load the Editor and create ImGui Context
 bool ModuleEditor::Start()
 {
-	LOG("### Loading Editor ###");
+	TTLOG("### Loading Editor ###");
 	bool ret = true;
 
 	// Setup Dear ImGui context
@@ -75,6 +77,22 @@ bool ModuleEditor::Start()
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != NULL);
+
+	// Get SDL version
+	SDL_VERSION(&SDLCompiledVersion);
+	SDL_GetVersion(&SDLLinkedVersion);
+
+	// Get ImGui version
+	imGuiVersion = ImGui::GetVersion();
+
+	// Get OpenGL version
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &openGLMajorVersion);
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &openGLMinorVersion);
+
+	// Get Assimp version
+	assimpVersion.major = aiGetVersionMajor();
+	assimpVersion.minor = aiGetVersionMinor();
+	assimpVersion.patch = aiGetVersionRevision();
 
 	return ret;
 }
@@ -272,12 +290,13 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM");
 		ImGui::Separator();
 		ImGui::Text("3rd Party Libraries used:");
-		ImGui::BulletText("SLD 2.0.0");
-		ImGui::BulletText("Glew 2.0.0");
-		ImGui::BulletText("ImGui 1.85");
+		ImGui::BulletText("Compiled SDL %d\.%d\.%d", SDLCompiledVersion.major, SDLCompiledVersion.minor, SDLCompiledVersion.patch);
+		ImGui::BulletText("Linked SDL %d\.%d\.%d", SDLLinkedVersion.major, SDLLinkedVersion.minor, SDLLinkedVersion.patch);
+		ImGui::BulletText("Glew %s", glewGetString(GLEW_VERSION));
+		ImGui::BulletText("ImGui %s", imGuiVersion);
 		ImGui::BulletText("MathGeoLib 1.5");
-		ImGui::BulletText("OpenGL 3.1");
-		ImGui::BulletText("Assimp 5.0.1 ");
+		ImGui::BulletText("OpenGL %d\.%d", openGLMajorVersion, openGLMinorVersion);
+		ImGui::BulletText("Assimp %d\.%d\.%d", assimpVersion.major, assimpVersion.minor, assimpVersion.patch);
 		ImGui::Separator();
 		ImGui::Text("License:");
 		ImGui::Text("MIT License");
