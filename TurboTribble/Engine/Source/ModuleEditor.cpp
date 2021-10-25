@@ -7,7 +7,6 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "SDL/include/SDL_opengl.h"
 #include "Assimp/include/version.h"
-#include <vector>
 #include <gl/GL.h>
 
 #include "ModuleWindow.h"
@@ -33,8 +32,8 @@ ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, st
 	inputActive = true;
 	hardwareActive = true;
 
-	appName = "Turbo Tribble";
-	orgName = "CITM UPC";
+	//appName = "TurboTribble";
+	//orgName = "CITM-UPC";
 }
 // Destructor
 ModuleEditor::~ModuleEditor()
@@ -53,8 +52,8 @@ bool ModuleEditor::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
-	//ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -155,16 +154,41 @@ UpdateStatus ModuleEditor::Update(float dt)
 	// GUI Console Window
 	if (showConfig)
 	{
-		ImGui::Begin("Configuration");
-		ImGui::Text("Options");
+		ImGui::Begin("Configuration", &showConfig);
+		if (ImGui::BeginMenu("Options"))
+		{
+			ImGui::MenuItem("Set Defaults");
+			ImGui::MenuItem("Load");
+			ImGui::MenuItem("Save");
+
+			ImGui::EndMenu();
+		}
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			if (ImGui::InputText("App name", appName, 20)) { SDL_SetWindowTitle(app->window->window, appName); }
-
-			ImGui::InputText("Organization", orgName, 20);
+			// Select all text when you enter the box and only modify it when Enter is pressed
+			ImGuiInputTextFlags textFlags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+			char text[32];
+			// App name box
+			strcpy(text, appName);
+			if (ImGui::InputText("App Name", text, IM_ARRAYSIZE(text), textFlags))
+			{
+				strcpy(appName, text);
+				SDL_SetWindowTitle(app->window->window, appName);
+			}
+			// Organization name box
+			strcpy(text, orgName);
+			if (ImGui::InputText("Organization", text, IM_ARRAYSIZE(text), textFlags))
+			{
+				strcpy(orgName, text);
+			}
 			
-			// TODO FPS stuff
-				//ImGui::PlotHistogram for the fps graphs
+			// FPS Slider
+			ImGui::SliderInt("Max FPS", &app->maxFPS, 1, MAX_FPS);
+			ImGui::Text("Limit Framerate");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", app->maxFPS);
+			// TODO FPS Histogram
+			// MS Histogram
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
@@ -284,10 +308,10 @@ UpdateStatus ModuleEditor::Update(float dt)
 	if (showAbout)
 	{
 
-		ImGui::Begin("About Turbo Tribble Engine");
-		ImGui::Text("Turbo Tribble is a C++ Game Engine developed as a class project");
-		ImGui::Text("Version 0.0 - WIP");
-		ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM");
+		ImGui::Begin("About TurboTribble Engine");
+		ImGui::Text("TurboTribble is a C++ Game Engine developed as a class project.");
+		ImGui::Text("Version 0.1 - WIP");
+		ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM-UPC.");
 		ImGui::Separator();
 		ImGui::Text("3rd Party Libraries used:");
 		ImGui::BulletText("Compiled SDL %d\.%d\.%d", SDLCompiledVersion.major, SDLCompiledVersion.minor, SDLCompiledVersion.patch);

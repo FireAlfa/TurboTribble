@@ -35,14 +35,6 @@ public:
 	// Modules vector
 	std::vector<Module*> modulesList;
 
-private:
-
-	// ----- Variables used for FPS control -----
-
-	Timer	msTimer;
-	float	dt;
-	// ------------------------------------------
-
 public:
 
 	// Application Constructor
@@ -68,6 +60,22 @@ private:
 
 	// Adds a Module to the Module vector
 	void AddModule(Module* mod);
+
+
+private:
+
+	// ----- Variables used for FPS control -----
+
+	Timer	msTimer;
+	float	dt;
+	// ------------------------------------------
+
+public:
+
+	// ----- Variables used for FPS control -----
+
+	int maxFPS = MAX_FPS;
+	// ------------------------------------------
 };
 
 #endif // !__APPLICATION_H__

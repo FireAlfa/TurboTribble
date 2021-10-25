@@ -116,6 +116,11 @@ void Application::PrepareUpdate()
 // Called each loop after calling the Modules' Update() methods
 void Application::FinishUpdate()
 {
+	float k = (1000 / maxFPS) - dt;
+	if (k > 0)
+	{
+		SDL_Delay((Uint32)k);
+	}
 }
 
 

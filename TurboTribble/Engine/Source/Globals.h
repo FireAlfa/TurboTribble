@@ -45,6 +45,7 @@ enum class UpdateStatus
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
+#define MAX_FPS 144
 #define TITLE "TurboTribble"
 
 #endif // !__GLOBALS_H__

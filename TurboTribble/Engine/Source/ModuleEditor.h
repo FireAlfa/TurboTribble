@@ -5,6 +5,7 @@
 
 #include "SDL/include/SDL_version.h"
 #include <string>
+#include <vector>
 
 
 
@@ -44,12 +45,14 @@ private:
 	bool hardwareActive;
 	// ------------------------------------------
 
+
 	// ----- Configuration variables -----
 
-	char *appName = "";
-	char *orgName = "";
+	char appName[32] = "TurboTribble";
+	char orgName[32] = "CITM-UPC";
 	// -----------------------------------
 	
+
 	// ----- About variables -----
 
 	SDL_version SDLCompiledVersion;
@@ -59,5 +62,16 @@ private:
 	int openGLMinorVersion = 0;
 	SDL_version assimpVersion;
 	// ---------------------------
+
+
+	// ----- FPS/MS Graph -----
+	
+	char title[25];
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
+
+	void FPSGraph(float dt, int size);
+	void MSGraph(float dt, int size);
+	// ------------------------
 };
 #endif // !__MODULE_EDITOR_H__
