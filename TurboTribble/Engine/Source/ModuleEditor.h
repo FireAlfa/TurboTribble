@@ -69,9 +69,7 @@ private:
 	char title[25];
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;
-
-	void FPSGraph(float dt, int size);
-	void MSGraph(float dt, int size);
+	std::vector<float> mem_log;
 	// ------------------------
 };
 #endif // !__MODULE_EDITOR_H__

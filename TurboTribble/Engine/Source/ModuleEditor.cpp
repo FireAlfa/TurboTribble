@@ -181,6 +181,10 @@ UpdateStatus ModuleEditor::Update(float dt)
 			{
 				strcpy(orgName, text);
 			}
+
+			fps_log.push_back(ImGui::GetIO().Framerate);
+			ms_log.push_back(1000.0f / ImGui::GetIO().Framerate);
+			//mem_log.push_back(ImGui::GetIO().);
 			
 			// FPS Slider
 			ImGui::SliderInt("Max FPS", &app->maxFPS, 1, MAX_FPS);
@@ -188,9 +192,24 @@ UpdateStatus ModuleEditor::Update(float dt)
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", app->maxFPS);
 			// FPS Histogram
-			// TODO
+			sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
+			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			// MS Histogram
-			// TODO
+			sprintf_s(title, 25, "Milliseconds %.1f", ms_log[ms_log.size() - 1]);
+			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			// Memory Consumption Histogram
+			//sprintf_s(title, 25, "Memory Usage %.1f", mem_log[mem_log.size() - 1]);
+			//ImGui::PlotHistogram("##memory", &mem_log[0], mem_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+
+			ImGui::Text("Total Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Total Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Peak Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Peak Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Accumulated Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Accumulated Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Accumulated Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Total Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+			ImGui::Text("Peak Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
 
 		}
 		if (ImGui::CollapsingHeader("Window"))
