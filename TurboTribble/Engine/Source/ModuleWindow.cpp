@@ -92,3 +92,20 @@ void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
+
+
+int ModuleWindow::GetRefreshRate() {
+	SDL_DisplayMode Mode;
+	int DisplayIndex = SDL_GetWindowDisplayIndex(window);
+	// If we can't find the refresh rate, we'll return this:
+	int DefaultRefreshRate = 60;
+	if (SDL_GetDesktopDisplayMode(DisplayIndex, &Mode) != 0)
+	{
+		return DefaultRefreshRate;
+	}
+	if (Mode.refresh_rate == 0)
+	{
+		return DefaultRefreshRate;
+	}
+	return Mode.refresh_rate;
+}

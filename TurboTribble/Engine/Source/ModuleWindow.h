@@ -25,6 +25,9 @@ public:
 	// Changes the title of the window
 	void SetTitle(const char* title);
 
+	// Gets the Screen's refresh rate
+	int GetRefreshRate();
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
