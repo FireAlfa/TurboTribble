@@ -79,8 +79,83 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Color.h" />
+    <ClInclude Include="Source\External\Assimp\include\aabb.h" />
+    <ClInclude Include="Source\External\Assimp\include\ai_assert.h" />
+    <ClInclude Include="Source\External\Assimp\include\anim.h" />
+    <ClInclude Include="Source\External\Assimp\include\BaseImporter.h" />
+    <ClInclude Include="Source\External\Assimp\include\Bitmap.h" />
+    <ClInclude Include="Source\External\Assimp\include\BlobIOSystem.h" />
+    <ClInclude Include="Source\External\Assimp\include\ByteSwapper.h" />
+    <ClInclude Include="Source\External\Assimp\include\camera.h" />
+    <ClInclude Include="Source\External\Assimp\include\cexport.h" />
+    <ClInclude Include="Source\External\Assimp\include\cfileio.h" />
+    <ClInclude Include="Source\External\Assimp\include\cimport.h" />
+    <ClInclude Include="Source\External\Assimp\include\color4.h" />
+    <ClInclude Include="Source\External\Assimp\include\config.h" />
+    <ClInclude Include="Source\External\Assimp\include\CreateAnimMesh.h" />
+    <ClInclude Include="Source\External\Assimp\include\DefaultIOStream.h" />
+    <ClInclude Include="Source\External\Assimp\include\DefaultIOSystem.h" />
+    <ClInclude Include="Source\External\Assimp\include\DefaultLogger.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\Defines.h" />
+    <ClInclude Include="Source\External\Assimp\include\defs.h" />
+    <ClInclude Include="Source\External\Assimp\include\Exceptional.h" />
+    <ClInclude Include="Source\External\Assimp\include\Exporter.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\fast_atof.h" />
+    <ClInclude Include="Source\External\Assimp\include\GenericProperty.h" />
+    <ClInclude Include="Source\External\Assimp\include\Hash.h" />
+    <ClInclude Include="Source\External\Assimp\include\Importer.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\importerdesc.h" />
+    <ClInclude Include="Source\External\Assimp\include\IOStream.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\IOStreamBuffer.h" />
+    <ClInclude Include="Source\External\Assimp\include\IOSystem.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\irrXMLWrapper.h" />
+    <ClInclude Include="Source\External\Assimp\include\light.h" />
+    <ClInclude Include="Source\External\Assimp\include\LineSplitter.h" />
+    <ClInclude Include="Source\External\Assimp\include\LogAux.h" />
+    <ClInclude Include="Source\External\Assimp\include\Logger.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\LogStream.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\Macros.h" />
+    <ClInclude Include="Source\External\Assimp\include\material.h" />
+    <ClInclude Include="Source\External\Assimp\include\MathFunctions.h" />
+    <ClInclude Include="Source\External\Assimp\include\matrix3x3.h" />
+    <ClInclude Include="Source\External\Assimp\include\matrix4x4.h" />
+    <ClInclude Include="Source\External\Assimp\include\MemoryIOWrapper.h" />
+    <ClInclude Include="Source\External\Assimp\include\mesh.h" />
+    <ClInclude Include="Source\External\Assimp\include\metadata.h" />
+    <ClInclude Include="Source\External\Assimp\include\NullLogger.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\ParsingUtils.h" />
+    <ClInclude Include="Source\External\Assimp\include\pbrmaterial.h" />
+    <ClInclude Include="Source\External\Assimp\include\postprocess.h" />
+    <ClInclude Include="Source\External\Assimp\include\Profiler.h" />
+    <ClInclude Include="Source\External\Assimp\include\ProgressHandler.hpp" />
+    <ClInclude Include="Source\External\Assimp\include\qnan.h" />
+    <ClInclude Include="Source\External\Assimp\include\quaternion.h" />
+    <ClInclude Include="Source\External\Assimp\include\RemoveComments.h" />
+    <ClInclude Include="Source\External\Assimp\include\scene.h" />
+    <ClInclude Include="Source\External\Assimp\include\SceneCombiner.h" />
+    <ClInclude Include="Source\External\Assimp\include\SGSpatialSort.h" />
+    <ClInclude Include="Source\External\Assimp\include\SkeletonMeshBuilder.h" />
+    <ClInclude Include="Source\External\Assimp\include\SmoothingGroups.h" />
+    <ClInclude Include="Source\External\Assimp\include\SpatialSort.h" />
+    <ClInclude Include="Source\External\Assimp\include\StandardShapes.h" />
+    <ClInclude Include="Source\External\Assimp\include\StreamReader.h" />
+    <ClInclude Include="Source\External\Assimp\include\StreamWriter.h" />
+    <ClInclude Include="Source\External\Assimp\include\StringComparison.h" />
+    <ClInclude Include="Source\External\Assimp\include\StringUtils.h" />
+    <ClInclude Include="Source\External\Assimp\include\Subdivision.h" />
+    <ClInclude Include="Source\External\Assimp\include\texture.h" />
+    <ClInclude Include="Source\External\Assimp\include\TinyFormatter.h" />
+    <ClInclude Include="Source\External\Assimp\include\types.h" />
+    <ClInclude Include="Source\External\Assimp\include\vector2.h" />
+    <ClInclude Include="Source\External\Assimp\include\vector3.h" />
+    <ClInclude Include="Source\External\Assimp\include\version.h" />
+    <ClInclude Include="Source\External\Assimp\include\Vertex.h" />
+    <ClInclude Include="Source\External\Assimp\include\XMLTools.h" />
+    <ClInclude Include="Source\External\Assimp\include\ZipArchiveIOSystem.h" />
     <ClInclude Include="Source\External\ImGui\imconfig.h" />
     <ClInclude Include="Source\External\ImGui\imgui.h" />
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h" />
@@ -105,6 +180,8 @@
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui.cpp" />
@@ -126,6 +203,17 @@
     <ClCompile Include="Source\ModuleWindow.cpp" />
     <ClCompile Include="Source\Primitive.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\External\Assimp\include\color4.inl" />
+    <None Include="Source\External\Assimp\include\config.h.in" />
+    <None Include="Source\External\Assimp\include\material.inl" />
+    <None Include="Source\External\Assimp\include\matrix3x3.inl" />
+    <None Include="Source\External\Assimp\include\matrix4x4.inl" />
+    <None Include="Source\External\Assimp\include\quaternion.inl" />
+    <None Include="Source\External\Assimp\include\SmoothingGroups.inl" />
+    <None Include="Source\External\Assimp\include\vector2.inl" />
+    <None Include="Source\External\Assimp\include\vector3.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
