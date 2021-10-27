@@ -2,7 +2,7 @@
 #include "Application.h"
 
 #include "glew.h"
-#include "SDL\include\SDL_opengl.h"
+#include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
@@ -10,12 +10,15 @@
 
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleEditor.h"
 
 
 
 // Constructor
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
+
 }
 // Destructor
 ModuleRenderer3D::~ModuleRenderer3D()
@@ -137,16 +140,16 @@ bool ModuleRenderer3D::Init()
 
 	return ret;
 }
+	
 // Clear the buffer
 UpdateStatus ModuleRenderer3D::PreUpdate(float dt)
 {
-	// TODO ppw 03 - diapo 24
-	//Color c = app->camera.background;
-	//glClearColor(c.r, c.g, c.b, c.a);
+	// Get background color
+	Color c = app->camera->backgroundColor;
+	glClearColor(c.r, c.g, c.b, c.a);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-
+	//glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(app->camera->GetViewMatrix());
 
@@ -158,12 +161,28 @@ UpdateStatus ModuleRenderer3D::PreUpdate(float dt)
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
-// Present the buffer to screen
+
+// Present the buffer to screen, calls the draws
 UpdateStatus ModuleRenderer3D::PostUpdate(float dt)
 {
+	// Draw the Scene
+	app->scene_intro->Draw();
+
+	// TODO Debug Draw
+	/*if (debug_draw == true)
+	{
+		BeginDebugDraw();
+		App->DebugDraw();
+		EndDebugDraw();
+	}*/
+
+	// Draw the Editor
+	app->editor->Draw();
+
 	SDL_GL_SwapWindow(app->window->window);
 	return UpdateStatus::UPDATE_CONTINUE;
 }
+
 // Called before quitting, destroys the renderer
 bool ModuleRenderer3D::CleanUp()
 {

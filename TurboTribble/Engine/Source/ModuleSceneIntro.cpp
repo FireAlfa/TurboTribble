@@ -27,13 +27,10 @@ bool ModuleSceneIntro::Start()
 	app->camera->LookAt(vec3(0, 0, 0));
 	return ret;
 }
-// Update: draw background Plane
+// Update
 UpdateStatus ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
-
+	
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 // Unload Scene
@@ -42,4 +39,13 @@ bool ModuleSceneIntro::CleanUp()
 	TTLOG("Unloading Scene");
 
 	return true;
+}
+
+
+// Draw everything on screen, called by ModuleRenderer
+void ModuleSceneIntro::Draw()
+{
+	Plane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();
 }

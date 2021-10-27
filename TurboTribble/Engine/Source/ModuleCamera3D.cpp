@@ -28,6 +28,8 @@ bool ModuleCamera3D::Start()
 	TTLOG("Setting up the camera");
 	bool ret = true;
 
+	backgroundColor = colorBlack;
+
 	return ret;
 }
 // Camera that moves with keys and mouse

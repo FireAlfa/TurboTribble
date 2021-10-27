@@ -169,21 +169,21 @@ UpdateStatus ModuleEditor::Update(float dt)
 			ImGuiInputTextFlags textFlags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
 			char text[32];
 			// App name box
-			strcpy(text, appName);
+			strcpy_s(text, appName);
 			if (ImGui::InputText("App Name", text, IM_ARRAYSIZE(text), textFlags))
 			{
-				strcpy(appName, text);
+				strcpy_s(appName, text);
 				SDL_SetWindowTitle(app->window->window, appName);
 			}
 			// Organization name box
-			strcpy(text, orgName);
+			strcpy_s(text, orgName);
 			if (ImGui::InputText("Organization", text, IM_ARRAYSIZE(text), textFlags))
 			{
-				strcpy(orgName, text);
+				strcpy_s(orgName, text);
 			}
 
-			fps_log.push_back(ImGui::GetIO().Framerate);
-			ms_log.push_back(1000.0f / ImGui::GetIO().Framerate);
+			fpsLog.push_back(ImGui::GetIO().Framerate);
+			msLog.push_back(1000.0f / ImGui::GetIO().Framerate);
 			//mem_log.push_back(ImGui::GetIO().);
 			
 			// FPS Slider
@@ -191,12 +191,25 @@ UpdateStatus ModuleEditor::Update(float dt)
 			ImGui::Text("Limit Framerate");
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", app->maxFPS);
+
 			// FPS Histogram
-			sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			fpsLog.push_back(1 / dt);
+			sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
+			ImGui::PlotHistogram("##framerate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			if (fpsLog.size() > 70.0f)
+			{
+				fpsLog.erase(fpsLog.begin());
+			}
+
 			// MS Histogram
-			sprintf_s(title, 25, "Milliseconds %.1f", ms_log[ms_log.size() - 1]);
-			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			msLog.push_back(dt * 1000);
+			sprintf_s(title, 25, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
+			ImGui::PlotHistogram("##milliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+			if (msLog.size() > 70.0f)
+			{
+				msLog.erase(msLog.begin());
+			}
+
 			// Memory Consumption Histogram
 			// TODO
 			//sprintf_s(title, 25, "Memory Usage %.1f", mem_log[mem_log.size() - 1]);
@@ -243,7 +256,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		}
 		if (ImGui::CollapsingHeader("File System"))
 		{
-			if (ImGui::Checkbox("Active", &fileSysActive));
+			if (ImGui::Checkbox("Active", &fileSysActive)) {};
 
 			ImGui::Text("Base Path:");
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", SDL_GetBasePath());
@@ -255,7 +268,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
-			if (ImGui::Checkbox("Active", &inputActive));
+			if (ImGui::Checkbox("Active", &inputActive)) {};
 
 			ImGui::Text("Mouse Position:");
 			ImGui::SameLine();
@@ -272,7 +285,7 @@ UpdateStatus ModuleEditor::Update(float dt)
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
-			if (ImGui::Checkbox("Active:", &hardwareActive));
+			if (ImGui::Checkbox("Active:", &hardwareActive)) {};
 
 			SDL_version versionSDL;
 			SDL_GetVersion(&versionSDL);
@@ -334,13 +347,13 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM-UPC.");
 		ImGui::Separator();
 		ImGui::Text("3rd Party Libraries used:");
-		ImGui::BulletText("Compiled SDL %d\.%d\.%d", SDLCompiledVersion.major, SDLCompiledVersion.minor, SDLCompiledVersion.patch);
-		ImGui::BulletText("Linked SDL %d\.%d\.%d", SDLLinkedVersion.major, SDLLinkedVersion.minor, SDLLinkedVersion.patch);
+		ImGui::BulletText("Compiled SDL %d.%d.%d", SDLCompiledVersion.major, SDLCompiledVersion.minor, SDLCompiledVersion.patch);
+		ImGui::BulletText("Linked SDL %d.%d.%d", SDLLinkedVersion.major, SDLLinkedVersion.minor, SDLLinkedVersion.patch);
 		ImGui::BulletText("Glew %s", glewGetString(GLEW_VERSION));
 		ImGui::BulletText("ImGui %s", imGuiVersion);
 		ImGui::BulletText("MathGeoLib 1.5");
-		ImGui::BulletText("OpenGL %d\.%d", openGLMajorVersion, openGLMinorVersion);
-		ImGui::BulletText("Assimp %d\.%d\.%d", assimpVersion.major, assimpVersion.minor, assimpVersion.patch);
+		ImGui::BulletText("OpenGL %d.%d", openGLMajorVersion, openGLMinorVersion);
+		ImGui::BulletText("Assimp %d.%d.%d", assimpVersion.major, assimpVersion.minor, assimpVersion.patch);
 		ImGui::Separator();
 		ImGui::Text("License:");
 		ImGui::Text("MIT License");
@@ -374,11 +387,6 @@ UpdateStatus ModuleEditor::Update(float dt)
 // Render ImGui
 UpdateStatus ModuleEditor::PostUpdate(float dt)
 {
-	// ImGui Rendering
-	ImGui::Render();
-	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -391,4 +399,15 @@ bool ModuleEditor::CleanUp()
 	ImGui::DestroyContext();
 
 	return true;
+}
+
+
+// Draw everything on screen, called by ModuleRenderer
+void ModuleEditor::Draw()
+{
+	// ImGui Rendering
+	ImGui::Render();
+	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 }

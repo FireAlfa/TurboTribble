@@ -27,6 +27,10 @@ public:
 	// CleanUp Editor
 	bool CleanUp();
 
+
+	// Draw everything on screen, called by ModuleRenderer
+	void Draw();
+
 private:
 
 	// ----- Flags to show specific windows -----
@@ -67,9 +71,9 @@ private:
 	// ----- FPS/MS Graph -----
 	
 	char title[25];
-	std::vector<float> fps_log;
-	std::vector<float> ms_log;
-	std::vector<float> mem_log;
+	std::vector<float> fpsLog;
+	std::vector<float> msLog;
+	std::vector<float> memLog;
 	// ------------------------
 };
 #endif // !__MODULE_EDITOR_H__

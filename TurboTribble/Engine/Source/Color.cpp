@@ -1,7 +1,7 @@
 #include "Color.h"
 
-Color Red = Color(1.0f, 0.0f, 0.0f);
-Color Green = Color(0.0f, 1.0f, 0.0f);
-Color Blue = Color(0.0f, 0.0f, 1.0f);
-Color Black = Color(0.0f, 0.0f, 0.0f);
-Color White = Color(1.0f, 1.0f, 1.0f);
+Color colorRed = Color(1.0f, 0.0f, 0.0f);
+Color colorGreen = Color(0.0f, 1.0f, 0.0f);
+Color colorBlue = Color(0.0f, 0.0f, 1.0f);
+Color colorBlack = Color(0.0f, 0.0f, 0.0f);
+Color colorWhite = Color(1.0f, 1.0f, 1.0f);

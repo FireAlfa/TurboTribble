@@ -25,10 +25,10 @@ struct Color
 	}
 };
 
-extern Color Red;
-extern Color Green;
-extern Color Blue;
-extern Color Black;
-extern Color White;
+extern Color colorRed;
+extern Color colorGreen;
+extern Color colorBlue;
+extern Color colorBlack;
+extern Color colorWhite;
 
 #endif // !__COLOR_H__

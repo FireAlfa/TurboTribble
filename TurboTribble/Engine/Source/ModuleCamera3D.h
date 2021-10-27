@@ -4,6 +4,7 @@
 #include "Module.h"
 
 #include "glmath.h"
+#include "Color.h"
 
 
 
@@ -43,6 +44,7 @@ public:
 
 	// Camera public variables
 	vec3 x, y, z, position, reference;
+	Color backgroundColor = colorBlack;
 
 private:
 

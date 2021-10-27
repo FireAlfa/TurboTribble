@@ -53,6 +53,11 @@ public:
 	{
 		return true;
 	}
+
+	virtual void Draw()
+	{
+
+	}
 };
 
 #endif // !__MODULE_H__

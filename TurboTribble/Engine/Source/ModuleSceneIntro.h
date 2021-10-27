@@ -16,10 +16,14 @@ public:
 
 	// Load Scene
 	bool Start();
-	// Update: draw background Plane
+	// Update
 	UpdateStatus Update(float dt);
 	// Unload Scene
 	bool CleanUp();
+
+
+	// Draw everything on screen, called by ModuleRenderer
+	void Draw();
 };
 
 #endif // !__MODULE_SCENE_INTRO_H__

@@ -8,7 +8,7 @@
 
 
 // ------------------------------------------------------------
-Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::PRIMITIVE_POINT)
+Primitive::Primitive() : transform(IdentityMatrix), color(colorWhite), wire(false), axis(false), type(PrimitiveTypes::PRIMITIVE_POINT)
 {}
 
 // ------------------------------------------------------------
