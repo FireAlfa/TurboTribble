@@ -330,14 +330,17 @@
     <ClInclude Include="Source\External\Assimp\include\ZipArchiveIOSystem.h">
       <Filter>Sources\Assimp</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Sources\GameObjects\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ModuleMeshLoader.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mesh.h">
       <Filter>Sources\GameObjects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Sources\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>Sources\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -404,14 +407,14 @@
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp">
       <Filter>Sources\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject.cpp">
-      <Filter>Sources\GameObjects\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Sources\GameObjects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModuleMeshLoader.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Sources\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

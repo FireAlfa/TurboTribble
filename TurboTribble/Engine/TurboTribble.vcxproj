@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Color.h" />
+    <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\External\Assimp\include\aabb.h" />
     <ClInclude Include="Source\External\Assimp\include\ai_assert.h" />
     <ClInclude Include="Source\External\Assimp\include\anim.h" />
