@@ -17,6 +17,7 @@ class ModuleSceneIntro;
 class ModuleRenderer3D;
 class ModuleCamera3D;
 class ModuleEditor;
+class ModuleMeshLoader;
 
 class Application
 {
@@ -30,6 +31,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
+	ModuleMeshLoader* loader;
 	// -------------------
 
 	// Modules vector

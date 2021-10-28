@@ -7,6 +7,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
+#include "ModuleMeshLoader.h"
 
 
 
@@ -20,6 +21,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
+	loader = new ModuleMeshLoader(this);
 
 	// The order in which we do AddModule is very important!
 	// Modules will Init() Start() and Update() in this order
@@ -29,6 +31,8 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	
+	AddModule(loader);
 	
 	// Scenes
 	AddModule(scene_intro);

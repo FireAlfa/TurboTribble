@@ -50,13 +50,13 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\assimp\include;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\GLEW\include;$(ProjectDir)Source\External\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\GLEW\include;$(ProjectDir)Source\External\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\assimp\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86;$(ProjectDir)Source\External\GLEW\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86;$(ProjectDir)Source\External\GLEW\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;assimp-vc142-mt.lib;MathGeoLib.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -79,8 +79,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\External\Assimp\include\aabb.h" />
@@ -166,13 +164,16 @@
     <ClInclude Include="Source\External\ImGui\imstb_textedit.h" />
     <ClInclude Include="Source\External\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\External\JSON Parser\json.hpp" />
+    <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Light.h" />
+    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\ModuleCamera3D.h" />
     <ClInclude Include="Source\ModuleEditor.h" />
     <ClInclude Include="Source\ModuleInput.h" />
+    <ClInclude Include="Source\ModuleMeshLoader.h" />
     <ClInclude Include="Source\ModuleRenderer3D.h" />
     <ClInclude Include="Source\ModuleSceneIntro.h" />
     <ClInclude Include="Source\ModuleWindow.h" />
@@ -180,8 +181,6 @@
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui.cpp" />
@@ -191,13 +190,16 @@
     <ClCompile Include="Source\External\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source\External\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\ModuleCamera3D.cpp" />
     <ClCompile Include="Source\ModuleEditor.cpp" />
     <ClCompile Include="Source\ModuleInput.cpp" />
+    <ClCompile Include="Source\ModuleMeshLoader.cpp" />
     <ClCompile Include="Source\ModuleRenderer3D.cpp" />
     <ClCompile Include="Source\ModuleSceneIntro.cpp" />
     <ClCompile Include="Source\ModuleWindow.cpp" />

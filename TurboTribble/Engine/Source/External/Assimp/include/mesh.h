@@ -48,8 +48,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef AI_MESH_H_INC
 #define AI_MESH_H_INC
 
-#include <assimp/types.h>
-#include <assimp/aabb.h>
+#include <Assimp/include/types.h>
+#include <Assimp/include/aabb.h>
 
 #ifdef __cplusplus
 extern "C" {
