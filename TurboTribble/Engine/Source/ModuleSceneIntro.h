@@ -2,7 +2,7 @@
 #define __MODULE_SCENE_INTRO_H__
 
 #include "Module.h"
-
+#include "GameObject.h"
 
 
 class ModuleSceneIntro : public Module
@@ -24,6 +24,8 @@ public:
 
 	// Draw everything on screen, called by ModuleRenderer
 	void Draw();
+
+	GameObject* root;
 };
 
 #endif // !__MODULE_SCENE_INTRO_H__

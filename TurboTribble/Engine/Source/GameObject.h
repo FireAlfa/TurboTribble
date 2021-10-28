@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 class GameObject
 {
 public:
@@ -18,6 +20,9 @@ public:
 
 private:
 	bool active = true;
-	std::string name;
-	std::vector <Component> components;
+	string name;
+	vector <Component> components;
+
+	GameObject* parent;
+	vector <GameObject*> children;
 };
