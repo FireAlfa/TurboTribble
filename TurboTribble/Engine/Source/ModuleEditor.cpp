@@ -193,7 +193,6 @@ UpdateStatus ModuleEditor::Update(float dt)
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", app->maxFPS);
 
 			// FPS Histogram
-			fpsLog.push_back(1 / dt);
 			sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
 			ImGui::PlotHistogram("##framerate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			if (fpsLog.size() > 70.0f)
@@ -202,7 +201,6 @@ UpdateStatus ModuleEditor::Update(float dt)
 			}
 
 			// MS Histogram
-			msLog.push_back(dt * 1000);
 			sprintf_s(title, 25, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
 			ImGui::PlotHistogram("##milliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 			if (msLog.size() > 70.0f)
