@@ -33,6 +33,14 @@ public:
 
 private:
 
+	void CheckKeyboardInputs();
+	UpdateStatus MenuBar();
+	void ConsoleWindow();
+	void ConfigurationWindow();
+	void AboutWindow();
+
+private:
+
 	// ----- Flags to show specific windows -----
 
 	bool showDemo;
