@@ -4,7 +4,7 @@
 
 class GameObject;
 
-enum Type
+enum class CompType
 {
 	TRANSFORM,
 	MESH,
@@ -25,9 +25,9 @@ public:
 
 	virtual bool GetOwner() { return owner; }
 
-private:
+protected:
 
-	Type type;
+	CompType type;
 	bool active;
 	GameObject* owner;
 };

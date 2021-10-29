@@ -14,14 +14,14 @@ void GameObject::Update()
 {
 }
 
-Component* AddComponent(Type type)
+Component* AddComponent(CompType type)
 {
 	Component* ret = nullptr;
 
 	return ret;
 }
 
-Component* GetComponent(Type type)
+Component* GetComponent(CompType type)
 {
 	Component* ret = nullptr;
 

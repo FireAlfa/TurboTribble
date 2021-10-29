@@ -13,8 +13,8 @@ public:
 	GameObject(char* name);
 	~GameObject();
 
-	Component* AddComponent(Type type);
-	Component* GetComponent(Type type);
+	Component* AddComponent(CompType type);
+	Component* GetComponent(CompType type);
 
 	void Update();
 
