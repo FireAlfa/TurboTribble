@@ -20,7 +20,7 @@ ModuleMeshLoader::~ModuleMeshLoader()
 bool ModuleMeshLoader::Init()
 {
 	bool ret = true;
-	TTLOG("Creating Mesh Loader context");
+	TTLOG("+++++ Init Module MeshLoader +++++");
 
 	// Stream log messages to Debug window
 	struct aiLogStream stream;
@@ -46,7 +46,7 @@ UpdateStatus ModuleMeshLoader::PostUpdate(float dt)
 // Called before quitting
 bool ModuleMeshLoader::CleanUp()
 {
-	TTLOG("Destroying Mesh Loader");
+	TTLOG("+++++ Quitting Module MeshLoader +++++");
 
 	// Detach log stream
 	aiDetachAllLogStreams();

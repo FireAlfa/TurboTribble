@@ -8,6 +8,7 @@
 #include <vector>
 
 
+extern std::vector<std::string> consoleLogs;
 
 class ModuleEditor : public Module
 {
@@ -30,6 +31,8 @@ public:
 
 	// Draw everything on screen, called by ModuleRenderer
 	void Draw();
+
+	void LogConsoleWindow(std::string string);
 
 private:
 
@@ -84,5 +87,6 @@ private:
 	std::vector<float> msLog;
 	std::vector<float> memLog;
 	// ------------------------
+
 };
 #endif // !__MODULE_EDITOR_H__

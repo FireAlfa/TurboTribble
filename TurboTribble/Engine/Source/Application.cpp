@@ -66,7 +66,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	TTLOG("Application Start --------------");
+	TTLOG("++++++++ Application Start ++++++++");
 	for (unsigned int i = 0; i < modulesList.size() && ret == true; ++i)
 	{
 		ret = modulesList[i]->Start();

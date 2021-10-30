@@ -25,7 +25,7 @@ ModuleCamera3D::~ModuleCamera3D()
 // Start
 bool ModuleCamera3D::Start()
 {
-	TTLOG("Setting up the camera");
+	TTLOG("+++++ Setting up the camera +++++");
 	bool ret = true;
 
 	backgroundColor = colorBlack;
@@ -104,7 +104,7 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 // CleanUp
 bool ModuleCamera3D::CleanUp()
 {
-	TTLOG("Cleaning camera");
+	TTLOG("+++++ Cleaning camera +++++");
 
 	return true;
 }

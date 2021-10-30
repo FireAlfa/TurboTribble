@@ -257,7 +257,10 @@ UpdateStatus ModuleEditor::MenuBar()
 void ModuleEditor::ConsoleWindow()
 {
 	ImGui::Begin("Console", &showConsole);
-	ImGui::Text("This is the console");
+	for (int i = 0; i < consoleLogs.size(); i++)
+	{
+		ImGui::Text("%s", consoleLogs.at(i).c_str());
+	}
 	ImGui::End();
 }
 
@@ -490,4 +493,10 @@ void ModuleEditor::AboutWindow()
 		"SOFTWARE.");
 
 	ImGui::End();
+}
+
+
+void ModuleEditor::LogConsoleWindow(std::string string)
+{
+	consoleLogs.push_back(string);
 }

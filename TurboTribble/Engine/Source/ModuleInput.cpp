@@ -24,13 +24,13 @@ ModuleInput::~ModuleInput()
 // Initialize the input events subsystem
 bool ModuleInput::Init()
 {
-	TTLOG("Init SDL input event system");
+	TTLOG("+++++ Init Module Input +++++");
 	bool ret = true;
 	SDL_Init(0);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-		TTLOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		TTLOG("##### SDL_EVENTS could not initialize! SDL_Error: %s #####\n", SDL_GetError());
 		ret = false;
 	}
 
@@ -127,7 +127,7 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
-	TTLOG("Quitting SDL input event subsystem");
+	TTLOG("+++++ Quitting Module Input +++++");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

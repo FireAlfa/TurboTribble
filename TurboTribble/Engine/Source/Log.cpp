@@ -2,6 +2,9 @@
 #define __LOG_CPP__
 
 #include "Globals.h"
+#include "ModuleEditor.h"
+
+std::vector<std::string> consoleLogs;
 
 // Log a string to the console
 void Log(const char file[], int line, const char* format, ...)
@@ -16,6 +19,7 @@ void Log(const char file[], int line, const char* format, ...)
 	va_end(ap);
 	sprintf_s(tmpString2, 4096, "\n%s(%d) : %s", file, line, tmpString);
 	OutputDebugString(tmpString2);
+	consoleLogs.push_back(tmpString);
 }
 
 #endif // !__LOG_CPP__
