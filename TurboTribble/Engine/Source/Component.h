@@ -20,7 +20,7 @@ public:
 	virtual void Enable() { active = true; }
 	virtual void Disable() { active = false; }
 
-	virtual void Update(float dt);
+	virtual void Update(float dt) {}
 
 	virtual bool IsEnabled() { return active; }
 

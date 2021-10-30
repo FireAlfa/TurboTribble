@@ -51,6 +51,7 @@ bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const string& filePat
 	for (unsigned int i = 0; i < mMeshes.size(); i++) {
 		const aiMesh* aiMesh = scene->mMeshes[i];
 		//InitSingleMesh(i, aiMesh);
+	}
 }
 
 // Called before quitting
