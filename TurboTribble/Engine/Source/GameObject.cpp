@@ -1,8 +1,11 @@
 #include "GameObject.h"
 
+#include <string>
+
 // Constructor
-GameObject::GameObject(char* name)
+GameObject::GameObject(string* name)
 {
+	//name = new string(this);
 }
 
 // Destructor
@@ -14,7 +17,7 @@ void GameObject::Update()
 {
 }
 
-Component* AddComponent(CompType type)
+Component* CreateComponent(CompType type)
 {
 	Component* ret = nullptr;
 

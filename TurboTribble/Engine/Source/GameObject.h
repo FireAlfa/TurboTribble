@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __GAMEOBJECT_H__
+#define __GAMEOBJECT_H__
 
 #include "Component.h"
 
@@ -10,10 +11,10 @@ using namespace std;
 class GameObject
 {
 public:
-	GameObject(char* name);
+	GameObject(string* name);
 	~GameObject();
 
-	Component* AddComponent(CompType type);
+	Component* CreateComponent(CompType type);
 	Component* GetComponent(CompType type);
 
 	void Update();
@@ -21,8 +22,10 @@ public:
 private:
 	bool active = true;
 	string name;
-	vector <Component> components;
 
+	vector<Component> components;
 	GameObject* parent;
-	vector <GameObject*> children;
+	vector<GameObject*> children;
 };
+
+#endif // !__GAMEOBJECT_H__

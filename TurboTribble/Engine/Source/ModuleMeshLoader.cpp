@@ -1,12 +1,7 @@
-#include "Application.h"
 #include "ModuleMeshLoader.h"
 
-#include "Assimp/include/cimport.h"
-#include "Assimp/include/scene.h"
-#include "Assimp/include/postprocess.h"
-
 // Constructor
-ModuleMeshLoader::ModuleMeshLoader(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleMeshLoader::ModuleMeshLoader(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
 
 }
@@ -30,17 +25,32 @@ bool ModuleMeshLoader::Init()
 	return ret;
 }
 
-// PreUpdate: clear buffer
-UpdateStatus ModuleMeshLoader::PreUpdate(float dt)
-{
+bool ModuleMeshLoader::LoadMesh(const std::string& filePath)
+{	
+	bool ret = false;
 
-	return UpdateStatus::UPDATE_CONTINUE;
+	Assimp::Importer Importer;
+
+	const aiScene* scene = Importer.ReadFile(filePath.c_str(), ASSIMP_LOAD_FLAGS);
+	if (scene)
+	{
+		// Use scene->mNumMeshes to iterate on scene->mMeshes array
+		aiReleaseImport(scene);
+	}
+	else
+		TTLOG("Error loading scene '%s' : '%s' \n ", filePath.c_str(), Importer.GetErrorString());
+
+	return ret;
 }
 
-// PostUpdate present buffer to screen
-UpdateStatus ModuleMeshLoader::PostUpdate(float dt)
+bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const string& filePath)
 {
-	return UpdateStatus::UPDATE_CONTINUE;
+	mMeshes.resize(scene->mNumMeshes);
+
+	// Initialize the meshes in the scene one by one
+	for (unsigned int i = 0; i < mMeshes.size(); i++) {
+		const aiMesh* aiMesh = scene->mMeshes[i];
+		//InitSingleMesh(i, aiMesh);
 }
 
 // Called before quitting
