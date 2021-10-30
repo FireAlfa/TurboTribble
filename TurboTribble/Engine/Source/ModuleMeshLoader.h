@@ -27,7 +27,7 @@ public:
 	// Loads a Mesh by the filePath
 	bool LoadMesh(const std::string& filePath);
 
-	bool InitFromScene(const aiScene* scene, const string& filePath);
+	bool InitFromScene(const aiScene* scene, const std::string& filePath);
 
 	
 

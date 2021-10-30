@@ -3,7 +3,7 @@
 #include <string>
 
 // Constructor
-GameObject::GameObject(string* name)
+GameObject::GameObject(std::string* name)
 {
 	//name = new string(this);
 }

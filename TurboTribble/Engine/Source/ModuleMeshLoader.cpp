@@ -43,7 +43,7 @@ bool ModuleMeshLoader::LoadMesh(const std::string& filePath)
 	return ret;
 }
 
-bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const string& filePath)
+bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const std::string& filePath)
 {
 	mMeshes.resize(scene->mNumMeshes);
 
@@ -52,6 +52,8 @@ bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const string& filePat
 		const aiMesh* aiMesh = scene->mMeshes[i];
 		//InitSingleMesh(i, aiMesh);
 	}
+
+	return true;
 }
 
 // Called before quitting

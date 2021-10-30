@@ -12,7 +12,7 @@ class Mesh : Component
 {
 public:
 	Mesh() { Mesh::type = CompType::MESH; }
-	~Mesh();
+	~Mesh() {}
 
 
 

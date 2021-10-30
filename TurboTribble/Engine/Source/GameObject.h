@@ -6,12 +6,12 @@
 #include <vector>
 #include <string>
 
-using namespace std;
+//using namespace std;
 
 class GameObject
 {
 public:
-	GameObject(string* name);
+	GameObject(std::string* name);
 	~GameObject();
 
 	Component* CreateComponent(CompType type);
@@ -21,11 +21,11 @@ public:
 
 private:
 	bool active = true;
-	string name;
+	std::string name;
 
-	vector<Component> components;
+	std::vector<Component> components;
 	GameObject* parent;
-	vector<GameObject*> children;
+	std::vector<GameObject*> children;
 };
 
 #endif // !__GAMEOBJECT_H__
