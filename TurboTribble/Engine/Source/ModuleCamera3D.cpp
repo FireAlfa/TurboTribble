@@ -39,26 +39,44 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 
 	vec3 newPos(0, 0, 0);
 	float speed = 5.0f * dt;
+
+	// Hold shift to move faster
 	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
-		speed = 8.0f * dt;
+		speed = 12.0f * dt;
 
-	if (app->input->GetKey(SDL_SCANCODE_R) == KeyState::KEY_REPEAT) newPos.y += speed;
-	if (app->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_REPEAT) newPos.y -= speed;
+	// Arrow Movement
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KeyState::KEY_REPEAT) newPos -= z * speed;
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KeyState::KEY_REPEAT) newPos += z * speed;
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_REPEAT) newPos -= x * speed;
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_REPEAT) newPos += x * speed;
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT) newPos -= z * speed;
-	if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT) newPos += z * speed;
+	// Flythrough mode
+	if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KeyState::KEY_REPEAT)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT) newPos -= z * speed;
+		if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT) newPos += z * speed;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT) newPos -= x * speed;
+		if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) newPos += x * speed;
 
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT) newPos -= x * speed;
-	if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) newPos += x * speed;
-
-	position += newPos;
-	reference += newPos;
+		if (app->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT) newPos.y += speed;
+		if (app->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_REPEAT) newPos.y -= speed;
+	}
 	// ----------------------------------
 
 
 	// -----  Mouse Camera Control -----
 
+	// Zoom in and out using Scrool Wheel
+	if (app->input->GetMouseZ() < 0)
+	{
+		newPos += z * speed * 4;
+	}
+	if (app->input->GetMouseZ() > 0)
+	{
+		newPos -= z * speed * 4;
+	}
+
+	// Look around the camera position holding Right Click
 	if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KeyState::KEY_REPEAT)
 	{
 		int dx = -app->input->GetMouseXMotion();
@@ -96,6 +114,10 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	// ---------------------------------
 
 
+
+	// Update position
+	position += newPos;
+	reference += newPos;
 	// Recalculate matrix after calculations
 	CalculateViewMatrix();
 
@@ -155,7 +177,6 @@ float* ModuleCamera3D::GetViewMatrix()
 {
 	return &viewMatrix;
 }
-
 // Calculate View Matrix
 void ModuleCamera3D::CalculateViewMatrix()
 {
