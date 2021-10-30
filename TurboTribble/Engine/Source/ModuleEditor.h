@@ -55,6 +55,7 @@ private:
 	bool fileSysActive;
 	bool inputActive;
 	bool hardwareActive;
+	bool openOptions = true;
 	// ------------------------------------------
 
 

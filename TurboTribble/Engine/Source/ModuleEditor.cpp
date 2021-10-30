@@ -3,6 +3,7 @@
 
 #include "glew.h"
 #include "imgui/imgui.h"
+#include "ImGui/imgui_internal.h"
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "SDL/include/SDL_opengl.h"
@@ -196,6 +197,29 @@ UpdateStatus ModuleEditor::MenuBar()
 			}
 			ImGui::EndMenu();
 		}
+		// Menu Bar GameObject Tab
+		if (ImGui::BeginMenu("GameObject"))
+		{
+			if (ImGui::BeginMenu("3D Objects"))
+			{
+				// Primitives menu
+				if (ImGui::MenuItem("Cube"))
+				{
+					// TODO
+				}
+				if (ImGui::MenuItem("Sphere"))
+				{
+					// TODO
+				}
+				if (ImGui::MenuItem("Cylinder"))
+				{
+					// TODO
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenu();
+		}
+
 		// Menu Bar Window Tab
 		if (ImGui::BeginMenu("Window"))
 		{
@@ -241,14 +265,19 @@ void ModuleEditor::ConsoleWindow()
 void ModuleEditor::ConfigurationWindow()
 {
 	ImGui::Begin("Configuration", &showConfig);
+
 	if (ImGui::BeginMenu("Options"))
 	{
+
 		ImGui::MenuItem("Set Defaults");
 		ImGui::MenuItem("Load");
 		ImGui::MenuItem("Save");
 
 		ImGui::EndMenu();
+
 	}
+
+	
 	if (ImGui::CollapsingHeader("Application"))
 	{
 		// Select all text when you enter the box and only modify it when Enter is pressed
@@ -280,7 +309,7 @@ void ModuleEditor::ConfigurationWindow()
 
 		// FPS Histogram
 		sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+		ImGui::PlotHistogram("##framerate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 170.0f, ImVec2(310, 100));
 		if (fpsLog.size() > 70.0f)
 		{
 			fpsLog.erase(fpsLog.begin());
