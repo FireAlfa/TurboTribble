@@ -1,9 +1,7 @@
-#pragma once
+#ifndef __CMESH_H__
+#define __CMESH_H__
 
 #include "Component.h"
-
-#include "MathGeoLib/include/Geometry/AABB.h"
-#include "MathGeoLib/include/Geometry/OBB.h"
 
 #include <vector>
 typedef unsigned int uint;
@@ -12,17 +10,17 @@ class Mesh : Component
 {
 public:
 	Mesh() { Mesh::type = CompType::MESH; }
-	~Mesh();
+	~Mesh() {}
 
 
 
 
 public:
-	uint id_index = 0; // index in VRAM
-	uint num_index = 0;
-	uint* index = nullptr;
-	uint id_vertex = 0; // unique vertex in VRAM
-	uint num_vertex = 0;
-	float* vertex = nullptr;
 
+
+	unsigned int numIndices;
+	unsigned int baseVertex;
+	unsigned int baseIndex;
+	unsigned int materialIndex;
 };
+#endif // !__CMESH_H__

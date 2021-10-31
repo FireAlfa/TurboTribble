@@ -26,7 +26,7 @@ void GameObject::Update()
 {
 }
 
-Component* AddComponent(CompType type)
+Component* CreateComponent(CompType type)
 {
 	Component* ret = nullptr;
 

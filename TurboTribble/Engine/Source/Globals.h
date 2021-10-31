@@ -48,4 +48,7 @@ enum class UpdateStatus
 #define MAX_FPS 144
 #define TITLE "TurboTribble"
 
+// Assimp macro
+#define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices)
+
 #endif // !__GLOBALS_H__

@@ -4,6 +4,8 @@
 #include "Primitive.h"
 #include "ModuleCamera3D.h"
 #include "GameObject.h"
+#include "ModuleInput.h"
+#include "ModuleMeshLoader.h"
 
 
 
@@ -33,12 +35,14 @@ bool ModuleSceneIntro::Start()
 		TTLOG("Root Node GameObject created successfully.");
 	}
 
+
+	app->loader->LoadMesh("Assets/BakerHouse.fbx");
 	return ret;
 }
 // Update
 UpdateStatus ModuleSceneIntro::Update(float dt)
 {
-	
+
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 // Unload Scene

@@ -24,7 +24,6 @@ public:
 	// Unload Scene
 	bool CleanUp();
 
-
 	// Draw everything on screen, called by ModuleRenderer
 	void Draw();
 
