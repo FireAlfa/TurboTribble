@@ -99,7 +99,7 @@ void ModuleMeshLoader::InitSingleMesh(unsigned int index, const aiMesh* aiMesh)
 	for (uint i = 0; i < aiMesh->mNumFaces; i++)
 	{
 		const aiFace& face = aiMesh->mFaces[i];
-		assert(face.mNumIndices == 3);
+		//assert(face.mNumIndices == 3);
 		mIndices.push_back(face.mIndices[0]);
 		mIndices.push_back(face.mIndices[1]);
 		mIndices.push_back(face.mIndices[2]);

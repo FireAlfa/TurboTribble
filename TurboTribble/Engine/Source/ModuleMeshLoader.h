@@ -7,12 +7,23 @@
 
 #include "CMesh.h"
 
+#include "glew.h"
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/Importer.hpp"
 #include "glmath.h"
-#include "glew.h"
+
+
+
+enum BufferType
+{
+	INDEX_BUFF = 0,
+	VRTX_BUFF = 1,
+	TEXCOORD_BUFF = 2,
+	NORMAL_BUFF = 3,
+};
+
 
 class ModuleMeshLoader : public Module
 {
@@ -56,14 +67,5 @@ public:
 	float* vertex = nullptr;
 
 	GLuint mBuffers[4]{ 0 };
-};
-
-
-enum BufferType
-{
-	INDEX_BUFF = 0,
-	VRTX_BUFF = 1,
-	TEXCOORD_BUFF = 2,
-	NORMAL_BUFF = 3,
 };
 #endif // !__MODULE_MESH_LOADER_H__

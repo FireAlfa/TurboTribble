@@ -2,8 +2,8 @@
 
 #include "Component.h"
 
-#include "MathGeoLib/include/Geometry/AABB.h"
-#include "MathGeoLib/include/Geometry/OBB.h"
+//#include "MathGeoLib/include/Geometry/AABB.h"
+//#include "MathGeoLib/include/Geometry/OBB.h"
 
 #include <vector>
 typedef unsigned int uint;
