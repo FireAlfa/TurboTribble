@@ -31,9 +31,9 @@ bool ModuleMeshLoader::LoadMesh(const char* filePath)
 
 	Assimp::Importer Importer;
 
-	//const aiScene* scene = Importer.ReadFile(filePath.c_str(), ASSIMP_LOAD_FLAGS);
+	//const aiScene* scene = Importer.ReadFile(filePath, ASSIMP_LOAD_FLAGS);
 	const aiScene* scene = aiImportFile(filePath, aiProcessPreset_TargetRealtime_MaxQuality);
-	if (scene)
+	if (scene != nullptr)
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		aiReleaseImport(scene);

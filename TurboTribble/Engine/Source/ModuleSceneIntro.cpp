@@ -36,7 +36,7 @@ bool ModuleSceneIntro::Start()
 	}
 
 
-	app->loader->LoadMesh("Assets/BakerHouse.fbx");
+	app->loader->LoadMesh("../Output/Assets/BakerHouse.fbx");
 	return ret;
 }
 // Update
