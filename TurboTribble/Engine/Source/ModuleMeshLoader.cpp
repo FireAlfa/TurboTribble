@@ -29,17 +29,16 @@ bool ModuleMeshLoader::LoadMesh(const char* filePath)
 {	
 	bool ret = false;
 
-	Assimp::Importer Importer;
 
-	//const aiScene* scene = Importer.ReadFile(filePath, ASSIMP_LOAD_FLAGS);
 	const aiScene* scene = aiImportFile(filePath, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr)
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		aiReleaseImport(scene);
+		TTLOG("Mesh with path %s loaded successfully.", filePath);
 	}
 	else
-		TTLOG("Error loading scene '%s' : '%s' \n ", filePath, Importer.GetErrorString());
+		TTLOG("Error loading scene '%s' : '%s' \n ", filePath);
 
 	return ret;
 }
