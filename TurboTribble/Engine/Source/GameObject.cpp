@@ -3,9 +3,9 @@
 #include <string>
 
 // Constructor
-GameObject::GameObject(std::string* name)
+GameObject::GameObject(const char* name)
 {
-	//name = new string(this);
+	//name = new const char*(this);
 }
 
 // Destructor

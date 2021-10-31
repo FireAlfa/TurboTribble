@@ -3,6 +3,8 @@
 
 #include "Primitive.h"
 #include "ModuleCamera3D.h"
+#include "ModuleInput.h"
+#include "ModuleMeshLoader.h"
 
 
 
@@ -25,12 +27,14 @@ bool ModuleSceneIntro::Start()
 	// Set the initial camera position
 	app->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	app->camera->LookAt(vec3(0, 0, 0));
+
+	app->loader->LoadMesh("Assets/BakerHouse.fbx");
 	return ret;
 }
 // Update
 UpdateStatus ModuleSceneIntro::Update(float dt)
 {
-	
+
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 // Unload Scene
@@ -48,4 +52,12 @@ void ModuleSceneIntro::Draw()
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+}
+
+GameObject* CreateGameObject(const char* name)
+{
+
+	GameObject* gameObject = new GameObject(name);
+	
+	return gameObject;
 }

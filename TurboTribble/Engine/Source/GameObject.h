@@ -11,7 +11,7 @@
 class GameObject
 {
 public:
-	GameObject(std::string* name);
+	GameObject(const char* name);
 	~GameObject();
 
 	Component* CreateComponent(CompType type);

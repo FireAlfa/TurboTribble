@@ -25,25 +25,26 @@ bool ModuleMeshLoader::Init()
 	return ret;
 }
 
-bool ModuleMeshLoader::LoadMesh(const std::string& filePath)
+bool ModuleMeshLoader::LoadMesh(const char* filePath)
 {	
 	bool ret = false;
 
 	Assimp::Importer Importer;
 
-	const aiScene* scene = Importer.ReadFile(filePath.c_str(), ASSIMP_LOAD_FLAGS);
+	//const aiScene* scene = Importer.ReadFile(filePath.c_str(), ASSIMP_LOAD_FLAGS);
+	const aiScene* scene = aiImportFile(filePath, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene)
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		aiReleaseImport(scene);
 	}
 	else
-		TTLOG("Error loading scene '%s' : '%s' \n ", filePath.c_str(), Importer.GetErrorString());
+		TTLOG("Error loading scene '%s' : '%s' \n ", filePath, Importer.GetErrorString());
 
 	return ret;
 }
 
-bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const std::string& filePath)
+bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const char* filePath)
 {
 	mMeshes.resize(scene->mNumMeshes);
 

@@ -1,9 +1,7 @@
-#pragma once
+#ifndef __CMESH_H__
+#define __CMESH_H__
 
 #include "Component.h"
-
-//#include "MathGeoLib/include/Geometry/AABB.h"
-//#include "MathGeoLib/include/Geometry/OBB.h"
 
 #include <vector>
 typedef unsigned int uint;
@@ -25,3 +23,4 @@ public:
 	unsigned int baseIndex;
 	unsigned int materialIndex;
 };
+#endif // !__CMESH_H__

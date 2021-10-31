@@ -21,9 +21,11 @@ public:
 	// Unload Scene
 	bool CleanUp();
 
-
 	// Draw everything on screen, called by ModuleRenderer
 	void Draw();
+
+	// Game Object creator
+	GameObject* CreateGameObject(const char* name);
 
 	GameObject* root;
 };
