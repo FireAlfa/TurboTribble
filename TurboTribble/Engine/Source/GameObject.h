@@ -1,28 +1,44 @@
-#pragma once
+#ifndef __GAMEOBJECT_H__
+#define __GAMEOBJECT_H__
 
 #include "Component.h"
 
 #include <vector>
 #include <string>
 
-using namespace std;
+
 
 class GameObject
 {
 public:
-	GameObject(char* name);
+
+	GameObject(const char* name, GameObject* parent);
 	~GameObject();
+
+	void Update();
 
 	Component* AddComponent(CompType type);
 	Component* GetComponent(CompType type);
 
-	void Update();
-
 private:
-	bool active = true;
-	string name;
-	vector <Component> components;
 
-	GameObject* parent;
-	vector <GameObject*> children;
+	// ----- GameObject's Variables -----
+
+	std::string name;
+	GameObject* parent = nullptr;
+	bool active = true;
+	// --------------------------------
+
+	// ----- GameObject's Components -----
+
+	std::vector<Component> components;
+	// -----------------------------------
+
+	// ----- GameObject's Children -----
+
+	std::vector<GameObject*> children;
+	// -----------------------------------
+
 };
+
+#endif // !__GAMEOBJECT_H__

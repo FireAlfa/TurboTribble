@@ -1,8 +1,20 @@
 #include "GameObject.h"
 
+#include "Globals.h"
+
+
 // Constructor
-GameObject::GameObject(char* name)
+GameObject::GameObject(const char* name, GameObject* parent)
 {
+	this->name = name;
+	this->parent = parent;
+	if (this->parent != nullptr)
+	{
+		parent->children.push_back(this);
+		TTLOG("GameObject %s created successfully. Child of %s", name, parent->name.c_str());
+	}
+
+	// TODO Apply transform
 }
 
 // Destructor

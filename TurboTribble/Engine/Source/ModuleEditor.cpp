@@ -46,7 +46,7 @@ ModuleEditor::~ModuleEditor()
 // Load the Editor and create ImGui Context
 bool ModuleEditor::Start()
 {
-	TTLOG("### Loading Editor ###");
+	TTLOG("+++++ Loading Editor +++++");
 	bool ret = true;
 
 	// Setup Dear ImGui context

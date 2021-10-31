@@ -3,6 +3,7 @@
 
 #include "Primitive.h"
 #include "ModuleCamera3D.h"
+#include "GameObject.h"
 
 
 
@@ -25,6 +26,13 @@ bool ModuleSceneIntro::Start()
 	// Set the initial camera position
 	app->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	app->camera->LookAt(vec3(0, 0, 0));
+
+	root = CreateGameObject("Root Node", nullptr);
+	if (root != nullptr)
+	{
+		TTLOG("Root Node GameObject created successfully.");
+	}
+
 	return ret;
 }
 // Update
@@ -48,4 +56,9 @@ void ModuleSceneIntro::Draw()
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+}
+
+GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent)
+{
+	return new GameObject(name, parent);
 }

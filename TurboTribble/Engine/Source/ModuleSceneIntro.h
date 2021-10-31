@@ -2,8 +2,11 @@
 #define __MODULE_SCENE_INTRO_H__
 
 #include "Module.h"
-#include "GameObject.h"
+#include <vector>
 
+
+
+class GameObject;
 
 class ModuleSceneIntro : public Module
 {
@@ -25,7 +28,12 @@ public:
 	// Draw everything on screen, called by ModuleRenderer
 	void Draw();
 
-	GameObject* root;
+	GameObject* CreateGameObject(const char* name, GameObject* parent);
+
+private:
+
+	std::vector<GameObject*> gameObjects;
+	GameObject* root = nullptr;
 };
 
 #endif // !__MODULE_SCENE_INTRO_H__
