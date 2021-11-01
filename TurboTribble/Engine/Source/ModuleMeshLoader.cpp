@@ -29,7 +29,7 @@ bool ModuleMeshLoader::Init()
 
 MeshInfo ModuleMeshLoader::LoadMesh(const char* filePath)
 {	
-
+	TTLOG("Loading Mesh");
 	const aiScene* scene = aiImportFile(filePath, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -98,19 +98,19 @@ void ModuleMeshLoader::InitSingleMesh(unsigned int index, const aiMesh* aiMesh)
 void ModuleMeshLoader::CreateBuffers()
 {
 	// Vertices buffer
-	glGenBuffers(1, &info.idVertex);
+	glGenBuffers(1, (GLuint*)&info.idVertex);
 	glBindBuffer(GL_ARRAY_BUFFER, info.idVertex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * info.numVertex* 3, info.vertex, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 1);
 
 	// Texture coords buffer
-	glGenBuffers(1, &info.idTexCo);
+	glGenBuffers(1, (GLuint*)&info.idTexCo);
 	glBindBuffer(GL_ARRAY_BUFFER, info.idTexCo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * info.numTexCo * 2, info.texCo, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 1);
 
 	// Indices buffer
-	glGenBuffers(1, &info.idIndex);
+	glGenBuffers(1, (GLuint*)&info.idIndex);
 	glBindBuffer(GL_ARRAY_BUFFER, info.idIndex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * info.numIndex, info.index, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 1);

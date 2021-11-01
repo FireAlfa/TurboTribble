@@ -16,22 +16,24 @@
 	FBX
 };
 
-class Mesh : Component
+class Mesh : public Component
 {
 public:
 
-	Mesh();
+	Mesh(GameObject* owner);
 	~Mesh();
 
 	void SetMeshInfo(MeshInfo meshInfo);
 
-	MeshInfo GetMeshInfo() { return compMeshInfo; }
+	MeshInfo GetMeshInfo() {
+		return compMeshInfo; }
 
 public:
 
 	MeshInfo compMeshInfo;
 
 	MeshType meshType;
+	CompType compType;
 
 	unsigned int numIndices;
 	unsigned int baseVertex;

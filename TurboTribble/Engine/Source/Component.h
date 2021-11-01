@@ -7,6 +7,7 @@ class GameObject;
 
 enum class CompType
 {
+	EMPTY = 0,
 	TRANSFORM,
 	MESH,
 	MATERIAL,
@@ -16,6 +17,10 @@ enum class CompType
 class Component
 {
 public:
+
+	Component() {}
+	Component(GameObject* owner) : active(true), owner(owner), type(CompType::EMPTY) {}
+	virtual ~Component() {}
 
 	virtual void Enable() { active = true; }
 	virtual void Disable() { active = false; }
@@ -28,11 +33,13 @@ public:
 
 	virtual void SetMeshInfo(MeshInfo meshInfo) {}
 
-	virtual MeshInfo GetMeshInfo() { return compMeshInfo; }
+	virtual MeshInfo GetMeshInfo() { return meshInfo; }
+
+	virtual CompType GetCompType() { return type; }
 
 protected:
 
-	MeshInfo compMeshInfo;
+	MeshInfo meshInfo;
 
 	CompType type;
 	bool active;

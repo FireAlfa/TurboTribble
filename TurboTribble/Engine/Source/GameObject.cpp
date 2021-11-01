@@ -11,6 +11,7 @@ GameObject::GameObject(const char* name, GameObject* parent)
 {
 	this->name = name;
 	this->parent = parent;
+	this->visible = true;
 	if (this->parent != nullptr)
 	{
 		parent->children.push_back(this);
@@ -33,30 +34,69 @@ Component* GameObject::AddComponent(CompType type)
 {
 	Component* ret = nullptr;
 
+	switch (type)
+	{
+	case CompType::TRANSFORM:
+		
+		break;
+	case CompType::MESH:
+		ret = new Mesh(this);
+		TTLOG("Added Mesh Component to %s", this->name.c_str());
+		break;
+	case CompType::MATERIAL:
+		break;
+	case CompType::LIGHT:
+		break;
+	default:
+		break;
+	}
+
+	if (ret != nullptr)
+	{
+		components.push_back(ret);
+	}
+
 	return ret;
 }
 
 Component* GameObject::GetComponent(CompType type)
 {
-	Component* ret = nullptr;
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (components.at(i)->GetCompType() == type)
+		{
+			return components.at(i);
+		}
+	}
 
-	return ret;
+	return nullptr;
 }
 
 void GameObject::SetMeshInfo(MeshInfo meshInfo)
 {
-	Component* comp = GetComponent(CompType::MESH);
-
-	if (comp != nullptr) { comp->SetMeshInfo(meshInfo); };
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (components.at(i)->GetCompType() == CompType::MESH)
+		{
+			this->components.at(i)->SetMeshInfo(meshInfo);
+		}
+	}
 }
 
 void GameObject::Draw()
 {
-	Component* mesh = GetComponent(CompType::MESH);
+	MeshInfo meshInfo;
 
-	MeshInfo meshInfo = mesh->GetMeshInfo();
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (components.at(i)->GetCompType() == CompType::MESH)
+		{
+			meshInfo = this->components.at(i)->GetMeshInfo();
+		}
+	}
 
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, meshInfo.idVertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -64,6 +104,7 @@ void GameObject::Draw()
 	glBindBuffer(GL_ARRAY_BUFFER, meshInfo.idTexCo);
 	glVertexPointer(2, GL_FLOAT, 0, NULL);
 
+	glBindTexture(GL_TEXTURE_2D, );
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshInfo.idIndex);
 
 	glDrawElements(GL_TRIANGLES, meshInfo.numIndex, GL_UNSIGNED_INT, NULL);
@@ -72,4 +113,5 @@ void GameObject::Draw()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }

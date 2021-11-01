@@ -37,7 +37,7 @@ public:
 
 	// ----- GameObject's Components -----
 
-	std::vector<Component> components;
+	std::vector<Component*> components;
 	// -----------------------------------
 
 	// ----- GameObject's Children -----

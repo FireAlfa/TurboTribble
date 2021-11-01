@@ -16,15 +16,15 @@
 
 struct MeshInfo
 {
-	GLuint idIndex = 0; // index in VRAM
+	uint idIndex = 0; // index in VRAM
 	uint numIndex = 0;
 	uint* index = nullptr;
 
-	GLuint idVertex = 0; // unique vertex in VRAM
+	uint idVertex = 0; // unique vertex in VRAM
 	uint numVertex = 0;
 	float3* vertex = nullptr;
 
-	GLuint idTexCo = 0; // unique vertex in VRAM
+	uint idTexCo = 0; // unique vertex in VRAM
 	uint numTexCo = 0;
 	float2* texCo = nullptr;
 

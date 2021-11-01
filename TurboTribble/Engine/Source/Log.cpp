@@ -7,7 +7,7 @@
 std::vector<std::string> consoleLogs;
 
 // Log a string to the console
-void Log(const char file[], int line, const char* format, ...)
+void TTLog(const char file[], int line, const char* format, ...)
 {
 	static char tmpString[4096];
 	static char tmpString2[4096];
