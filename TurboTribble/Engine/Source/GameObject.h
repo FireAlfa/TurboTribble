@@ -25,6 +25,8 @@ public:
 
 	void SetMeshInfo(MeshInfo meshInfo);
 
+	void SetName(std::string _name) { name = _name; };
+
 public:
 
 	// ----- GameObject's Variables -----

@@ -622,7 +622,19 @@ void ModuleEditor::InspectorWindow()
 		{
 			if (app->sceneIntro->root->children.at(i) == selectedNode)
 			{
-				ImGui::TextColored(ImVec4(1, 1, 0, 1), "Name: %s", app->sceneIntro->root->children.at(i)->name.c_str());
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", app->sceneIntro->root->children.at(i)->name.c_str());
+				if (ImGui::CollapsingHeader("Properties", ImGuiTreeNodeFlags_DefaultOpen))
+				{
+					// Select all text when you enter the box and only modify it when Enter is pressed
+					ImGuiInputTextFlags textFlags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+					char text[32];
+					// Name box
+					strcpy_s(text, app->sceneIntro->root->children.at(i)->name.c_str());
+					if (ImGui::InputText("Name", text, IM_ARRAYSIZE(text), textFlags))
+					{
+						app->sceneIntro->root->children.at(i)->SetName(text);
+					}
+				}
 				for (int j = 0; j < app->sceneIntro->root->children.at(i)->components.size(); j++)
 				{
 					app->sceneIntro->root->children.at(i)->components.at(j)->DrawInspector();
