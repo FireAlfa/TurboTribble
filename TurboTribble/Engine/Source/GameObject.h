@@ -20,7 +20,7 @@ public:
 	Component* AddComponent(CompType type);
 	Component* GetComponent(CompType type);
 
-private:
+public:
 
 	// ----- GameObject's Variables -----
 
