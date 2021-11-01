@@ -63,6 +63,15 @@ private:
 	bool hardwareActive;
 	// ------------------------------------------
 
+	// --- Flags for renderer configuration ---
+
+	bool depthTest;
+	bool cullFace;
+	bool lighting;
+	bool colorMaterial;
+	bool texture2D;
+
+	// ----------------------------------------
 
 	// ----- Configuration variables -----
 
