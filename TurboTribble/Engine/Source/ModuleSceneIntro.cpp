@@ -37,7 +37,7 @@ bool ModuleSceneIntro::Start()
 
 	GameObject* bakerHouse = CreateGameObject("Baker House", root);
 	Component* mesh = bakerHouse->AddComponent(CompType::MESH);
-	bakerHouse->SetMeshInfo(app->loader->LoadMesh("../Output/Assets/BakerHouse.fbx"));
+	bakerHouse->SetMeshInfo(app->loader->LoadMesh("../Output/Assets/Examples/baker_house.fbx"));
 
 	return ret;
 }

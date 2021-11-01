@@ -39,12 +39,11 @@ MeshInfo ModuleMeshLoader::LoadMesh(const char* filePath)
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-
-		TTLOG("Mesh with path %s loaded successfully.", filePath);
 		InitFromScene(scene, filePath);
 		//FillBuffers();
 		
 		aiReleaseImport(scene);
+		TTLOG("Mesh with path %s loaded successfully.", filePath);
 	}
 	else
 	{
