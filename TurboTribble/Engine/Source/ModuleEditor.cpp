@@ -27,6 +27,7 @@ ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, st
 	showConfig = false;
 	showAbout = false;
 	showHierarchy = false;
+	showInspector = false;
 	winActive = true;
 	fullscreen = false;
 	resizable = true;
@@ -132,6 +133,9 @@ UpdateStatus ModuleEditor::Update(float dt)
 		ImGui::End();
 	}
 
+	// GUI Inspector Window
+	if (showInspector) { InspectorWindow(); };
+
 	// GUI Console Window
 	if (showConsole) { ConsoleWindow(); };
 
@@ -182,6 +186,13 @@ void ModuleEditor::CheckKeyboardInputs()
 		(app->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN))
 	{
 		showHierarchy = !showHierarchy;
+	}
+
+	if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+		app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+		(app->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN))
+	{
+		showInspector = !showInspector;
 	}
 
 	if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
@@ -256,6 +267,10 @@ UpdateStatus ModuleEditor::MenuBar()
 				if (ImGui::MenuItem("Hierarchy", "Ctrl+1", showHierarchy))
 				{
 					showHierarchy = !showHierarchy;
+				}
+				if (ImGui::MenuItem("Inspector", "Ctrl+2", showInspector))
+				{
+					showInspector = !showInspector;
 				}
 				if (ImGui::MenuItem("Console", "Ctrl+Shift+C", showConsole))
 				{
@@ -586,4 +601,23 @@ void ModuleEditor::HierarchyWindow(GameObject* go)
 			ImGui::TreePop();
 		}
 	}
+}
+
+void ModuleEditor::InspectorWindow()
+{
+	ImGui::Begin("Inspector", &showInspector);
+	if (app->sceneIntro->root != nullptr)
+	{
+		for (int i = 0; i < app->sceneIntro->root->children.size(); i++)
+		{
+			if (app->sceneIntro->root->children.at(i) == selectedNode)
+			{
+				for (int j = 0; j < app->sceneIntro->root->children.at(i)->components.size(); j++)
+				{
+					app->sceneIntro->root->children.at(i)->components.at(j)->DrawInspector();
+				}
+			}
+		}
+	}
+	ImGui::End();
 }

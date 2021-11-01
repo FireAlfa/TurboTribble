@@ -43,6 +43,7 @@ private:
 	void ConfigurationWindow();
 	void AboutWindow();
 	void HierarchyWindow(GameObject* go);
+	void InspectorWindow();
 
 private:
 
@@ -53,6 +54,7 @@ private:
 	bool showConfig;
 	bool showAbout;
 	bool showHierarchy;
+	bool showInspector;
 	bool winActive;
 	bool fullscreen;
 	bool resizable;

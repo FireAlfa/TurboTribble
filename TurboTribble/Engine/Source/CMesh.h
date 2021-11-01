@@ -28,6 +28,8 @@ public:
 	MeshInfo GetMeshInfo() {
 		return compMeshInfo; }
 
+	void DrawInspector();
+
 public:
 
 	MeshInfo compMeshInfo;

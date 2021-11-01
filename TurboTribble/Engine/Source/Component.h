@@ -2,6 +2,9 @@
 #define __COMPONENT_H__
 
 #include "ModuleMeshLoader.h"
+#include "imgui/imgui.h"
+
+
 
 class GameObject;
 
@@ -27,15 +30,18 @@ public:
 
 	virtual void Update(float dt) {}
 
+
 	virtual bool IsEnabled() { return active; }
 
 	virtual bool GetOwner() { return owner; }
 
 	virtual void SetMeshInfo(MeshInfo meshInfo) {}
-
 	virtual MeshInfo GetMeshInfo() { return meshInfo; }
 
 	virtual CompType GetCompType() { return type; }
+
+
+	virtual void DrawInspector() {}
 
 protected:
 

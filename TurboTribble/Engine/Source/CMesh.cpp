@@ -25,3 +25,10 @@ void Mesh::SetMeshInfo(MeshInfo mI)
 	//this->meshType = meshType;
 }
 
+void Mesh::DrawInspector()
+{
+	if (ImGui::CollapsingHeader("Mesh"))
+	{
+
+	}
+}
