@@ -3,6 +3,8 @@
 
 #include "Globals.h"
 
+#include "CMesh.h"
+
 
 // Constructor
 GameObject::GameObject(const char* name, GameObject* parent)

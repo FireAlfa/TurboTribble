@@ -3,11 +3,10 @@
 
 #include "Globals.h"
 #include "Component.h"
-#include "ModuleMeshLoader.h"
 
 #include <vector>
 
-class ModuleMeshLoader;
+
 
  enum class MeshType
 {
@@ -28,7 +27,7 @@ public:
 
 public:
 
-	MeshInfo meshInfo;
+	MeshInfo compMeshInfo;
 
 	MeshType meshType;
 

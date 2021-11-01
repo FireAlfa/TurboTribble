@@ -6,7 +6,6 @@
 
 
 class GameObject;
-struct MeshInfo;
 
 enum class CompType
 {

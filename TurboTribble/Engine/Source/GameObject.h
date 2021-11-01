@@ -2,7 +2,6 @@
 #define __GAMEOBJECT_H__
 
 #include "Component.h"
-#include "CMesh.h"
 
 #include "glew.h"
 #include <vector>
