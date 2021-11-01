@@ -113,7 +113,7 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 			// File drop mesh loading
 			case (SDL_DROPFILE):
 			{
-				GameObject* dropedGO = app->sceneIntro->CreateGameObject("GameObject", app->sceneIntro->root);
+				GameObject* dropedGO = app->sceneIntro->CreateGameObject("Dropped GameObject", app->sceneIntro->root);
 				dropedGO->AddComponent(CompType::MESH);
 				dropedGO->SetMeshInfo(app->loader->LoadMesh(e.drop.file));
 				app->editor->ReadPath = e.drop.file;

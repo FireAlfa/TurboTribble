@@ -242,19 +242,29 @@ UpdateStatus ModuleEditor::MenuBar()
 				// Primitives menu
 				if (ImGui::MenuItem("Cube"))
 				{
-					// TODO Create Cube
 					GameObject* cube = app->sceneIntro->CreateGameObject("Cube", app->sceneIntro->root);
 					Component* mesh = cube->AddComponent(CompType::MESH);
-					//mesh->GetMeshInfo() = app->loader->LoadMesh("");
-				}
-				if (ImGui::MenuItem("Sphere"))
-				{
-					// TODO Create Sphere
+					mesh->GetMeshInfo() = app->loader->LoadMesh("../Output/Assets/Meshes/Primitives/cube.fbx");
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
-					// TODO Create Cylinder
+					GameObject* cube = app->sceneIntro->CreateGameObject("Cylinder", app->sceneIntro->root);
+					Component* mesh = cube->AddComponent(CompType::MESH);
+					mesh->GetMeshInfo() = app->loader->LoadMesh("../Output/Assets/Meshes/Primitives/cylinder.fbx");
 				}
+				if (ImGui::MenuItem("Plane"))
+				{
+					GameObject* cube = app->sceneIntro->CreateGameObject("Plane", app->sceneIntro->root);
+					Component* mesh = cube->AddComponent(CompType::MESH);
+					mesh->GetMeshInfo() = app->loader->LoadMesh("../Output/Assets/Meshes/Primitives/plane.fbx");
+				}
+				if (ImGui::MenuItem("Sphere"))
+				{
+					GameObject* cube = app->sceneIntro->CreateGameObject("Sphere", app->sceneIntro->root);
+					Component* mesh = cube->AddComponent(CompType::MESH);
+					mesh->GetMeshInfo() = app->loader->LoadMesh("../Output/Assets/Meshes/Primitives/sphere.fbx");
+				}
+				
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenu();
