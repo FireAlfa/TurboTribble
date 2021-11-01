@@ -37,9 +37,6 @@ public:
 	MeshType meshType;
 	CompType compType;
 
-	unsigned int numIndices;
-	unsigned int baseVertex;
-	unsigned int baseIndex;
-	unsigned int materialIndex;
+	bool wireframe = false;
 };
 #endif // !__CMESH_H__

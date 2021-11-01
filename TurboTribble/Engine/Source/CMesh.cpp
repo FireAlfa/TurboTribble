@@ -29,6 +29,9 @@ void Mesh::DrawInspector()
 {
 	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		ImGui::Text("Number of Vertices: %d", compMeshInfo.numVertex);
+		ImGui::Text("Number of Faces: %d", compMeshInfo.numIndex);
 
+		ImGui::Checkbox("Wireframe", &wireframe);
 	}
 }
