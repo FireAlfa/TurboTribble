@@ -61,6 +61,12 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT) newPos.y += speed;
 		if (app->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_REPEAT) newPos.y -= speed;
 	}
+
+	// Focus on GameObject
+	if (app->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
+	{
+		LookAt({ 0,0,0 });
+	}
 	// ----------------------------------
 
 

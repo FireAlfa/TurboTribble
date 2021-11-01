@@ -79,8 +79,11 @@ private:
 
 	char appName[32] = "TurboTribble";
 	char orgName[32] = "CITM-UPC";
+public:	char* ReadPath = ".";
+
 	// -----------------------------------
 	
+private:
 
 	// ----- About variables -----
 
