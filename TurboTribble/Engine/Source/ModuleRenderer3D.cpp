@@ -169,12 +169,7 @@ UpdateStatus ModuleRenderer3D::PostUpdate(float dt)
 	app->sceneIntro->Draw();
 
 	// TODO Debug Draw
-	/*if (debug_draw == true)
-	{
-		BeginDebugDraw();
-		App->DebugDraw();
-		EndDebugDraw();
-	}*/
+	//
 
 	// Draw the Editor
 	app->editor->Draw();

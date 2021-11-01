@@ -36,7 +36,7 @@ bool ModuleSceneIntro::Start()
 	}
 
 	GameObject* bakerHouse = CreateGameObject("Baker House", root);
-	//bakerHouse->AddComponent(CompType::MESH);
+	bakerHouse->AddComponent(CompType::MESH);
 	app->loader->LoadMesh("../Output/Assets/BakerHouse.fbx");
 	return ret;
 }
@@ -61,6 +61,14 @@ void ModuleSceneIntro::Draw()
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		if ((root->children.at(i)->GetComponent(CompType::MESH) != nullptr) && (root->children.at(i)->visible))
+		{
+			root->children.at(i)->Draw();
+		}
+	}
 }
 
 GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent)

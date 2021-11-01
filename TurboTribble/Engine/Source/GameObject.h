@@ -19,7 +19,7 @@ public:
 
 	void Update();
 
-	void DrawMesh(Mesh mesh);
+	void Draw();
 
 	Component* AddComponent(CompType type);
 	Component* GetComponent(CompType type);
@@ -31,6 +31,7 @@ public:
 	std::string name;
 	GameObject* parent = nullptr;
 	bool active = true;
+	bool visible = true;
 	// --------------------------------
 
 	// ----- GameObject's Components -----

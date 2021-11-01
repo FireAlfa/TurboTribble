@@ -41,8 +41,12 @@ Component* GameObject::GetComponent(CompType type)
 	return ret;
 }
 
-void GameObject::DrawMesh(Mesh mesh)
+void GameObject::Draw()
 {
+	Component* mesh = GetComponent(CompType::MESH);
+
+	MeshInfo* meshInfo = mesh->GetMeshInfo();
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	//glBindBuffer(GL_ARRAY_BUFFER, app->loader->mBuffers[VRTX_BUFF]);

@@ -4,6 +4,7 @@
 
 
 class GameObject;
+struct MeshInfo;
 
 enum class CompType
 {
@@ -25,6 +26,8 @@ public:
 	virtual bool IsEnabled() { return active; }
 
 	virtual bool GetOwner() { return owner; }
+
+	virtual MeshInfo* GetMeshInfo() { return nullptr; }
 
 protected:
 
