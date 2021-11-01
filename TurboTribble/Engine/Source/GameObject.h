@@ -2,7 +2,9 @@
 #define __GAMEOBJECT_H__
 
 #include "Component.h"
+#include "CMesh.h"
 
+#include "glew.h"
 #include <vector>
 #include <string>
 
@@ -16,6 +18,8 @@ public:
 	~GameObject();
 
 	void Update();
+
+	void DrawMesh(Mesh mesh);
 
 	Component* AddComponent(CompType type);
 	Component* GetComponent(CompType type);

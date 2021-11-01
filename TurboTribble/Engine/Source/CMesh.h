@@ -1,22 +1,33 @@
 #ifndef __CMESH_H__
 #define __CMESH_H__
 
+#include "Globals.h"
 #include "Component.h"
+#include "ModuleMeshLoader.h"
 
 #include <vector>
-typedef unsigned int uint;
+
+class ModuleMeshLoader;
+
+ enum class MeshType
+{
+	CUBE,
+	SPHERE,
+	CYLINDER,
+	FBX
+};
 
 class Mesh : Component
 {
 public:
-	Mesh() { Mesh::type = CompType::MESH; }
-	~Mesh() {}
 
-
-
+	Mesh();
+	
+	~Mesh();
 
 public:
 
+	MeshType meshType;
 
 	unsigned int numIndices;
 	unsigned int baseVertex;

@@ -34,12 +34,18 @@ bool ModuleMeshLoader::LoadMesh(const char* filePath)
 	if (scene != nullptr)
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-		aiReleaseImport(scene);
+
 		TTLOG("Mesh with path %s loaded successfully.", filePath);
+		ret = InitFromScene(scene, filePath);
+		//FillBuffers();
+		//RenderMesh();
 	}
 	else
+	{
 		TTLOG("Error loading scene '%s' : '%s' \n ", filePath);
+	}
 
+	aiReleaseImport(scene);
 	return ret;
 }
 
@@ -109,31 +115,29 @@ void ModuleMeshLoader::InitSingleMesh(unsigned int index, const aiMesh* aiMesh)
 void ModuleMeshLoader::FillBuffers()
 {
 	// Vertices buffer
-	glGenBuffers(1, &mBuffers[VRTX_BUFF]);
+	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[VRTX_BUFF]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices) * mVertices.size(), &mVertices[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	// Texture coords buffer
-	glGenBuffers(1, &mBuffers[TEXCOORD_BUFF]);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[TEXCOORD_BUFF]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mTextureCoords) * mTextureCoords.size(), &mTextureCoords[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
 	// Normals buffer
-	glGenBuffers(1, &mBuffers[NORMAL_BUFF]);
+	glEnableClientState(GL_NORMAL_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[NORMAL_BUFF]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mNormals) * mNormals.size(), &mNormals[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glNormalPointer(GL_FLOAT, 0, NULL);
 
 	// Indices buffer
-	glGenBuffers(1, &mBuffers[VRTX_BUFF]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffers[INDEX_BUFF]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mIndices[0]) * mIndices.size(), &mIndices[0], GL_STATIC_DRAW);
 
+}
+
+void ModuleMeshLoader::RenderMesh()
+{
+	FillBuffers();
+	glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, NULL);
 }
 
 // Called before quitting

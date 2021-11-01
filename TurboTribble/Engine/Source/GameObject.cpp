@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "ModuleMeshLoader.h"
 
 #include "Globals.h"
 
@@ -26,16 +27,23 @@ void GameObject::Update()
 {
 }
 
-Component* CreateComponent(CompType type)
+Component* GameObject::AddComponent(CompType type)
 {
 	Component* ret = nullptr;
 
 	return ret;
 }
 
-Component* GetComponent(CompType type)
+Component* GameObject::GetComponent(CompType type)
 {
 	Component* ret = nullptr;
 
 	return ret;
+}
+
+void GameObject::DrawMesh(Mesh mesh)
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, app->loader->mBuffers[VRTX_BUFF]);
 }

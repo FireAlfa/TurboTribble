@@ -14,7 +14,7 @@
 #include "Assimp/include/Importer.hpp"
 #include "glmath.h"
 
-
+class Mesh;
 
 enum BufferType
 {
@@ -51,6 +51,8 @@ public:
 
 	// Called before quitting, destroys the mesh loader
 	bool CleanUp();
+
+	void RenderMesh();
 
 public:
 
