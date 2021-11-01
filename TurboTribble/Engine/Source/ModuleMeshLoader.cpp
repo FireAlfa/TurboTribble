@@ -29,6 +29,10 @@ bool ModuleMeshLoader::LoadMesh(const char* filePath)
 {	
 	bool ret = false;
 
+	glGenBuffers(1, &mBuffers[VRTX_BUFF]);
+	glGenBuffers(1, &mBuffers[TEXCOORD_BUFF]);
+	glGenBuffers(1, &mBuffers[NORMAL_BUFF]);
+	glGenBuffers(1, &mBuffers[INDEX_BUFF]);
 
 	const aiScene* scene = aiImportFile(filePath, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr)
@@ -132,12 +136,15 @@ void ModuleMeshLoader::FillBuffers()
 	// Indices buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffers[INDEX_BUFF]);
 
+	glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void ModuleMeshLoader::RenderMesh()
 {
-	FillBuffers();
-	glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, NULL);
+	
 }
 
 // Called before quitting
