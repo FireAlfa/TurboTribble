@@ -29,7 +29,7 @@ public:
 
 	GameObject* CreateGameObject(const char* name, GameObject* parent);
 
-private:
+public:
 
 	std::vector<GameObject*> gameObjects;
 	GameObject* root = nullptr;

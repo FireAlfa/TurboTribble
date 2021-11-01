@@ -8,6 +8,9 @@
 #include <vector>
 
 
+
+class GameObject;
+
 extern std::vector<std::string> consoleLogs;
 
 class ModuleEditor : public Module
@@ -32,8 +35,6 @@ public:
 	// Draw everything on screen, called by ModuleRenderer
 	void Draw();
 
-	void LogConsoleWindow(std::string string);
-
 private:
 
 	void CheckKeyboardInputs();
@@ -41,6 +42,7 @@ private:
 	void ConsoleWindow();
 	void ConfigurationWindow();
 	void AboutWindow();
+	void HierarchyWindow(GameObject* go);
 
 private:
 
@@ -50,6 +52,7 @@ private:
 	bool showConsole;
 	bool showConfig;
 	bool showAbout;
+	bool showHierarchy;
 	bool winActive;
 	bool fullscreen;
 	bool resizable;
@@ -58,7 +61,6 @@ private:
 	bool fileSysActive;
 	bool inputActive;
 	bool hardwareActive;
-	bool openOptions = true;
 	// ------------------------------------------
 
 
@@ -87,6 +89,12 @@ private:
 	std::vector<float> msLog;
 	std::vector<float> memLog;
 	// ------------------------
+
+
+	// ----- Hierarchy Variables -----
+
+	GameObject* selectedNode;
+	// -------------------------------
 
 };
 #endif // !__MODULE_EDITOR_H__

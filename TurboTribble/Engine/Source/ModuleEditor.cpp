@@ -13,6 +13,8 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
+#include "GameObject.h"
+#include "ModuleSceneIntro.h"
 
 
 
@@ -24,6 +26,7 @@ ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, st
 	showConsole = false;
 	showConfig = false;
 	showAbout = false;
+	showHierarchy = false;
 	winActive = true;
 	fullscreen = false;
 	resizable = true;
@@ -113,6 +116,14 @@ UpdateStatus ModuleEditor::Update(float dt)
 	ret = MenuBar();
 	
 
+	// GUI Hierarchy Window
+	if (showHierarchy)
+	{
+		ImGui::Begin("Hierarchy", &showHierarchy);
+		HierarchyWindow(app->sceneIntro->root);
+		ImGui::End();
+	}
+
 	// GUI Console Window
 	if (showConsole) { ConsoleWindow(); };
 
@@ -158,6 +169,13 @@ void ModuleEditor::Draw()
 // Change flags to show specific windows via keyboard
 void ModuleEditor::CheckKeyboardInputs()
 {
+	if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+		app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+		(app->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN))
+	{
+		showHierarchy = !showHierarchy;
+	}
+
 	if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
 		app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
 		(app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_DOWN ||
@@ -219,12 +237,15 @@ UpdateStatus ModuleEditor::MenuBar()
 			}
 			ImGui::EndMenu();
 		}
-
 		// Menu Bar Window Tab
 		if (ImGui::BeginMenu("Window"))
 		{
 			if (ImGui::BeginMenu("General"))
 			{
+				if (ImGui::MenuItem("Hierarchy", "Ctrl+1", showHierarchy))
+				{
+					showHierarchy = !showHierarchy;
+				}
 				if (ImGui::MenuItem("Console", "Ctrl+Shift+C", showConsole))
 				{
 					showConsole = !showConsole;
@@ -496,7 +517,28 @@ void ModuleEditor::AboutWindow()
 }
 
 
-void ModuleEditor::LogConsoleWindow(std::string string)
+void ModuleEditor::HierarchyWindow(GameObject* go)
 {
-	consoleLogs.push_back(string);
+	if (go != nullptr)
+	{
+		ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_OpenOnArrow | (go->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0); // If the GameObject has no children, don't give the option to open it
+		if (go == selectedNode)
+		{
+			parentFlags |= ImGuiTreeNodeFlags_Selected;
+		}
+		bool open = ImGui::TreeNodeEx(go->name.c_str(), parentFlags);
+		// Control what GameObject we have selected with the mouse
+		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
+		{
+			selectedNode = go;
+		}
+		if (open) {
+			// Recursive call to this method for each children
+			for (size_t i = 0; i < go->children.size(); i++)
+			{
+				HierarchyWindow(go->children.at(i));
+			};
+			ImGui::TreePop();
+		}
+	}
 }

@@ -166,7 +166,7 @@ UpdateStatus ModuleRenderer3D::PreUpdate(float dt)
 UpdateStatus ModuleRenderer3D::PostUpdate(float dt)
 {
 	// Draw the Scene
-	app->scene_intro->Draw();
+	app->sceneIntro->Draw();
 
 	// TODO Debug Draw
 	/*if (debug_draw == true)

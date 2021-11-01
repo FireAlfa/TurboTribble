@@ -35,7 +35,8 @@ bool ModuleSceneIntro::Start()
 		TTLOG("Root Node GameObject created successfully.");
 	}
 
-
+	GameObject* bakerHouse = CreateGameObject("Baker House", root);
+	//bakerHouse->AddComponent(CompType::MESH);
 	app->loader->LoadMesh("../Output/Assets/BakerHouse.fbx");
 	return ret;
 }
