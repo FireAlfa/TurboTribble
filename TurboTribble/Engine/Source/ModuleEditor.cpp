@@ -377,15 +377,15 @@ void ModuleEditor::ConfigurationWindow()
 		//sprintf_s(title, 25, "Memory Usage %.1f", mem_log[mem_log.size() - 1]);
 		//ImGui::PlotHistogram("##memory", &mem_log[0], mem_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 
-		ImGui::Text("Total Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Total Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Peak Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Peak Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Accumulated Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Accumulated Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Accumulated Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Total Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
-		ImGui::Text("Peak Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", 1);
+		ImGui::Text("Total Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Total Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Peak Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Peak Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Accumulated Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Accumulated Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Accumulated Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Total Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
+		ImGui::Text("Peak Alloc Unit Count: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d");
 
 	}
 	if (ImGui::CollapsingHeader("Window"))
@@ -423,7 +423,7 @@ void ModuleEditor::ConfigurationWindow()
 		ImGui::Text("Base Path:");
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", SDL_GetBasePath());
 		ImGui::Text("Read Path:");
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), ".");
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", ReadPath);
 		ImGui::Text("Write Path:");
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), ".");
 
@@ -457,10 +457,10 @@ void ModuleEditor::ConfigurationWindow()
 		ImGui::Separator();
 		ImGui::Text("CPU:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %dKb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());;
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %d Kb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());;
 		ImGui::Text("System RAM:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1fGb", (float)SDL_GetSystemRAM());
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1f Gb", (float)SDL_GetSystemRAM()/1000);
 		ImGui::Text("Caps:");
 
 		if (SDL_HasRDTSC() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "RDTSC,"); }

@@ -4,6 +4,7 @@
 #include "ModuleRenderer3D.h"
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleEditor.h"
 
 #include "imgui/imgui_impl_sdl.h"
 
@@ -115,6 +116,7 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 				GameObject* dropedGO = app->sceneIntro->CreateGameObject("GameObject", app->sceneIntro->root);
 				dropedGO->AddComponent(CompType::MESH);
 				dropedGO->SetMeshInfo(app->loader->LoadMesh(e.drop.file));
+				app->editor->ReadPath = e.drop.file;
 				SDL_free(e.drop.file);
 				TTLOG("Droped model loaded succesfully");
 				break;
