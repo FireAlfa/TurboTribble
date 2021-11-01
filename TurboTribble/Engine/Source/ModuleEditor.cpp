@@ -612,6 +612,7 @@ void ModuleEditor::InspectorWindow()
 		{
 			if (app->sceneIntro->root->children.at(i) == selectedNode)
 			{
+				ImGui::Text("Name: %s", app->sceneIntro->root->children.at(i)->name.c_str());
 				for (int j = 0; j < app->sceneIntro->root->children.at(i)->components.size(); j++)
 				{
 					app->sceneIntro->root->children.at(i)->components.at(j)->DrawInspector();

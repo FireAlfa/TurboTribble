@@ -27,7 +27,7 @@ void Mesh::SetMeshInfo(MeshInfo mI)
 
 void Mesh::DrawInspector()
 {
-	if (ImGui::CollapsingHeader("Mesh"))
+	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 
 	}
