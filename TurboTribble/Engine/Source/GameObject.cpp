@@ -11,7 +11,7 @@ GameObject::GameObject(const char* name, GameObject* parent)
 {
 	this->name = name;
 	this->parent = parent;
-	this->visible = true;
+	this->visible = false;
 	if (this->parent != nullptr)
 	{
 		parent->children.push_back(this);
@@ -96,21 +96,23 @@ void GameObject::Draw()
 	}
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
 	glBindBuffer(GL_ARRAY_BUFFER, meshInfo.idVertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, meshInfo.idTexCo);
 	glVertexPointer(2, GL_FLOAT, 0, NULL);
 
-	glBindTexture(GL_TEXTURE_2D, );
+	glBindTexture(GL_TEXTURE_2D, meshInfo.idTexture);
+	
+	glBindTexture(GL_ELEMENT_ARRAY_BUFFER, meshInfo.idIndex);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshInfo.idIndex);
 
 	glDrawElements(GL_TRIANGLES, meshInfo.numIndex, GL_UNSIGNED_INT, NULL);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);

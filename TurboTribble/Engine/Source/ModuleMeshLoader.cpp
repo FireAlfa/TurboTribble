@@ -35,9 +35,11 @@ MeshInfo ModuleMeshLoader::LoadMesh(const char* filePath)
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		InitFromScene(scene, filePath);
+
 		CreateBuffers();
 		
 		aiReleaseImport(scene);
+		
 		TTLOG("Mesh with path %s loaded successfully.", filePath);
 	}
 	else
@@ -101,19 +103,24 @@ void ModuleMeshLoader::CreateBuffers()
 	glGenBuffers(1, (GLuint*)&info.idVertex);
 	glBindBuffer(GL_ARRAY_BUFFER, info.idVertex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * info.numVertex* 3, info.vertex, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Texture coords buffer
 	glGenBuffers(1, (GLuint*)&info.idTexCo);
 	glBindBuffer(GL_ARRAY_BUFFER, info.idTexCo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * info.numTexCo * 2, info.texCo, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Indices buffer
 	glGenBuffers(1, (GLuint*)&info.idIndex);
 	glBindBuffer(GL_ARRAY_BUFFER, info.idIndex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * info.numIndex, info.index, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// Texture buffer
+	//glGenTextures(GL_TEXTURE_2D, (GLuint*)&info.idTexture);
+	//glBindTexture(GL_TEXTURE_2D, info.idTexture);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 // Called before quitting

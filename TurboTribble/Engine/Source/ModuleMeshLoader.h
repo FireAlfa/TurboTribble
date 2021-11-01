@@ -24,10 +24,11 @@ struct MeshInfo
 	uint numVertex = 0;
 	float3* vertex = nullptr;
 
-	uint idTexCo = 0; // unique vertex in VRAM
+	uint idTexCo = 0; // unique texture coordinates in VRAM
 	uint numTexCo = 0;
 	float2* texCo = nullptr;
 
+	uint idTexture = 0; // unique texture in VRAM
 };
 
 class ModuleMeshLoader : public Module
