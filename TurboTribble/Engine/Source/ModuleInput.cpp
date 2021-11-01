@@ -2,6 +2,8 @@
 #include "Application.h"
 
 #include "ModuleRenderer3D.h"
+#include "GameObject.h"
+#include "ModuleSceneIntro.h"
 
 #include "imgui/imgui_impl_sdl.h"
 
@@ -107,6 +109,17 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 			mouseYMotion = e.motion.yrel / SCREEN_SIZE;
 			break;
 
+			// File drop mesh loading
+			case (SDL_DROPFILE):
+			{
+				GameObject* dropedGO = app->sceneIntro->CreateGameObject("GameObject", app->sceneIntro->root);
+				dropedGO->AddComponent(CompType::MESH);
+				dropedGO->SetMeshInfo(app->loader->LoadMesh(e.drop.file));
+				SDL_free(e.drop.file);
+				TTLOG("Droped model loaded succesfully");
+				break;
+			}
+
 			case SDL_QUIT:
 			quit = true;
 			break;
@@ -116,6 +129,8 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
 					app->renderer3D->OnResize(e.window.data1, e.window.data2);
 			}
+
+			
 		}
 	}
 
