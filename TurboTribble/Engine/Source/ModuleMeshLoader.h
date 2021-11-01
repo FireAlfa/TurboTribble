@@ -5,16 +5,36 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "CMesh.h"
-
 #include "glew.h"
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
-#include "Assimp/include/Importer.hpp"
-#include "glmath.h"
+#include "Math/float3.h"
+#include "Math/float2.h"
 
 class Mesh;
+
+struct MeshInfo
+{
+	uint idIndex = 0; // index in VRAM
+	uint numIndex = 0;
+	uint* index = nullptr;
+
+	uint idVertex = 0; // unique vertex in VRAM
+	uint numVertex = 0;
+	float3* vertex = nullptr;
+
+	uint idTexCo = 0; // unique vertex in VRAM
+	uint numTexCo = 0;
+	float2* texCo = nullptr;
+
+	std::vector<float3> mVertices;
+	std::vector<float2> mTextureCoords;
+	std::vector<float3> mNormals;
+	std::vector<float2> mIndices;	
+	
+	GLuint mBuffers[4]{ 0 };
+};
 
 enum BufferType
 {
@@ -37,13 +57,9 @@ public:
 	bool Init();
 
 	// Loads a Mesh by the filePath
-	bool LoadMesh(const char* filePath);
+	MeshInfo LoadMesh(const char* filePath);
 
-	bool InitFromScene(const aiScene* scene, const char* filePath);
-
-	void CountVerticesAndIndices(const aiScene* scene, uint numVertex, uint numIndex);
-
-	void ReserveSpace(uint numVertex, uint numIndex);
+	void InitFromScene(const aiScene* scene, const char* filePath);
 
 	void InitSingleMesh(unsigned int index, const aiMesh* aiMesh);
 
@@ -52,22 +68,11 @@ public:
 	// Called before quitting, destroys the mesh loader
 	bool CleanUp();
 
-	void RenderMesh();
-
 public:
 
-	std::vector<vec3> mVertices;
-	std::vector<vec2> mTextureCoords;
-	std::vector<vec3> mNormals;
-	std::vector<vec3> mIndices;
+	std::vector<MeshInfo> mMeshes;
 
-	std::vector<Mesh> mMeshes;
+	MeshInfo info;
 
-	uint numIndex = 0;
-	uint* index = nullptr;
-	uint numVertex = 0;
-	float* vertex = nullptr;
-
-	GLuint mBuffers[4]{ 0 };
 };
 #endif // !__MODULE_MESH_LOADER_H__

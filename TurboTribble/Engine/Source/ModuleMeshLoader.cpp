@@ -1,5 +1,7 @@
 #include "ModuleMeshLoader.h"
 
+#include "CMesh.h"
+
 // Constructor
 ModuleMeshLoader::ModuleMeshLoader(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
@@ -25,127 +27,105 @@ bool ModuleMeshLoader::Init()
 	return ret;
 }
 
-bool ModuleMeshLoader::LoadMesh(const char* filePath)
+MeshInfo ModuleMeshLoader::LoadMesh(const char* filePath)
 {	
-	bool ret = false;
 
-	glGenBuffers(1, &mBuffers[VRTX_BUFF]);
-	glGenBuffers(1, &mBuffers[TEXCOORD_BUFF]);
-	glGenBuffers(1, &mBuffers[NORMAL_BUFF]);
-	glGenBuffers(1, &mBuffers[INDEX_BUFF]);
+	glGenBuffers(1, &info.mBuffers[VRTX_BUFF]);
+	glGenBuffers(1, &info.mBuffers[TEXCOORD_BUFF]);
+	glGenBuffers(1, &info.mBuffers[NORMAL_BUFF]);
+	glGenBuffers(1, &info.mBuffers[INDEX_BUFF]);
 
 	const aiScene* scene = aiImportFile(filePath, aiProcessPreset_TargetRealtime_MaxQuality);
-	if (scene != nullptr)
+	if (scene != nullptr && scene->HasMeshes())
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 
 		TTLOG("Mesh with path %s loaded successfully.", filePath);
-		ret = InitFromScene(scene, filePath);
-		FillBuffers();
-		RenderMesh();
+		InitFromScene(scene, filePath);
+		//FillBuffers();
+		
+		aiReleaseImport(scene);
 	}
 	else
 	{
 		TTLOG("Error loading scene '%s' : '%s' \n ", filePath);
 	}
 
-	aiReleaseImport(scene);
-	return ret;
+	return info;
 }
 
-bool ModuleMeshLoader::InitFromScene(const aiScene* scene, const char* filePath)
+void ModuleMeshLoader::InitFromScene(const aiScene* scene, const char* filePath)
 {
-	mMeshes.resize(scene->mNumMeshes);
-
-	CountVerticesAndIndices(scene, numVertex, numIndex);
-
-	ReserveSpace(numVertex, numIndex);
-
 	// Initialize the meshes in the scene one by one
-	for (unsigned int i = 0; i < mMeshes.size(); i++) {
+	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
 		const aiMesh* aiMesh = scene->mMeshes[i];
 		InitSingleMesh(i, aiMesh);
 	}
-
-	return true;
-}
-
-void ModuleMeshLoader::CountVerticesAndIndices(const aiScene* scene, uint numVertex, uint numIndex)
-{
-	for (uint i = 0; i < mMeshes.size(); i++)
-	{
-		mMeshes[i].materialIndex = scene->mMeshes[i]->mMaterialIndex;
-		mMeshes[i].numIndices = scene->mMeshes[i]->mNumFaces * 3;
-		mMeshes[i].baseVertex = numVertex;
-		mMeshes[i].baseIndex = numIndex;
-	}
-}
-
-void ModuleMeshLoader::ReserveSpace(uint numVertex, uint numIndex)
-{
-	mVertices.reserve(numVertex);
-	mTextureCoords.reserve(numVertex);
-	mNormals.reserve(numVertex);
-	mIndices.reserve(numIndex);
 }
 
 void ModuleMeshLoader::InitSingleMesh(unsigned int index, const aiMesh* aiMesh)
 {
-	const aiVector3D zero3D(0.0f, 0.0f, 0.0f);
+	// Copy vertices
+	info.numVertex = aiMesh->mNumVertices;
+	info.vertex = new float3[info.numVertex];
+	memcpy(info.vertex, aiMesh->mVertices, sizeof(float) * info.numVertex * 3);
+	TTLOG("New mesh with %d vertices", info.numVertex);
 
-	// Populate the vertex attribute vectors
-	for (uint i = 0; i < aiMesh->mNumVertices; i++)
+	// Copy faces
+	if (aiMesh->HasFaces())
 	{
-		const aiVector3D& vecPos = aiMesh->mVertices[i];
-		const aiVector3D& vecNormal = aiMesh->mNormals[i];
-		const aiVector3D& vecTexCoords = aiMesh->HasTextureCoords(0) ? aiMesh->mTextureCoords[0][i] : zero3D;
-
-		mVertices.push_back(vec3(vecPos.x, vecPos.y, vecPos.z));
-		mNormals.push_back(vec3(vecNormal.x, vecNormal.y, vecNormal.z));
-		mTextureCoords.push_back(vec2(vecTexCoords.x, vecTexCoords.y));
+		info.numIndex = aiMesh->mNumFaces * 3;
+		info.index = new uint[info.numIndex * 2]; // assume each face is a triangle
+		for (uint i = 0; i < aiMesh->mNumFaces; ++i)
+		{
+			if (aiMesh->mFaces[i].mNumIndices != 3)
+			{
+				TTLOG("WARNING, geometry face with != 3 indices!");
+			}
+			else
+			{
+				memcpy(&info.index[i * 3], aiMesh->mFaces[i].mIndices, 3 * sizeof(uint));
+			}
+		}
+		TTLOG("Faces loaded");
 	}
 
-	// Populate the index buffer
-	for (uint i = 0; i < aiMesh->mNumFaces; i++)
+	// Copy texture coordinates
+	if (aiMesh->HasTextureCoords(info.idTexCo))
 	{
-		const aiFace& face = aiMesh->mFaces[i];
-		//assert(face.mNumIndices == 3);
-		mIndices.push_back(face.mIndices[0]);
-		mIndices.push_back(face.mIndices[1]);
-		mIndices.push_back(face.mIndices[2]);
+		info.texCo = new float2[info.numVertex];
+		memcpy(info.texCo, aiMesh->mVertices, sizeof(float) * info.numTexCo * 3);
+		TTLOG("Texture coordinates loaded");
 	}
+
+
 }
 
-void ModuleMeshLoader::FillBuffers()
-{
-	// Vertices buffer
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[VRTX_BUFF]);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	// Texture coords buffer
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[TEXCOORD_BUFF]);
-	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
-	// Normals buffer
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[NORMAL_BUFF]);
-	glNormalPointer(GL_FLOAT, 0, NULL);
-
-	// Indices buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffers[INDEX_BUFF]);
-
-	glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, NULL);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-void ModuleMeshLoader::RenderMesh()
-{
-	
-}
+//void ModuleMeshLoader::FillBuffers()
+//{
+//	// Vertices buffer
+//	glEnableClientState(GL_VERTEX_ARRAY);
+//	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[VRTX_BUFF]);
+//	glVertexPointer(3, GL_FLOAT, 0, NULL);
+//
+//	// Texture coords buffer
+//	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+//	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[TEXCOORD_BUFF]);
+//	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+//
+//	// Normals buffer
+//	glEnableClientState(GL_NORMAL_ARRAY);
+//	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[NORMAL_BUFF]);
+//	glNormalPointer(GL_FLOAT, 0, NULL);
+//
+//	// Indices buffer
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffers[INDEX_BUFF]);
+//
+//	glDrawElements(GL_TRIANGLES, info.mIndices.size(), GL_UNSIGNED_INT, NULL);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, 0);
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//}
 
 // Called before quitting
 bool ModuleMeshLoader::CleanUp()
