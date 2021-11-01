@@ -248,17 +248,17 @@ void Line::InnerRender() const
 }
 
 // PLANE ==================================================
-Plane::Plane() : Primitive(), normal(0, 1, 0), constant(1)
+PrimitivePlane::PrimitivePlane() : Primitive(), normal(0, 1, 0), constant(1)
 {
 	type = PrimitiveTypes::PRIMITIVE_PLANE;
 }
 
-Plane::Plane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
+PrimitivePlane::PrimitivePlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
 {
 	type = PrimitiveTypes::PRIMITIVE_PLANE;
 }
 
-void Plane::InnerRender() const
+void PrimitivePlane::InnerRender() const
 {
 	glLineWidth(1.0f);
 

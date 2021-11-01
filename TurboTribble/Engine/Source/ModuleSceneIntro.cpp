@@ -58,7 +58,7 @@ bool ModuleSceneIntro::CleanUp()
 // Draw everything on screen, called by ModuleRenderer
 void ModuleSceneIntro::Draw()
 {
-	Plane p(0, 1, 0, 0);
+	PrimitivePlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
 
