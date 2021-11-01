@@ -223,15 +223,18 @@ UpdateStatus ModuleEditor::MenuBar()
 				// Primitives menu
 				if (ImGui::MenuItem("Cube"))
 				{
-					// TODO
+					// TODO Create Cube
+					GameObject* cube = app->sceneIntro->CreateGameObject("Cube", app->sceneIntro->root);
+					Component* mesh = cube->AddComponent(CompType::MESH);
+					//mesh->GetMeshInfo() = app->loader->LoadMesh("");
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
-					// TODO
+					// TODO Create Sphere
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
-					// TODO
+					// TODO Create Cylinder
 				}
 				ImGui::EndMenu();
 			}
@@ -347,8 +350,7 @@ void ModuleEditor::ConfigurationWindow()
 			msLog.erase(msLog.begin());
 		}
 
-		// Memory Consumption Histogram
-		// TODO
+		// TODO Memory Consumption Histogram
 		//sprintf_s(title, 25, "Memory Usage %.1f", mem_log[mem_log.size() - 1]);
 		//ImGui::PlotHistogram("##memory", &mem_log[0], mem_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 
@@ -516,24 +518,31 @@ void ModuleEditor::AboutWindow()
 	ImGui::End();
 }
 
-
+// Display the Tree part of the Hierarchy Window
 void ModuleEditor::HierarchyWindow(GameObject* go)
 {
 	if (go != nullptr)
 	{
-		ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_OpenOnArrow | (go->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0); // If the GameObject has no children, don't give the option to open it
+		// You need to click on the arrow to open it and if the GameObject has no children, don't give the option to open it
+		ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_OpenOnArrow | (go->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0);
+
+		// Give the node the Selected flag
 		if (go == selectedNode)
 		{
 			parentFlags |= ImGuiTreeNodeFlags_Selected;
 		}
+
+		// Create the node, returns true if it's opened
 		bool open = ImGui::TreeNodeEx(go->name.c_str(), parentFlags);
+
 		// Control what GameObject we have selected with the mouse
 		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
 		{
 			selectedNode = go;
 		}
+
+		// Recursive call to this method for each children
 		if (open) {
-			// Recursive call to this method for each children
 			for (size_t i = 0; i < go->children.size(); i++)
 			{
 				HierarchyWindow(go->children.at(i));
