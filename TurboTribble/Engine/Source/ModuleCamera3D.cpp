@@ -67,6 +67,46 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	{
 		LookAt({ 0,0,0 });
 	}
+
+	// Orbit on GameObject
+	if ((app->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_REPEAT) && (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT))
+	{
+		vec3 orbitCenter{ 0,0,0 };
+
+		reference = orbitCenter;
+
+		int dx = -app->input->GetMouseXMotion();
+		int dy = -app->input->GetMouseYMotion();
+
+		float sensitivity = 0.25f;
+
+		position -= reference;
+
+		if (dx != 0)
+		{
+			float deltaX = (float)dx * sensitivity;
+
+			x = rotate(x, deltaX, vec3(0.0f, 1.0f, 0.0f));
+			y = rotate(y, deltaX, vec3(0.0f, 1.0f, 0.0f));
+			z = rotate(z, deltaX, vec3(0.0f, 1.0f, 0.0f));
+		}
+
+		if (dy != 0)
+		{
+			float deltaY = (float)dy * sensitivity;
+
+			y = rotate(y, deltaY, x);
+			z = rotate(z, deltaY, x);
+
+			if (y.y < 0.0f)
+			{
+				z = vec3(0.0f, z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				y = cross(z, x);
+			}
+		}
+
+		position = reference + z * length(position);
+	}
 	// ----------------------------------
 
 
