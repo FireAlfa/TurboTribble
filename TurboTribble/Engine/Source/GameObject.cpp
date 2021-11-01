@@ -104,12 +104,11 @@ void GameObject::Draw()
 	glVertexPointer(2, GL_FLOAT, 0, NULL);
 
 	glBindTexture(GL_TEXTURE_2D, meshInfo.idTexture);
-	
-	glBindTexture(GL_ELEMENT_ARRAY_BUFFER, meshInfo.idIndex);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshInfo.idIndex);
 
-	glDrawElements(GL_TRIANGLES, meshInfo.numIndex, GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, meshInfo.numVertex, GL_UNSIGNED_INT, NULL);
 
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);

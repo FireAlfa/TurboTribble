@@ -120,7 +120,7 @@ void ModuleMeshLoader::CreateBuffers()
 	// Texture buffer
 	//glGenTextures(GL_TEXTURE_2D, (GLuint*)&info.idTexture);
 	//glBindTexture(GL_TEXTURE_2D, info.idTexture);
-	//glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 // Called before quitting
