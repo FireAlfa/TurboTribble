@@ -3,8 +3,6 @@
 
 #include "ModuleMeshLoader.h"
 
-
-
 class GameObject;
 
 enum class CompType
@@ -28,9 +26,13 @@ public:
 
 	virtual bool GetOwner() { return owner; }
 
-	virtual void SetMeshInfo(MeshInfo meshInfo) {};
+	virtual void SetMeshInfo(MeshInfo meshInfo) {}
+
+	virtual MeshInfo GetMeshInfo() { return compMeshInfo; }
 
 protected:
+
+	MeshInfo compMeshInfo;
 
 	CompType type;
 	bool active;

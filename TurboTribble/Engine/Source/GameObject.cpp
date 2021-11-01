@@ -54,8 +54,22 @@ void GameObject::Draw()
 {
 	Component* mesh = GetComponent(CompType::MESH);
 
+	MeshInfo meshInfo = mesh->GetMeshInfo();
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	//glBindBuffer(GL_ARRAY_BUFFER, app->loader->mBuffers[VRTX_BUFF]);
+	glBindBuffer(GL_ARRAY_BUFFER, meshInfo.idVertex);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, meshInfo.idTexCo);
+	glVertexPointer(2, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshInfo.idIndex);
+
+	glDrawElements(GL_TRIANGLES, meshInfo.numIndex, GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
 }

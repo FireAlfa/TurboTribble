@@ -25,6 +25,8 @@ public:
 
 	void SetMeshInfo(MeshInfo meshInfo);
 
+	MeshInfo GetMeshInfo() { return compMeshInfo; }
+
 public:
 
 	MeshInfo compMeshInfo;
