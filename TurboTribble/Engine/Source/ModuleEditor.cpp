@@ -36,6 +36,14 @@ ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, st
 	inputActive = true;
 	hardwareActive = true;
 
+	// ----------------
+
+	depthTest = true;
+	cullFace = true;
+	lighting = true;
+	colorMaterial = true;
+	texture2D = true;
+
 	//appName = "TurboTribble";
 	//orgName = "CITM-UPC";
 }
@@ -472,6 +480,34 @@ void ModuleEditor::ConfigurationWindow()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d Mb");
 
+	}
+	if (ImGui::CollapsingHeader("Renderer"))
+	{
+		if (ImGui::Checkbox("Depth Test", &depthTest))
+		{
+			if (depthTest == true) glEnable(GL_DEPTH_TEST);
+			else glDisable(GL_DEPTH_TEST);
+		}
+		if (ImGui::Checkbox("Cull Face", &cullFace))
+		{
+			if (cullFace == true) glEnable(GL_CULL_FACE);
+			else glDisable(GL_CULL_FACE);
+		}
+		if (ImGui::Checkbox("Lighting", &lighting))
+		{
+			if (lighting == true) glEnable(GL_LIGHTING);
+			else glDisable(GL_LIGHTING);
+		}
+		if (ImGui::Checkbox("Color Material", &colorMaterial))
+		{
+			if (colorMaterial == true) glEnable(GL_COLOR_MATERIAL);
+			else glDisable(GL_COLOR_MATERIAL);
+		}
+		if (ImGui::Checkbox("Texture 2D", &texture2D))
+		{
+			if (texture2D == true) glEnable(GL_TEXTURE_2D);
+			else glDisable(GL_TEXTURE_2D);
+		}
 	}
 	ImGui::End();
 }
