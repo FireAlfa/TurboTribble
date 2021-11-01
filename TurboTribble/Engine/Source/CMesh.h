@@ -22,10 +22,13 @@ class Mesh : Component
 public:
 
 	Mesh();
-	
 	~Mesh();
 
+	void SetMeshInfo(MeshInfo meshInfo);
+
 public:
+
+	MeshInfo meshInfo;
 
 	MeshType meshType;
 

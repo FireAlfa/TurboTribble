@@ -41,11 +41,18 @@ Component* GameObject::GetComponent(CompType type)
 	return ret;
 }
 
+void GameObject::SetMeshInfo(MeshInfo meshInfo)
+{
+	Component* comp = GetComponent(CompType::MESH);
+
+	if (comp != nullptr) { comp->SetMeshInfo(meshInfo); };
+}
+
 void GameObject::Draw()
 {
 	Component* mesh = GetComponent(CompType::MESH);
 
-	MeshInfo* meshInfo = mesh->GetMeshInfo();
+	//MeshInfo* meshInfo = mesh->GetMeshInfo();
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 

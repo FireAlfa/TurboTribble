@@ -24,6 +24,8 @@ public:
 	Component* AddComponent(CompType type);
 	Component* GetComponent(CompType type);
 
+	void SetMeshInfo(MeshInfo meshInfo);
+
 public:
 
 	// ----- GameObject's Variables -----

@@ -9,3 +9,8 @@ Mesh::~Mesh()
 {
 
 }
+
+void Mesh::SetMeshInfo(MeshInfo meshInfo)
+{
+
+}

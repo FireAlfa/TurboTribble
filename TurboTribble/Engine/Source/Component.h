@@ -1,6 +1,8 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
 
+#include "ModuleMeshLoader.h"
+
 
 
 class GameObject;
@@ -27,7 +29,7 @@ public:
 
 	virtual bool GetOwner() { return owner; }
 
-	virtual MeshInfo* GetMeshInfo() { return nullptr; }
+	virtual void SetMeshInfo(MeshInfo meshInfo) {};
 
 protected:
 
