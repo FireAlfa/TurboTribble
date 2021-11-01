@@ -37,8 +37,8 @@ bool ModuleMeshLoader::LoadMesh(const char* filePath)
 
 		TTLOG("Mesh with path %s loaded successfully.", filePath);
 		ret = InitFromScene(scene, filePath);
-		//FillBuffers();
-		//RenderMesh();
+		FillBuffers();
+		RenderMesh();
 	}
 	else
 	{
