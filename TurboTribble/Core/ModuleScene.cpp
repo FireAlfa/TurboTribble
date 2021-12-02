@@ -34,7 +34,7 @@ bool ModuleScene::Start()
 	root = new GameObject("Root");
 
 	// Loading house and textures since beginning
-	app->import->LoadGeometry("Assets/Models/BakerHouse.fbx");
+	app->import->LoadGeometry("Assets/Models/baker_house.fbx");
 	
 	return ret;
 }

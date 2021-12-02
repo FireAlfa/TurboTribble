@@ -10,7 +10,7 @@
 #include "SDL/include/SDL_opengl.h"
 #include "ImGui/imgui.h"
 #include "Geometry/Sphere.h"
-#include "par_shapes.h"
+#include "ParShapes/par_shapes.h"
 
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent) {}

@@ -38,9 +38,6 @@
     <ClCompile Include="Core\ModuleViewportFrameBuffer.cpp">
       <Filter>Engine\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Core\par_shapes.cpp">
-      <Filter>ExternalLibraries\ParShapes</Filter>
-    </ClCompile>
     <ClCompile Include="Core\ModuleScene.cpp">
       <Filter>Engine\Modules</Filter>
     </ClCompile>
@@ -179,6 +176,9 @@
     <ClCompile Include="Core\Log.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Core\External\ParShapes\par_shapes.cpp">
+      <Filter>ExternalLibraries\ParShapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Color.h">
@@ -219,9 +219,6 @@
     </ClInclude>
     <ClInclude Include="Core\ModuleEditor.h">
       <Filter>Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\par_shapes.h">
-      <Filter>ExternalLibraries\ParShapes</Filter>
     </ClInclude>
     <ClInclude Include="Core\ModuleViewportFrameBuffer.h">
       <Filter>Engine\Modules</Filter>
@@ -702,6 +699,9 @@
     </ClInclude>
     <ClInclude Include="Core\Globals.h">
       <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ParShapes\par_shapes.h">
+      <Filter>ExternalLibraries\ParShapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

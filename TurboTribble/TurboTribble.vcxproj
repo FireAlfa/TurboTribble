@@ -54,6 +54,7 @@
     <ClCompile Include="Core\External\MathGeoLib\include\Math\SSEMath.cpp" />
     <ClCompile Include="Core\External\MathGeoLib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Core\External\MathGeoLib\include\Time\Clock.cpp" />
+    <ClCompile Include="Core\External\ParShapes\par_shapes.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Log.cpp" />
     <ClCompile Include="Core\ModuleFileSystem.cpp" />
@@ -67,7 +68,6 @@
     <ClCompile Include="Core\ModuleScene.cpp" />
     <ClCompile Include="Core\ModuleTextures.cpp" />
     <ClCompile Include="Core\ModuleWindow.cpp" />
-    <ClCompile Include="Core\par_shapes.cpp" />
     <ClCompile Include="Core\PerfTimer.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Core\ModuleViewportFrameBuffer.cpp" />
@@ -192,6 +192,7 @@
     <ClInclude Include="Core\External\MathGeoLib\include\Math\sse_mathfun.h" />
     <ClInclude Include="Core\External\MathGeoLib\include\Math\TransformOps.h" />
     <ClInclude Include="Core\External\MathGeoLib\include\Time\Clock.h" />
+    <ClInclude Include="Core\External\ParShapes\par_shapes.h" />
     <ClInclude Include="Core\External\PhysFS\include\physfs.h" />
     <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\allocators.h" />
     <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\document.h" />
@@ -242,7 +243,6 @@
     <ClInclude Include="Core\ModuleTextures.h" />
     <ClInclude Include="Core\ModuleWindow.h" />
     <ClInclude Include="Core\p2Defs.h" />
-    <ClInclude Include="Core\par_shapes.h" />
     <ClInclude Include="Core\PathNode.h" />
     <ClInclude Include="Core\PerfTimer.h" />
     <ClInclude Include="Core\Timer.h" />
