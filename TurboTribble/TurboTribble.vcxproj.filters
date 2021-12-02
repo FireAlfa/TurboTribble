@@ -1,0 +1,807 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Core\Main.cpp" />
+    <ClCompile Include="Core\Color.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\PerfTimer.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Timer.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleCamera3D.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleInput.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleRenderer3D.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleWindow.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleImport.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleFileSystem.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleTextures.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleEditor.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleViewportFrameBuffer.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\par_shapes.cpp">
+      <Filter>ExternalLibraries\ParShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleScene.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Light.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Application.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\ImGui\imgui_demo.cpp">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\ImGui\imgui_draw.cpp">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\ImGui\imgui_impl_sdl.cpp">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\ImGui\imgui_widgets.cpp">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\ImGui\imgui.cpp">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Time\Clock.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float3x4.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float4.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float4x4.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\MathFunc.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\MathLog.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\MathOps.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\Polynomial.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\Quat.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\SSEMath.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\TransformOps.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\BitOps.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float2.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float3.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float3x3.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Frustum.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Line.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\LineSegment.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\OBB.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Plane.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Polygon.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Polyhedron.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Ray.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Sphere.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Triangle.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\AABB.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Capsule.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Circle.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Cone.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Cylinder.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\External\MathGeoLib\include\Algorithm\Random\LCG.cpp">
+      <Filter>ExternalLibraries\MathGeoLib\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ComponentMaterial.cpp">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ComponentMesh.cpp">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ComponentTransform.cpp">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GameObject.cpp">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Log.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Color.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\p2Defs.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PerfTimer.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Timer.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleWindow.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleCamera3D.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleInput.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleRenderer3D.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleImport.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleFileSystem.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PathNode.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleTextures.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleEditor.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\par_shapes.h">
+      <Filter>ExternalLibraries\ParShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleViewportFrameBuffer.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleScene.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Module.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Light.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Application.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\Compiler\poppack1.h">
+      <Filter>ExternalLibraries\Assimp\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\Compiler\pstdint.h">
+      <Filter>ExternalLibraries\Assimp\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\Compiler\pushpack1.h">
+      <Filter>ExternalLibraries\Assimp\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\port\AndroidJNI\AndroidJNIIOSystem.h">
+      <Filter>ExternalLibraries\Assimp\port</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\ai_assert.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\anim.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\camera.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\cexport.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\cfileio.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\cimport.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\color4.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\config.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\DefaultLogger.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\defs.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\Exporter.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\Importer.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\importerdesc.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\IOStream.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\IOSystem.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\light.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\Logger.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\LogStream.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\material.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\matrix3x3.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\matrix4x4.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\mesh.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\metadata.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\NullLogger.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\postprocess.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\ProgressHandler.hpp">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\quaternion.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\scene.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\texture.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\types.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\vector2.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\vector3.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\Assimp\include\version.h">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\config.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\devil_internal_exports.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\il.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\il_wrap.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\ilu.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\ilu_region.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\ilut.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\DevIL\include\ilut_config.h">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imgui_impl_opengl3.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imgui_impl_sdl.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imgui_internal.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imstb_rectpack.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imstb_textedit.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imstb_truetype.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imconfig.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\ImGui\imgui.h">
+      <Filter>ExternalLibraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\MathBuildConfig.h">
+      <Filter>ExternalLibraries\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\MathGeoLib.h">
+      <Filter>ExternalLibraries\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\MathGeoLibFwd.h">
+      <Filter>ExternalLibraries\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Time\Clock.h">
+      <Filter>ExternalLibraries\MathGeoLib\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float3x3.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float3x4.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4_neon.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4_sse.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4x4.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4x4_neon.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4x4_sse.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\FloatCmp.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathAll.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathConstants.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathFunc.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathLog.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathNamespace.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathTypes.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MatrixProxy.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\myassert.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Polynomial.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Quat.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\quat_simd.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Rect.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Reinterpret.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\sse_mathfun.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\SSEMath.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\TransformOps.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\assume.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\BitOps.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Complex.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\CoordinateAxisConvention.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\FixedPoint.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float2.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float3.h">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Frustum.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\GeometryAll.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\GeomType.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\HitInfo.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\KDTree.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Line.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\LineSegment.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\OBB.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\PBVolume.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Plane.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Polygon.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Polyhedron.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\QuadTree.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Ray.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Sphere.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Triangle.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\AABB.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\AABB2D.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Capsule.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Circle.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Cone.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Cylinder.h">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\MathGeoLib\include\Algorithm\Random\LCG.h">
+      <Filter>ExternalLibraries\MathGeoLib\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\PhysFS\include\physfs.h">
+      <Filter>ExternalLibraries\PhysFS</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\allocators.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\document.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\encodedstream.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\encodings.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\filereadstream.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\filewritestream.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\fwd.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\istreamwrapper.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\memorybuffer.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\memorystream.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\ostreamwrapper.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\pointer.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\prettywriter.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\rapidjson.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\reader.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\schema.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\stream.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\stringbuffer.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\writer.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\error\en.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\error\error.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\biginteger.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\diyfp.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\dtoa.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\ieee754.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\itoa.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\meta.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\pow10.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\regex.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\stack.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\strfunc.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\strtod.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\swap.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\msinttypes\inttypes.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\msinttypes\stdint.h">
+      <Filter>ExternalLibraries\rapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Component.h">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentMaterial.h">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentMesh.h">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentTransform.h">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameObject.h">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Globals.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ExternalLibraries">
+      <UniqueIdentifier>{b02b6d92-51f1-446d-912c-e8e08917fe28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\ImGui">
+      <UniqueIdentifier>{1a51778c-3272-46ad-b9d5-ef7c7f3e222e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\MathGeoLib">
+      <UniqueIdentifier>{db57348c-fd7a-456c-af08-3060b25cac32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\MathGeoLib\Algorithm">
+      <UniqueIdentifier>{a76418e5-d570-4c69-80dd-850b265496f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\MathGeoLib\Geometry">
+      <UniqueIdentifier>{d92d0642-da0e-4855-add9-4bf9d2af319a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\MathGeoLib\Math">
+      <UniqueIdentifier>{2ebf03e9-955e-48c1-b8b6-7203298f56d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\MathGeoLib\Time">
+      <UniqueIdentifier>{7fb278c4-85c5-4c45-ae92-d63993a0374d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\Assimp">
+      <UniqueIdentifier>{1401864e-fcc9-4c45-9b85-5c138800ee92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\Assimp\Compiler">
+      <UniqueIdentifier>{0b91650b-8c09-46dc-8e85-b0124d168a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\Assimp\port">
+      <UniqueIdentifier>{83d632b6-929b-4010-b1dd-8e3b6e880463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\PhysFS">
+      <UniqueIdentifier>{c01260d3-32d6-41ff-b405-425b3fb60dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\DevIL">
+      <UniqueIdentifier>{1a890e46-4201-4e1a-9298-6a0d3b355fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\rapidJSON">
+      <UniqueIdentifier>{862d253a-d571-4c99-98fd-4e7848ee62c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\ParShapes">
+      <UniqueIdentifier>{f7a11dd1-e48c-4a6a-8680-98577e1db031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{7eb047bf-5ffd-435d-8533-8406456ee58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Modules">
+      <UniqueIdentifier>{b84466b7-18a4-4773-9679-b016c8bbe793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObjects - Components">
+      <UniqueIdentifier>{d1a70285-14e9-4c7c-a311-85881ed87eff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Tools">
+      <UniqueIdentifier>{3b33fd60-8311-4ddf-87d9-d36b91d2b082}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core\External\Assimp\include\color4.inl">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </None>
+    <None Include="Core\External\Assimp\include\material.inl">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </None>
+    <None Include="Core\External\Assimp\include\matrix3x3.inl">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </None>
+    <None Include="Core\External\Assimp\include\matrix4x4.inl">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </None>
+    <None Include="Core\External\Assimp\include\quaternion.inl">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </None>
+    <None Include="Core\External\Assimp\include\vector2.inl">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </None>
+    <None Include="Core\External\Assimp\include\vector3.inl">
+      <Filter>ExternalLibraries\Assimp</Filter>
+    </None>
+    <None Include="Core\External\DevIL\include\config.h.win">
+      <Filter>ExternalLibraries\DevIL</Filter>
+    </None>
+    <None Include="Core\External\MathGeoLib\include\Math\Matrix.inl">
+      <Filter>ExternalLibraries\MathGeoLib\Math</Filter>
+    </None>
+    <None Include="Core\External\MathGeoLib\include\Geometry\KDTree.inl">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="Core\External\MathGeoLib\include\Geometry\QuadTree.inl">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
+      <Filter>ExternalLibraries\MathGeoLib\Geometry</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\Application.cpp" />
+    <ClCompile Include="Core\Color.cpp" />
+    <ClCompile Include="Core\ComponentMaterial.cpp" />
+    <ClCompile Include="Core\ComponentMesh.cpp" />
+    <ClCompile Include="Core\ComponentTransform.cpp" />
+    <ClCompile Include="Core\External\ImGui\imgui.cpp" />
+    <ClCompile Include="Core\External\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Core\External\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Core\External\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Core\External\ImGui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Core\External\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Algorithm\Random\LCG.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\AABB.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Capsule.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Circle.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Cone.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Cylinder.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Frustum.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Line.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\LineSegment.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\OBB.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Plane.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Polygon.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Polyhedron.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Ray.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Sphere.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\Triangle.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\BitOps.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float2.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float3.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float3x3.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float3x4.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float4.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\float4x4.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\MathFunc.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\MathLog.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\MathOps.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\Polynomial.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\Quat.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\SSEMath.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Math\TransformOps.cpp" />
+    <ClCompile Include="Core\External\MathGeoLib\include\Time\Clock.cpp" />
+    <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Core\Log.cpp" />
+    <ClCompile Include="Core\ModuleFileSystem.cpp" />
+    <ClCompile Include="Core\Light.cpp" />
+    <ClCompile Include="Core\Main.cpp" />
+    <ClCompile Include="Core\ModuleCamera3D.cpp" />
+    <ClCompile Include="Core\ModuleEditor.cpp" />
+    <ClCompile Include="Core\ModuleImport.cpp" />
+    <ClCompile Include="Core\ModuleInput.cpp" />
+    <ClCompile Include="Core\ModuleRenderer3D.cpp" />
+    <ClCompile Include="Core\ModuleScene.cpp" />
+    <ClCompile Include="Core\ModuleTextures.cpp" />
+    <ClCompile Include="Core\ModuleWindow.cpp" />
+    <ClCompile Include="Core\par_shapes.cpp" />
+    <ClCompile Include="Core\PerfTimer.cpp" />
+    <ClCompile Include="Core\Timer.cpp" />
+    <ClCompile Include="Core\ModuleViewportFrameBuffer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Application.h" />
+    <ClInclude Include="Core\Color.h" />
+    <ClInclude Include="Core\Component.h" />
+    <ClInclude Include="Core\ComponentMaterial.h" />
+    <ClInclude Include="Core\ComponentMesh.h" />
+    <ClInclude Include="Core\ComponentTransform.h" />
+    <ClInclude Include="Core\External\Assimp\include\ai_assert.h" />
+    <ClInclude Include="Core\External\Assimp\include\anim.h" />
+    <ClInclude Include="Core\External\Assimp\include\camera.h" />
+    <ClInclude Include="Core\External\Assimp\include\cexport.h" />
+    <ClInclude Include="Core\External\Assimp\include\cfileio.h" />
+    <ClInclude Include="Core\External\Assimp\include\cimport.h" />
+    <ClInclude Include="Core\External\Assimp\include\color4.h" />
+    <ClInclude Include="Core\External\Assimp\include\Compiler\poppack1.h" />
+    <ClInclude Include="Core\External\Assimp\include\Compiler\pstdint.h" />
+    <ClInclude Include="Core\External\Assimp\include\Compiler\pushpack1.h" />
+    <ClInclude Include="Core\External\Assimp\include\config.h" />
+    <ClInclude Include="Core\External\Assimp\include\DefaultLogger.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\defs.h" />
+    <ClInclude Include="Core\External\Assimp\include\Exporter.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\Importer.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\importerdesc.h" />
+    <ClInclude Include="Core\External\Assimp\include\IOStream.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\IOSystem.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\light.h" />
+    <ClInclude Include="Core\External\Assimp\include\Logger.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\LogStream.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\material.h" />
+    <ClInclude Include="Core\External\Assimp\include\matrix3x3.h" />
+    <ClInclude Include="Core\External\Assimp\include\matrix4x4.h" />
+    <ClInclude Include="Core\External\Assimp\include\mesh.h" />
+    <ClInclude Include="Core\External\Assimp\include\metadata.h" />
+    <ClInclude Include="Core\External\Assimp\include\NullLogger.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="Core\External\Assimp\include\postprocess.h" />
+    <ClInclude Include="Core\External\Assimp\include\ProgressHandler.hpp" />
+    <ClInclude Include="Core\External\Assimp\include\quaternion.h" />
+    <ClInclude Include="Core\External\Assimp\include\scene.h" />
+    <ClInclude Include="Core\External\Assimp\include\texture.h" />
+    <ClInclude Include="Core\External\Assimp\include\types.h" />
+    <ClInclude Include="Core\External\Assimp\include\vector2.h" />
+    <ClInclude Include="Core\External\Assimp\include\vector3.h" />
+    <ClInclude Include="Core\External\Assimp\include\version.h" />
+    <ClInclude Include="Core\External\DevIL\include\config.h" />
+    <ClInclude Include="Core\External\DevIL\include\devil_internal_exports.h" />
+    <ClInclude Include="Core\External\DevIL\include\il.h" />
+    <ClInclude Include="Core\External\DevIL\include\ilu.h" />
+    <ClInclude Include="Core\External\DevIL\include\ilut.h" />
+    <ClInclude Include="Core\External\DevIL\include\ilut_config.h" />
+    <ClInclude Include="Core\External\DevIL\include\ilu_region.h" />
+    <ClInclude Include="Core\External\DevIL\include\il_wrap.h" />
+    <ClInclude Include="Core\External\ImGui\imconfig.h" />
+    <ClInclude Include="Core\External\ImGui\imgui.h" />
+    <ClInclude Include="Core\External\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Core\External\ImGui\imgui_impl_sdl.h" />
+    <ClInclude Include="Core\External\ImGui\imgui_internal.h" />
+    <ClInclude Include="Core\External\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Core\External\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Core\External\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Algorithm\Random\LCG.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\AABB.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\AABB2D.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Capsule.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Circle.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Cone.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Cylinder.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Frustum.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\GeometryAll.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\GeomType.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\HitInfo.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\KDTree.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Line.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\LineSegment.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\OBB.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\PBVolume.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Plane.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Polygon.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Polyhedron.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\QuadTree.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Ray.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Sphere.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\Triangle.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\MathBuildConfig.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\MathGeoLib.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\MathGeoLibFwd.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\assume.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\BitOps.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Complex.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\CoordinateAxisConvention.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\FixedPoint.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float2.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float3.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float3x3.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float3x4.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4x4.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4x4_neon.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4x4_sse.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4_neon.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\float4_sse.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\FloatCmp.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathAll.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathConstants.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathFunc.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathLog.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathNamespace.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MathTypes.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\MatrixProxy.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\myassert.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Polynomial.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Quat.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\quat_simd.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Rect.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\Reinterpret.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\SSEMath.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\sse_mathfun.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Math\TransformOps.h" />
+    <ClInclude Include="Core\External\MathGeoLib\include\Time\Clock.h" />
+    <ClInclude Include="Core\External\PhysFS\include\physfs.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\allocators.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\document.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\encodedstream.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\encodings.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\error\en.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\error\error.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\filereadstream.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\filewritestream.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\fwd.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\itoa.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\meta.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\pow10.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\regex.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\stack.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\strtod.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\internal\swap.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\memorybuffer.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\memorystream.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\pointer.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\prettywriter.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\rapidjson.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\reader.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\schema.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\stream.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\stringbuffer.h" />
+    <ClInclude Include="Core\External\rapidjson-1.1.0\include\rapidjson\writer.h" />
+    <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="Core\Globals.h" />
+    <ClInclude Include="Core\ModuleFileSystem.h" />
+    <ClInclude Include="Core\Light.h" />
+    <ClInclude Include="Core\Module.h" />
+    <ClInclude Include="Core\ModuleCamera3D.h" />
+    <ClInclude Include="Core\ModuleEditor.h" />
+    <ClInclude Include="Core\ModuleImport.h" />
+    <ClInclude Include="Core\ModuleInput.h" />
+    <ClInclude Include="Core\ModuleRenderer3D.h" />
+    <ClInclude Include="Core\ModuleScene.h" />
+    <ClInclude Include="Core\ModuleTextures.h" />
+    <ClInclude Include="Core\ModuleWindow.h" />
+    <ClInclude Include="Core\p2Defs.h" />
+    <ClInclude Include="Core\par_shapes.h" />
+    <ClInclude Include="Core\PathNode.h" />
+    <ClInclude Include="Core\PerfTimer.h" />
+    <ClInclude Include="Core\Timer.h" />
+    <ClInclude Include="Core\ModuleViewportFrameBuffer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core\External\Assimp\include\color4.inl" />
+    <None Include="Core\External\Assimp\include\material.inl" />
+    <None Include="Core\External\Assimp\include\matrix3x3.inl" />
+    <None Include="Core\External\Assimp\include\matrix4x4.inl" />
+    <None Include="Core\External\Assimp\include\quaternion.inl" />
+    <None Include="Core\External\Assimp\include\vector2.inl" />
+    <None Include="Core\External\Assimp\include\vector3.inl" />
+    <None Include="Core\External\DevIL\include\config.h.win" />
+    <None Include="Core\External\MathGeoLib\include\Geometry\KDTree.inl" />
+    <None Include="Core\External\MathGeoLib\include\Geometry\QuadTree.inl" />
+    <None Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
+    <None Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl" />
+    <None Include="Core\External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
+    <None Include="Core\External\MathGeoLib\include\Math\Matrix.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{72D780C9-C383-4F37-8455-1AEB98BA9247}</ProjectGuid>
+    <RootNamespace>Game Engine</RootNamespace>
+    <ProjectName>TurboTribble</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Core\External;$(SolutionDir)\Core\External\MathGeoLib\include;$(SolutionDir)\Core\External\glew\include;$(SolutionDir)\Core\External\JSONObject\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <UndefinePreprocessorDefinitions>MATH_SSE;</UndefinePreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Core\External\Assimp\libx86;$(SolutionDir)\Core\External\SDL\libx86;$(SolutionDir)\Core\External\glew\libx86;$(SolutionDir)\Core\External\DevIL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;assimp.lib;ILUT.lib;ILU.lib;DevIL.lib;glew32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Core\MathGeoLib\include;$(SolutionDir)\Core\glew\include;$(SolutionDir)\Core\JSONObject\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions>MATH_SSE;</UndefinePreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Core\Assimp\libx86;$(SolutionDir)\Core\SDL\libx86;$(SolutionDir)\Core\glew\libx86;$(SolutionDir)\Core\DevIL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;assimp.lib;ILUT.lib;ILU.lib;DevIL.lib;glew32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
