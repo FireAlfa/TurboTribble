@@ -6,6 +6,7 @@
 #include "Globals.h"
 
 #include "ImGui/imgui.h"
+#include "SDL/include/SDL_version.h"
 #include <string>
 
 
@@ -49,6 +50,9 @@ public:
 	// Console Text Pushback
 	void UpdateText(const char* consoleText);
 
+	// Frame Selected
+	void FrameSelected();
+
 private:
 
 	// Draw MenuBar
@@ -64,6 +68,7 @@ private:
 
 	// ----- Draw Windows -----
 
+	void CheckKeyboardInputs();
 	void UpdateWindowStatus();
 	void AboutWindow();	// Can be done better
 	void InspectorGameObject();
@@ -88,15 +93,34 @@ private:
 	bool showDemoWindow;
 	bool showAnotherWindow;
 	bool showAboutWindow;
-	bool showConfWindow;
+	bool showConfigWindow;
 	bool showInspectorWindow;
 	bool showHierarchyWindow;
 	bool showSceneWindow;
 	bool showGameWindow;
-	bool showTextures;
+	bool showTexturesWindow;
 	bool showConsoleWindow;
 	// ---------------------------------
 
+
+	// ----- Style flags -----
+	
+	bool darkStyle;
+	bool classicStyle;
+	bool lightStyle;
+	bool customStyle;
+	// -----------------------
+
+
+	// ----- About variables -----
+
+	SDL_version SDLCompiledVersion;
+	SDL_version SDLLinkedVersion;
+	const char* imGuiVersion;
+	int openGLMajorVersion = 0;
+	int openGLMinorVersion = 0;
+	SDL_version assimpVersion;
+	// ---------------------------
 
 	// Text
 	ImGuiTextBuffer consoleText;

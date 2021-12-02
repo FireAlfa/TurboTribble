@@ -58,7 +58,7 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 
 	// Hold shift to move faster
 	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
-		speed = 12.0f * dt;
+		speed = speed * 2.5 * dt;
 	
 	// Arrow Movement
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KeyState::KEY_REPEAT) newPos += z * speed;
@@ -69,34 +69,19 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	// Flythrough mode
 	if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KeyState::KEY_REPEAT)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT) newPos -= z * speed;
-		if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT) newPos += z * speed;
-		if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT) newPos -= x * speed;
-		if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) newPos += x * speed;
+		if (app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT) newPos += z * speed;
+		if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT) newPos -= z * speed;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT) newPos += x * speed;
+		if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) newPos -= x * speed;
 
-		if (app->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT) newPos.y += speed;
-		if (app->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_REPEAT) newPos.y -= speed;
+		if (app->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT) newPos.y -= speed;
+		if (app->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_REPEAT) newPos.y += speed;
 	}
 		
 	// Focus on Game Object
 	if (app->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
 	{
-		if(app->editor->gameobjectSelected != nullptr)
-		{			
-			if (ComponentMesh* mesh = app->editor->gameobjectSelected->GetComponent<ComponentMesh>())
-			{
-				const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
-				LookAt(meshCenter);
-				const float meshRadius = mesh->GetSphereRadius();
-				const float currentDistance = meshCenter.Distance(position);
-				const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
-				position = position + z * (currentDistance - desiredDistance);
-			}
-			else
-			{
-				LookAt(app->editor->gameobjectSelected->transform->GetPosition());
-			}
-		}
+		FrameSelected();
 	}
 	// ----------------------------------
 	
@@ -190,6 +175,25 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 
+void ModuleCamera3D::FrameSelected()
+{
+	if (app->editor->gameobjectSelected != nullptr)
+	{
+		if (ComponentMesh* mesh = app->editor->gameobjectSelected->GetComponent<ComponentMesh>())
+		{
+			const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
+			LookAt(meshCenter);
+			const float meshRadius = mesh->GetSphereRadius();
+			const float currentDistance = meshCenter.Distance(position);
+			const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
+			position = position + z * (currentDistance - desiredDistance);
+		}
+		else
+		{
+			LookAt(app->editor->gameobjectSelected->transform->GetPosition());
+		}
+	}
+}
 
 // -----------------------------------------------------------------
 void ModuleCamera3D::LookAt(const float3& point)

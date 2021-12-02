@@ -24,23 +24,30 @@
 #include "ImGui/imgui_internal.h"
 #include "glew.h"
 #include <gl/GL.h>
+#include "Assimp/include/version.h"
 
 
 
 ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
-   
+    // ----- Flags set -----
+    
     showDemoWindow = false;
     showAnotherWindow = false;
     showAboutWindow = false;
-    showConfWindow = true;
-
-    showConsoleWindow = true;
-    showHierarchyWindow = true;
+    showConfigWindow = true;
     showInspectorWindow = true;
-    showGameWindow = true;
+    showHierarchyWindow = true;
     showSceneWindow = true;
-    showTextures = true;
+    showGameWindow = true;
+    showTexturesWindow = true;
+    showConsoleWindow = true;
+
+    darkStyle = true;
+    classicStyle = false;
+    lightStyle = false;
+    customStyle = false;
+    // ---------------------
 
     currentColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     
@@ -71,7 +78,7 @@ bool ModuleEditor::Start()
     ImGuiIO& io = ImGui::GetIO();
     
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Enable Keyboard Controls
     sceneWindow |= ImGuiWindowFlags_NoScrollbar;
 
     // Setup ImGui style by default
@@ -83,19 +90,34 @@ bool ModuleEditor::Start()
     
     CreateGridBuffer();
 
+
+    // Get SDL version
+    SDL_VERSION(&SDLCompiledVersion);
+    SDL_GetVersion(&SDLLinkedVersion);
+    // Get ImGui version
+    imGuiVersion = ImGui::GetVersion();
+    // Get OpenGL version
+    SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &openGLMajorVersion);
+    SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &openGLMinorVersion);
+    // Get Assimp version
+    assimpVersion.major = aiGetVersionMajor();
+    assimpVersion.minor = aiGetVersionMinor();
+    assimpVersion.patch = aiGetVersionRevision();
+
     return ret;
 }
 
 UpdateStatus ModuleEditor::PreUpdate(float dt)
 {
-
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(app->window->window);
     ImGui::NewFrame();
 
-    return UpdateStatus::UPDATE_CONTINUE;
+    // Check if any Keyboard shortcut has been used
+    CheckKeyboardInputs();
 
+    return UpdateStatus::UPDATE_CONTINUE;
 }
 
 // PreUpdate: clear buffer
@@ -116,7 +138,6 @@ UpdateStatus ModuleEditor::Update(float dt)
 
 UpdateStatus ModuleEditor::PostUpdate(float dt)
 {
-
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 
     // Rendering
@@ -125,8 +146,8 @@ UpdateStatus ModuleEditor::PostUpdate(float dt)
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     // Update and Render additional Platform Windows
-        // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
-        //  For this specific demo app we could also call SDL_GL_MakeCurrent(window, gl_context) directly)
+    // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+    //  For this specific demo app we could also call SDL_GL_MakeCurrent(window, gl_context) directly)
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         SDL_Window* backupCurrentWindow = SDL_GL_GetCurrentWindow();
@@ -248,40 +269,41 @@ void ModuleEditor::DrawGrid()
 void ModuleEditor::AboutWindow()
 {
 
-    ImGui::Begin("About 3D Engine", &showAboutWindow);
-
+    ImGui::Begin("About TurboTribble Engine", &showAboutWindow);
+    ImGui::Text("TurboTribble is a C++ Game Engine developed as a class project.");
+    ImGui::Text("Version 0.1 - WIP");
+    ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM-UPC.");
     ImGui::Separator();
-    ImGui::Text("3D Engine\n");
+    ImGui::Text("3rd Party Libraries used:");
+    ImGui::BulletText("Compiled SDL %d.%d.%d", SDLCompiledVersion.major, SDLCompiledVersion.minor, SDLCompiledVersion.patch);
+    ImGui::BulletText("Linked SDL %d.%d.%d", SDLLinkedVersion.major, SDLLinkedVersion.minor, SDLLinkedVersion.patch);
+    ImGui::BulletText("Glew %s", glewGetString(GLEW_VERSION));
+    ImGui::BulletText("ImGui %s", imGuiVersion);
+    ImGui::BulletText("MathGeoLib 1.5");
+    ImGui::BulletText("OpenGL %d.%d", openGLMajorVersion, openGLMinorVersion);
+    ImGui::BulletText("Assimp %d.%d.%d", assimpVersion.major, assimpVersion.minor, assimpVersion.patch);
     ImGui::Separator();
-
-    ImGui::Text("3rd Party Libraries used: ");
-    ImGui::BulletText("SDL v2.0.12");
-    ImGui::BulletText("Glew v2.1.0");
-    ImGui::BulletText("OpenGL v3.1.0");
-    ImGui::BulletText("ImGui v1.78");
-    ImGui::BulletText("MathGeoLib v1.5");
-    ImGui::BulletText("PhysFS v3.0.2");
-    ImGui::BulletText("DevIL v1.7.8");
-    ImGui::BulletText("Assimp v3.1.1");
-
-    ImGui::Separator();
-    ImGui::Text("LICENSE\n");
-    ImGui::Separator();
-
-    ImGui::Text("MIT License\n\n");
-    ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy\n\nof this software and associated documentation files (the 'Software'), to deal\n");
-    ImGui::Text("in the Software without restriction, including without limitation the rights\n\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\n");
-    ImGui::Text("copies of the Software, and to permit persons to whom the Software is\n\nfurnished to do so, subject to the following conditions : \n");
-    ImGui::Text("\n");
-    ImGui::Text("The above copyright notice and this permission notice shall be included in all\n\ncopies or substantial portions of the Software.\n");
-    ImGui::Text("\n");
-    ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, \n");
-    ImGui::Text("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n");
-    ImGui::Text("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n");
-    ImGui::Text("SOFTWARE.\n");
-
-    //ImGui::Separator();
-
+    ImGui::Text("License:");
+    ImGui::Text("MIT License");
+    ImGui::Text("Copyright(c) 2021 Oscar Canales and Carles Garriga");
+    ImGui::TextWrapped(
+        "Permission is hereby granted, free of charge, to any person obtaining a copy "
+        "of this software and associated documentation files(the Software), to deal "
+        "in the Software without restriction, including without limitation the rights "
+        "to use, copy, modify, merge, publish, distribute, sublicense, and /or sell "
+        "copies of the Software, and to permit persons to whom the Software is "
+        "furnished to do so, subject to the following conditions:");
+    ImGui::TextWrapped(
+        "The above copyright notice and this permission notice shall be included in all "
+        "copies or substantial portions of the Software.");
+    ImGui::TextWrapped(
+        "THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR "
+        "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, "
+        "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE "
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER "
+        "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,"
+        "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE "
+        "SOFTWARE.");
 
     ImGui::End();
 
@@ -322,7 +344,8 @@ void ModuleEditor::BeginDock(char* dockSpaceId, ImGuiDockNodeFlags dockFlags, Im
 {
     // DockSpace
     ImGuiIO& io = ImGui::GetIO();
-    if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+    if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+    {
         ImGuiID dock = ImGui::GetID(dockSpaceId);
         ImGui::DockSpace(dock, size, dockFlags);
     }
@@ -330,29 +353,48 @@ void ModuleEditor::BeginDock(char* dockSpaceId, ImGuiDockNodeFlags dockFlags, Im
 
 void ModuleEditor::MenuBar()
 {
+    /* ----- MAIN MENU BAR DOCKED ----- */
+    if (ImGui::BeginMainMenuBar())
+    {
 
-    /* ---- MAIN MENU BAR DOCKED ---- */
-    if (ImGui::BeginMainMenuBar()) {
-
-        /* ---- FILE ---- */
-        if (ImGui::BeginMenu("File")) {
+        /* ----- FILE ----- */
+        if (ImGui::BeginMenu("File"))
+        {
             if (ImGui::MenuItem("Save", "Ctrl + S"))
             {
                 // DO SOMETHING
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Exit", "(Alt+F4)")) app->closeEngine = true;
+            if (ImGui::MenuItem("Exit", "Alt+F4")) app->closeEngine = true;
             ImGui::EndMenu();
         }
 
-        /* ---- GAMEOBJECTS ---- */
-        if (ImGui::BeginMenu("GameObject")) {
+        /* ----- EDIT ----- */
+        if (ImGui::BeginMenu("Edit"))
+        {
+            if (ImGui::MenuItem("Frame Selected", "F"))
+            {
+                app->camera->FrameSelected();
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Configuration", "Ctrl+Shift+O", showConfigWindow))
+            {
+                showConfigWindow = !showConfigWindow;
+            }
+            ImGui::EndMenu();
+        }
 
-            if (ImGui::MenuItem("Create empty GameObject")) {
+        /* ----- GAMEOBJECTS ----- */
+        if (ImGui::BeginMenu("GameObject"))
+        {
+
+            if (ImGui::MenuItem("Create Empty", "Ctrl+Shift+N"))
+            {
                 app->scene->CreateGameObject();
             }
 
-            if (ImGui::BeginMenu("3D Objects")) {
+            if (ImGui::BeginMenu("3D Objects"))
+            {
                 if (ImGui::MenuItem("Cube")) {
                     GameObject* newGameObject = app->scene->CreateGameObject("Cube");
                     ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CUBE);
@@ -370,54 +412,87 @@ void ModuleEditor::MenuBar()
             ImGui::EndMenu();
         }
 
+        /* ----- WINDOW ----- */
+        if (ImGui::BeginMenu("Window"))
+        {
 
-        /* ---- WINDOW ---- */
-        if (ImGui::BeginMenu("Window")) {
-
-            if (ImGui::MenuItem("Examples")) showDemoWindow = !showDemoWindow;
-            ImGui::Separator();
-
-            if (ImGui::BeginMenu("Workspace Style")) {
-                if (ImGui::MenuItem("Dark")) 
-                    ImGui::StyleColorsDark();
-                if (ImGui::MenuItem("Classic")) 
-                    ImGui::StyleColorsClassic();
-                if (ImGui::MenuItem("Light")) 
-                    ImGui::StyleColorsLight();
-                if (ImGui::MenuItem("Custom")) 
-                    ImGui::StyleColorsCustom();
+            if (ImGui::BeginMenu("General"))
+            {
+                if (ImGui::MenuItem("Scene", "Ctrl+1", showSceneWindow))
+                    showSceneWindow = !showSceneWindow;
+                if (ImGui::MenuItem("Game", "Ctrl+2", showGameWindow))
+                    showGameWindow = !showGameWindow;
+                if (ImGui::MenuItem("Inspector", "Ctrl+3", showInspectorWindow))
+                    showInspectorWindow = !showInspectorWindow;
+                if (ImGui::MenuItem("Hierarchy", "Ctrl+4", showHierarchyWindow))
+                    showHierarchyWindow = !showHierarchyWindow;
+                if (ImGui::MenuItem("Project", "Ctrl+5", false, false)) {}
+                if (ImGui::MenuItem("Textures", "Ctrl+6", showTexturesWindow))
+                    showTexturesWindow = !showTexturesWindow;
+                if (ImGui::MenuItem("Console", "Ctrl+Shift+C", showConsoleWindow))
+                    showConsoleWindow = !showConsoleWindow;
+                
                 ImGui::EndMenu();
             }
-            ImGui::Separator();
-
-            if (ImGui::MenuItem("Hierarchy")) 
-                showHierarchyWindow = !showHierarchyWindow;
-            if (ImGui::MenuItem("Inspector")) 
-                showInspectorWindow = !showInspectorWindow;
-            if (ImGui::MenuItem("Scene")) 
-                showSceneWindow = !showSceneWindow;
-            if (ImGui::MenuItem("Game")) 
-                showGameWindow = !showGameWindow;
-            if (ImGui::MenuItem("Console")) 
-                showConsoleWindow = !showConsoleWindow;
-            if (ImGui::MenuItem("Textures")) 
-                showTextures = !showTextures;
 
             ImGui::Separator();
-            if (ImGui::MenuItem("Configuration")) 
-                showConfWindow = !showConfWindow;
-            
 
+            if (ImGui::BeginMenu("Workspace Style"))
+            {
+                if (ImGui::MenuItem("Dark", "", darkStyle))
+                {
+                    ImGui::StyleColorsDark();
+                    if (darkStyle == false)
+                        darkStyle = true;
+                    classicStyle = false;
+                    lightStyle = false;
+                    customStyle = false;
+                }
+                if (ImGui::MenuItem("Classic", "", classicStyle))
+                {
+                    ImGui::StyleColorsClassic();
+                    if (classicStyle == false)
+                        classicStyle = true;
+                    darkStyle = false;
+                    lightStyle = false;
+                    customStyle = false;
+                }
+                if (ImGui::MenuItem("Light", "", lightStyle))
+                {
+                    ImGui::StyleColorsLight();
+                    if (lightStyle == false)
+                        lightStyle = true;
+                    darkStyle = false;
+                    classicStyle = false;
+                    customStyle = false;
+                }
+                if (ImGui::MenuItem("Custom", "", customStyle))
+                {
+                    ImGui::StyleColorsCustom();
+                    if (customStyle == false)
+                        customStyle = true;
+                    darkStyle = false;
+                    classicStyle = false;
+                    lightStyle = false;
+                }
+                ImGui::EndMenu();
+            }
             ImGui::EndMenu();
         }
 
-        /* ---- HELP ---- */
-        if (ImGui::BeginMenu("Help")) {
-            if (ImGui::MenuItem("About")) 
-                showAboutWindow = !showAboutWindow;
+        /* ----- HELP ----- */
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("About TurboTribble")) { showAboutWindow = !showAboutWindow, SW_SHOW; }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/wiki", 0, 0, SW_SHOW); }
+            if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/releases", 0, 0, SW_SHOW); }
+            if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/FireAlfa/TurboTribble/issues", 0, 0, SW_SHOW); }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Gui Demo", 0, showDemoWindow)) { showDemoWindow = !showDemoWindow; }
+
             ImGui::EndMenu();
         }
-
     }
 
     ImGui::EndMainMenuBar();
@@ -435,16 +510,18 @@ void ModuleEditor::UpdateWindowStatus()
         AboutWindow();
 
     // Config
-    if (showConfWindow) {
-
-        ImGui::Begin("Configuration", &showConfWindow);        
+    if (showConfigWindow)
+    {
+        ImGui::Begin("Configuration", &showConfigWindow);        
         app->OnGui();
         ImGui::End();
 
     }
-    if (showTextures)
+
+    // Textures
+    if (showTexturesWindow)
     {
-        ImGui::Begin("Textures", &showTextures);
+        ImGui::Begin("Textures", &showTexturesWindow);
         for (auto& t : app->textures->textures)
         {
             ImGui::Image((ImTextureID)t.second.id, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
@@ -467,8 +544,8 @@ void ModuleEditor::UpdateWindowStatus()
     }
         
     // Console
-    if (showConsoleWindow) {
-
+    if (showConsoleWindow)
+    {
         ImGui::Begin("Console", &showConsoleWindow);
         ImGui::TextUnformatted(consoleText.begin(), consoleText.end());
         ImGui::SetScrollHere(1.0f);
@@ -476,21 +553,19 @@ void ModuleEditor::UpdateWindowStatus()
     }
 
     // Inspector
-    if (showInspectorWindow) {
-
+    if (showInspectorWindow)
+    {
         ImGui::Begin("Inspector", &showInspectorWindow);
         // Only shows info if any gameobject selected
         if (gameobjectSelected != nullptr) 
             InspectorGameObject(); 
 
         ImGui::End();
-
     }
 
     // Hierarchy
-    if (showHierarchyWindow) {
-
-
+    if (showHierarchyWindow)
+    {
         ImGui::Begin("Hierarchy", &showHierarchyWindow);
 
         // Just cleaning gameObjects(not textures,buffers...)
@@ -549,7 +624,8 @@ void ModuleEditor::UpdateWindowStatus()
                     ImGui::EndDragDropTarget();
                 }
 
-                if (ImGui::IsItemClicked()) {
+                if (ImGui::IsItemClicked())
+                {
                     gameobjectSelected ? gameobjectSelected->isSelected = !gameobjectSelected->isSelected : 0;
                     gameobjectSelected = go;
                     gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
@@ -579,12 +655,14 @@ void ModuleEditor::UpdateWindowStatus()
         ImGui::End();
     }
 
-    if (showGameWindow) {
+    if (showGameWindow)
+    {
         ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
         ImGui::End();
     }
 
-    if (showSceneWindow) {
+    if (showSceneWindow)
+    {
 
         ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
@@ -610,4 +688,71 @@ void ModuleEditor::InspectorGameObject()
 ModuleEditor::Grid::~Grid()
 {
     glDeleteBuffers(1, &VAO);
+}
+
+void ModuleEditor::CheckKeyboardInputs()
+{
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN))
+    {
+        showSceneWindow = !showSceneWindow;
+    }
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN))
+    {
+        showGameWindow = !showGameWindow;
+    }
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_3) == KeyState::KEY_DOWN))
+    {
+        showInspectorWindow = !showInspectorWindow;
+    }
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN))
+    {
+        showHierarchyWindow = !showHierarchyWindow;
+    }
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN))
+    {
+        //showProjectWindow = !showProjectWindow;
+    }
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_6) == KeyState::KEY_DOWN))
+    {
+        showTexturesWindow = !showTexturesWindow;
+    }
+
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_DOWN ||
+            app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_C) == KeyState::KEY_DOWN))
+    {
+        showConsoleWindow = !showConsoleWindow;
+    }
+
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_DOWN ||
+            app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_O) == KeyState::KEY_DOWN))
+    {
+        showConfigWindow = !showConfigWindow;
+    }
+
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_DOWN ||
+            app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_N) == KeyState::KEY_DOWN))
+    {
+        app->scene->CreateGameObject();
+    }
 }

@@ -24,6 +24,7 @@ public:
 	bool Start() override;
 	// Update
 	UpdateStatus Update(float dt)override;
+	void FrameSelected();
 	// CleanUp
 	bool CleanUp() override;
 
