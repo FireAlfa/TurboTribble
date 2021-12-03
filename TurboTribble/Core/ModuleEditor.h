@@ -50,9 +50,6 @@ public:
 	// Console Text Pushback
 	void UpdateText(const char* consoleText);
 
-	// Frame Selected
-	void FrameSelected();
-
 private:
 
 	// Draw MenuBar
@@ -70,8 +67,16 @@ private:
 
 	void CheckKeyboardInputs();
 	void UpdateWindowStatus();
-	void AboutWindow();	// Can be done better
+
+	void AboutWindow();
+	void ConfigurationWindow();
+	void TexturesWindow();
+	void ConsoleWindow();
+	void InspectorWindow();
 	void InspectorGameObject();
+	void HierarchyWindow();
+	void GameWindow();
+	void SceneWindow();
 	// ------------------------
 
 

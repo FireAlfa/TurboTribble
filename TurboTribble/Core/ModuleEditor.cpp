@@ -500,183 +500,212 @@ void ModuleEditor::MenuBar()
 
 void ModuleEditor::UpdateWindowStatus()
 {
-
     // Demo
-    if (showDemoWindow) 
-        ImGui::ShowDemoWindow(&showDemoWindow);
+    if (showDemoWindow) ImGui::ShowDemoWindow(&showDemoWindow);
 
     // About info
-    if (showAboutWindow)  
-        AboutWindow();
+    if (showAboutWindow) AboutWindow();
 
     // Config
-    if (showConfigWindow)
-    {
-        ImGui::Begin("Configuration", &showConfigWindow);        
-        app->OnGui();
-        ImGui::End();
-
-    }
+    if (showConfigWindow) ConfigurationWindow();
 
     // Textures
-    if (showTexturesWindow)
-    {
-        ImGui::Begin("Textures", &showTexturesWindow);
-        for (auto& t : app->textures->textures)
-        {
-            ImGui::Image((ImTextureID)t.second.id, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
-            ImGui::SameLine();
-            ImGui::PushID(t.second.id);
-            if (ImGui::Button("Assign to selected"))
-            {
-                if (gameobjectSelected)
-                {
-                    ComponentMaterial* material = gameobjectSelected->GetComponent<ComponentMaterial>();
-                    if (material)
-                    {
-                        material->SetTexture(t.second);
-                    }
-                }
-            }
-            ImGui::PopID();
-        }
-        ImGui::End();
-    }
+    if (showTexturesWindow) TexturesWindow();
         
     // Console
-    if (showConsoleWindow)
-    {
-        ImGui::Begin("Console", &showConsoleWindow);
-        ImGui::TextUnformatted(consoleText.begin(), consoleText.end());
-        ImGui::SetScrollHere(1.0f);
-        ImGui::End();
-    }
+    if (showConsoleWindow) ConsoleWindow();
 
     // Inspector
-    if (showInspectorWindow)
-    {
-        ImGui::Begin("Inspector", &showInspectorWindow);
-        // Only shows info if any gameobject selected
-        if (gameobjectSelected != nullptr) 
-            InspectorGameObject(); 
-
-        ImGui::End();
-    }
+    if (showInspectorWindow) InspectorWindow();
 
     // Hierarchy
-    if (showHierarchyWindow)
+    if (showHierarchyWindow) HierarchyWindow();
+
+    // Game
+    if (showGameWindow) GameWindow();
+    
+    // Scene
+    if (showSceneWindow) SceneWindow();
+}
+
+void ModuleEditor::SceneWindow()
+{
+    ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+    ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
+    ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
+    if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
     {
-        ImGui::Begin("Hierarchy", &showHierarchyWindow);
+        lastViewportSize = viewPortSize;
+        app->camera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
+        app->camera->RecalculateProjection();
+    }
+    ImGui::Image((ImTextureID)app->viewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
 
-        // Just cleaning gameObjects(not textures,buffers...)
-        if (ImGui::Button("Clear", { 60,20 })) 
-        {
-            app->editor->gameobjectSelected = nullptr;
-            app->scene->CleanUp(); //Clean GameObjects 
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("New", { 60,20 }))
-        {
-            app->scene->CreateGameObject();
-        }
-        std::stack<GameObject*> s;
-        std::stack<uint> indents;
-        s.push(app->scene->root);
-        indents.push(0);
-        while (!s.empty())
-        {
-            GameObject* go = s.top();
-            uint indentsAmount = indents.top();
-            s.pop();
-            indents.pop();
+    /*ImGuiIO io = ImGui::GetIO();
+    ImVec2 posM = io.MousePos;*/
+    ImVec2 posW = ImGui::GetWindowPos();
+    if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(), ImVec2(posW.x + ImGui::GetWindowContentRegionMax().x, posW.y + ImGui::GetWindowContentRegionMax().y)))
+    {
+        app->camera->sceneHovered = true;
+    }
+    else
+    {
+        app->camera->sceneHovered = false;
+    }
+    
+    ImGui::End();
+}
 
-            ImGuiTreeNodeFlags nodeFlags = 0;
-            if (go->isSelected)
-                nodeFlags |= ImGuiTreeNodeFlags_Selected;
-            if (go->children.size() == 0)
-                nodeFlags |= ImGuiTreeNodeFlags_Leaf; 
+void ModuleEditor::GameWindow()
+{
+    ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
+    ImGui::End();
+}
+
+void ModuleEditor::HierarchyWindow()
+{
+    ImGui::Begin("Hierarchy", &showHierarchyWindow);
+
+    // Just cleaning gameObjects(not textures,buffers...)
+    if (ImGui::Button("Clear", { 60,20 }))
+    {
+        app->editor->gameobjectSelected = nullptr;
+        app->scene->CleanUp(); //Clean GameObjects 
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("New", { 60,20 }))
+    {
+        app->scene->CreateGameObject();
+    }
+    std::stack<GameObject*> s;
+    std::stack<uint> indents;
+    s.push(app->scene->root);
+    indents.push(0);
+    while (!s.empty())
+    {
+        GameObject* go = s.top();
+        uint indentsAmount = indents.top();
+        s.pop();
+        indents.pop();
+
+        ImGuiTreeNodeFlags nodeFlags = 0;
+        if (go->isSelected)
+            nodeFlags |= ImGuiTreeNodeFlags_Selected;
+        if (go->children.size() == 0)
+            nodeFlags |= ImGuiTreeNodeFlags_Leaf;
+        for (uint i = 0; i < indentsAmount; ++i)
+        {
+            ImGui::Indent();
+        }
+
+        if (strcmp(go->name.c_str(), "Root") == 0)
+        {
+            nodeFlags |= ImGuiTreeNodeFlags_DefaultOpen;
+        }
+        if (ImGui::TreeNodeEx(go->name.c_str(), nodeFlags))
+        {
+            
+            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+            {
+                ImGui::SetDragDropPayload("DragDropHierarchy", &go, sizeof(GameObject*), ImGuiCond_Once);
+                ImGui::Text("%s", go->name.c_str());
+                ImGui::EndDragDropSource();
+            }
+
+            if (ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DragDropHierarchy"))
+                {
+                    IM_ASSERT(payload->DataSize == sizeof(GameObject*));
+                    GameObject* droppedGo = (GameObject*)*(const int*)payload->Data;
+                    if (droppedGo)
+                    {
+                        droppedGo->parent->RemoveChild(droppedGo);
+                        go->AttachChild(droppedGo);
+                    }
+                }
+                ImGui::EndDragDropTarget();
+            }
+
+            if (ImGui::IsItemClicked())
+            {
+                gameobjectSelected ? gameobjectSelected->isSelected = !gameobjectSelected->isSelected : 0;
+                gameobjectSelected = go;
+                gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
+                if (gameobjectSelected->isSelected)
+                {
+                    TTLOG("+++ GameObject selected name: %s +++\n", gameobjectSelected->name.c_str());
+                }
+                else
+                {
+                    TTLOG("+++ GameObject unselected name: %s +++\n", gameobjectSelected->name.c_str());
+                }
+            }
+            for (GameObject* child : go->children)
+            {
+                s.push(child);
+                indents.push(indentsAmount + 1);
+            }
+
             for (uint i = 0; i < indentsAmount; ++i)
             {
-                ImGui::Indent();
+                ImGui::Unindent();
             }
 
-            if (ImGui::TreeNodeEx(go->name.c_str(), nodeFlags)) 
-            {
-                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-                {
-                    ImGui::SetDragDropPayload("DragDropHierarchy", &go, sizeof(GameObject*), ImGuiCond_Once);
-                    ImGui::Text("%s", go->name.c_str());
-                    ImGui::EndDragDropSource();
-                }
-
-                if (ImGui::BeginDragDropTarget())
-                {
-                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DragDropHierarchy"))
-                    {
-                        IM_ASSERT(payload->DataSize == sizeof(GameObject*));
-                        GameObject* droppedGo = (GameObject*)*(const int*)payload->Data;
-                        if (droppedGo)
-                        {
-                            droppedGo->parent->RemoveChild(droppedGo);
-                            go->AttachChild(droppedGo);
-                        }
-                    }
-                    ImGui::EndDragDropTarget();
-                }
-
-                if (ImGui::IsItemClicked())
-                {
-                    gameobjectSelected ? gameobjectSelected->isSelected = !gameobjectSelected->isSelected : 0;
-                    gameobjectSelected = go;
-                    gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
-                    if (gameobjectSelected->isSelected)
-                    {
-                        TTLOG("+++ GameObject selected name: %s +++\n", gameobjectSelected->name.c_str());
-                    }
-                    else
-                    {
-                        TTLOG("+++ GameObject unselected name: %s +++\n", gameobjectSelected->name.c_str());
-                    }
-                }
-                for (GameObject* child : go->children)
-                {
-                    s.push(child);
-                    indents.push(indentsAmount + 1);
-                }
-
-                for (uint i = 0; i < indentsAmount; ++i)
-                {
-                    ImGui::Unindent();
-                }
-
-                ImGui::TreePop();
-            }
+            ImGui::TreePop();
         }
-        ImGui::End();
     }
+    ImGui::End();
+}
 
-    if (showGameWindow)
+void ModuleEditor::InspectorWindow()
+{
+    ImGui::Begin("Inspector", &showInspectorWindow);
+    // Only shows info if any gameobject selected
+    if (gameobjectSelected != nullptr)
+        InspectorGameObject();
+
+    ImGui::End();
+}
+
+void ModuleEditor::ConsoleWindow()
+{
+    ImGui::Begin("Console", &showConsoleWindow);
+    ImGui::TextUnformatted(consoleText.begin(), consoleText.end());
+    ImGui::SetScrollHere(1.0f);
+    ImGui::End();
+}
+
+void ModuleEditor::TexturesWindow()
+{
+    ImGui::Begin("Textures", &showTexturesWindow);
+    for (auto& t : app->textures->textures)
     {
-        ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
-        ImGui::End();
-    }
-
-    if (showSceneWindow)
-    {
-
-        ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-
-        ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
-        ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
-        if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
+        ImGui::Image((ImTextureID)t.second.id, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::SameLine();
+        ImGui::PushID(t.second.id);
+        if (ImGui::Button("Assign to selected"))
         {
-            lastViewportSize = viewPortSize;
-            app->camera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
-            app->camera->RecalculateProjection();
+            if (gameobjectSelected)
+            {
+                ComponentMaterial* material = gameobjectSelected->GetComponent<ComponentMaterial>();
+                if (material)
+                {
+                    material->SetTexture(t.second);
+                }
+            }
         }
-        ImGui::Image((ImTextureID)app->viewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
-        ImGui::End();
+        ImGui::PopID();
     }
+    ImGui::End();
+}
+
+void ModuleEditor::ConfigurationWindow()
+{
+    ImGui::Begin("Configuration", &showConfigWindow);
+    app->OnGui();
+    ImGui::End();
 }
 
 void ModuleEditor::InspectorGameObject() 

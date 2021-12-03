@@ -50,6 +50,7 @@ public:
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
 	float3 position;
+	bool sceneHovered;
 	// ----------------------------
 
 private:

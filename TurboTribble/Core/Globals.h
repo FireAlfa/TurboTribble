@@ -59,5 +59,6 @@ enum class UpdateStatus
 #define VSYNC true
 #define TITLE "TurboTribble"
 #define ORGANITZATION "CITM-UPC"
+#define MAX_FPS 144
 
 #endif // !__GLOBALS_H__

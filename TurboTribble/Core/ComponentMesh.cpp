@@ -220,10 +220,8 @@ void ComponentMesh::OnGui()
 		ImGui::Text("Num vertices %d", numVertices);
 		ImGui::Text("Num faces %d", numIndices / 3);
 		ImGui::Checkbox("Wireframe", &drawWireframe);
-		ImGui::DragFloat("Normal draw scale", &normalScale);
+		ImGui::DragFloat("Normal draw scale", &normalScale, 0.05f, 0.0f, 5.0f);
 		ImGui::Checkbox("Draw face normals", &drawFaceNormals);
 		ImGui::Checkbox("Draw vertex normals", &drawVertexNormals);
 	}
 }
-
-

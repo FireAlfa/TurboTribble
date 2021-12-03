@@ -14,6 +14,8 @@
 #include "ModuleTextures.h"
 #include "Globals.h"
 
+#include "glew.h"
+
 
 
 Application::Application()
@@ -241,9 +243,28 @@ void Application::AddModule(Module* mod)
 
 void Application::DrawFPSDiagram() {
 
-	ImGui::InputText("App Name", TITLE, 20);
-	ImGui::InputText("Organization", ORGANITZATION, 20);
-	ImGui::SliderInt("Framerate", &cap, -1, 120);
+	// Select all text when you enter the box and only modify it when Enter is pressed
+	ImGuiInputTextFlags textFlags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+	char text[32];
+	// App name box
+	strcpy_s(text, appName);
+	if (ImGui::InputText("App Name", text, IM_ARRAYSIZE(text), textFlags))
+	{
+		strcpy_s(appName, text);
+		SDL_SetWindowTitle(app->window->window, appName);
+	}
+	// Organization name box
+	strcpy_s(text, orgName);
+	if (ImGui::InputText("Organization", text, IM_ARRAYSIZE(text), textFlags))
+	{
+		strcpy_s(orgName, text);
+	}
+
+	// FPS Slider
+	ImGui::SliderInt("Max FPS", &app->cap, 1, MAX_FPS);
+	ImGui::Text("Limit Framerate");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", app->cap);
 
 	if (fpsLog.size() != 30)
 	{
@@ -270,54 +291,44 @@ void Application::DrawFPSDiagram() {
 			SDL_GL_SetSwapInterval(1);
 		else
 			SDL_GL_SetSwapInterval(0);
-
 	}
 
 	ImGui::SameLine();
 	if (renderer3D->vsyncActive)ImGui::TextColored(ImVec4(1, 1, 0, 1), "On");
 	else { ImGui::TextColored(ImVec4(1, 1, 0, 1), "Off"); }
-
-
 }
+
 void Application::DrawHardwareConsole() {
 
-	ImGui::Text("SDL Version: ");
+	SDL_version versionSDL;
+	SDL_GetVersion(&versionSDL);
+	ImGui::Text("SDL Version:");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1, 1, 0, 1), "v2.0.12");
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d, %d, %d", versionSDL.major, versionSDL.minor, versionSDL.patch);
+	ImGui::Separator();
+	ImGui::Text("CPU:");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %d Kb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());;
+	ImGui::Text("System RAM:");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1f Gb", (float)SDL_GetSystemRAM() / 1000);
+	ImGui::Text("Caps:");
+
+	if (SDL_HasRDTSC() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "RDTSC,"); }
+	if (SDL_HasMMX() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "MMX,"); }
+	if (SDL_HasSSE() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE,"); }
+	if (SDL_HasSSE2() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE2,"); }
+	if (SDL_HasSSE3() == SDL_bool::SDL_TRUE) { ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE3,"); }
+	if (SDL_HasSSE41() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41,"); }
+	if (SDL_HasSSE42() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE42,"); }
+	if (SDL_HasAVX() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX,"); }
+	if (SDL_HasAVX2() == SDL_bool::SDL_TRUE) { ImGui::SameLine(); ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX2,"); }
 
 	ImGui::Separator();
-
-	ImGui::Text("CPUs: ");
+	ImGui::Text("GPU:");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %ikb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
-
-	ImGui::Text("System RAM: ");
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_VENDOR));
+	ImGui::Text("Brand:");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%iGb", SDL_GetSystemRAM() / 1000);
-
-	ImGui::Text("Caps: ");
-	ImGui::SameLine();
-
-	if (SDL_Has3DNow() == SDL_TRUE) ImGui::TextColored(ImVec4(1, 1, 0, 1), "3DNow, ");
-	ImGui::SameLine();
-	if (SDL_HasAVX() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX, ");
-	ImGui::SameLine();
-	if (SDL_HasAVX2() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX2, ");
-	ImGui::SameLine();
-	if (SDL_HasAltiVec() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "AltiVec, ");
-	ImGui::SameLine();
-	if (SDL_HasMMX() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "MMX, ");
-	
-	if (SDL_HasRDTSC() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "RDTSC, ");
-	ImGui::SameLine();
-	if (SDL_HasSSE() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE, ");
-	ImGui::SameLine();
-	if (SDL_HasSSE2() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE2, ");
-	ImGui::SameLine();
-	if (SDL_HasSSE3() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE3, ");
-	ImGui::SameLine();
-	if (SDL_HasSSE41() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41, ");
-	ImGui::SameLine();
-	if (SDL_HasSSE42() == SDL_TRUE)ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE42, ");
-	
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_RENDERER));
 }

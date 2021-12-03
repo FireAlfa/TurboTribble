@@ -113,6 +113,13 @@ private:
 	std::vector<float> msLog;
 	// ---------------------------
 
+
+	// ----- Configuration variables -----
+
+	char appName[32] = TITLE;
+	char orgName[32] = ORGANITZATION;
+	// -----------------------------------
+
 private:
 
 	// ----- Modules vector -----

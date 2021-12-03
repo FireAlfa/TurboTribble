@@ -23,6 +23,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool startEnabled) : Module(app
 	
 	CalculateViewMatrix();
 
+	sceneHovered = false;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -51,123 +52,125 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 UpdateStatus ModuleCamera3D::Update(float dt)
 {
-	// ---- Keyboard Camera Control -----
-
-	float3 newPos(0,0,0);
+	float3 newPos(0, 0, 0);
 	float speed = cameraSpeed * dt;
 
+	if (sceneHovered)
+	{
+		// ---- Keyboard Camera Control -----
+
 	// Hold shift to move faster
-	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
-		speed = speed * 2.5 * dt;
-	
-	// Arrow Movement
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KeyState::KEY_REPEAT) newPos += z * speed;
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KeyState::KEY_REPEAT) newPos -= z * speed;
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_REPEAT) newPos += x * speed;
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_REPEAT) newPos -= x * speed;
+		if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
+			speed = speed * 2.5 * dt;
 
-	// Flythrough mode
-	if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KeyState::KEY_REPEAT)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT) newPos += z * speed;
-		if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT) newPos -= z * speed;
-		if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT) newPos += x * speed;
-		if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) newPos -= x * speed;
+		// Arrow Movement
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KeyState::KEY_REPEAT) newPos += z * speed;
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KeyState::KEY_REPEAT) newPos -= z * speed;
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_REPEAT) newPos += x * speed;
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_REPEAT) newPos -= x * speed;
 
-		if (app->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT) newPos.y -= speed;
-		if (app->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_REPEAT) newPos.y += speed;
-	}
-		
-	// Focus on Game Object
-	if (app->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
-	{
-		FrameSelected();
-	}
-	// ----------------------------------
-	
-
-	// -----  Mouse Camera Control -----
-
-	//Zoom in and out using Scrool Wheel
-	if (app->input->GetMouseZ() < 0)
-	{
-		newPos -= z * speed * 4;
-	}
-	if (app->input->GetMouseZ() > 0)
-	{
-		newPos += z * speed * 4;
-	}
-
-	// Look around the camera position holding Right Click
-	bool hasRotated = false;
-	if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KeyState::KEY_REPEAT)
-	{
-		int dx = -app->input->GetMouseXMotion();
-		int dy = -app->input->GetMouseYMotion();
-
-		if (dx != 0)
+		// Flythrough mode
+		if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KeyState::KEY_REPEAT)
 		{
-			const float newDeltaX = (float)dx * cameraSensitivity;
-			float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX); // lerp for smooth rotation acceleration to avoid jittering
-			lastDeltaX = deltaX;
-			Quat rotateY = Quat::RotateY(y.y >= 0.f ? deltaX * .1f : -deltaX * .1f);
-			y = rotateY * y;
-			z = rotateY * z;
-			CalculateViewMatrix();
-			hasRotated = true;
+			if (app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT) newPos += z * speed;
+			if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT) newPos -= z * speed;
+			if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT) newPos += x * speed;
+			if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) newPos -= x * speed;
+
+			if (app->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT) newPos.y -= speed;
+			if (app->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_REPEAT) newPos.y += speed;
 		}
 
-		if (dy != 0)
+		// Focus on Game Object
+		if (app->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
 		{
-			const float newDeltaY = (float)dy * cameraSensitivity;
-			float deltaY = newDeltaY + 0.95f * (lastDeltaY - newDeltaY); // lerp for smooth rotation acceleration to avoid jittering
-			lastDeltaY = deltaY;
-			Quat rotateX = Quat::RotateAxisAngle(x, -deltaY * .1f);
-			y = rotateX * y;
-			z = rotateX * z;
-			CalculateViewMatrix();
-			hasRotated = true;
+			FrameSelected();
 		}
-	}
-	
-	// Orbit on GameObject
-	if (app->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_REPEAT)
-	{
-		int dx = -app->input->GetMouseXMotion();
-		int dy = -app->input->GetMouseYMotion();
+		// ----------------------------------
 
-		if (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) {
-			if (app->editor->gameobjectSelected != nullptr)
+
+		// -----  Mouse Camera Control -----
+
+		//Zoom in and out using Scrool Wheel
+		if (app->input->GetMouseZ() < 0)
+		{
+			newPos -= z * speed * 4;
+		}
+		if (app->input->GetMouseZ() > 0)
+		{
+			newPos += z * speed * 4;
+		}
+
+		// Look around the camera position holding Right Click
+		bool hasRotated = false;
+		if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KeyState::KEY_REPEAT)
+		{
+			int dx = -app->input->GetMouseXMotion();
+			int dy = -app->input->GetMouseYMotion();
+
+			if (dx != 0)
 			{
 				const float newDeltaX = (float)dx * cameraSensitivity;
-				const float newDeltaY = (float)dy * cameraSensitivity;
-
-				reference = app->editor->gameobjectSelected->transform->GetPosition();
-				Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
-
-				if (abs(y.y) < 0.3f) // Avoid gimball lock on up & down apex
-				{
-					if (position.y > reference.y && newDeltaY < 0.f)
-						orbitMat = orbitMat * math::Quat::RotateAxisAngle(x, newDeltaY * .1f);
-					if (position.y < reference.y && newDeltaY > 0.f)
-						orbitMat = orbitMat * math::Quat::RotateAxisAngle(x, newDeltaY * .1f);
-				}
-				else
-				{
-					orbitMat = orbitMat * math::Quat::RotateAxisAngle(x, newDeltaY * .1f);
-				}
-
-				position = orbitMat * (position - reference) + reference;
-
+				float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX); // lerp for smooth rotation acceleration to avoid jittering
+				lastDeltaX = deltaX;
+				Quat rotateY = Quat::RotateY(y.y >= 0.f ? deltaX * .1f : -deltaX * .1f);
+				y = rotateY * y;
+				z = rotateY * z;
 				CalculateViewMatrix();
-				LookAt(reference);
+				hasRotated = true;
+			}
+
+			if (dy != 0)
+			{
+				const float newDeltaY = (float)dy * cameraSensitivity;
+				float deltaY = newDeltaY + 0.95f * (lastDeltaY - newDeltaY); // lerp for smooth rotation acceleration to avoid jittering
+				lastDeltaY = deltaY;
+				Quat rotateX = Quat::RotateAxisAngle(x, -deltaY * .1f);
+				y = rotateX * y;
+				z = rotateX * z;
+				CalculateViewMatrix();
+				hasRotated = true;
 			}
 		}
+
+		// Orbit on GameObject
+		if (app->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_REPEAT)
+		{
+			int dx = -app->input->GetMouseXMotion();
+			int dy = -app->input->GetMouseYMotion();
+
+			if (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) {
+				if (app->editor->gameobjectSelected != nullptr)
+				{
+					const float newDeltaX = (float)dx * cameraSensitivity;
+					const float newDeltaY = (float)dy * cameraSensitivity;
+
+					reference = app->editor->gameobjectSelected->transform->GetPosition();
+					Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
+
+					if (abs(y.y) < 0.3f) // Avoid gimball lock on up & down apex
+					{
+						if (position.y > reference.y && newDeltaY < 0.f)
+							orbitMat = orbitMat * math::Quat::RotateAxisAngle(x, newDeltaY * .1f);
+						if (position.y < reference.y && newDeltaY > 0.f)
+							orbitMat = orbitMat * math::Quat::RotateAxisAngle(x, newDeltaY * .1f);
+					}
+					else
+					{
+						orbitMat = orbitMat * math::Quat::RotateAxisAngle(x, newDeltaY * .1f);
+					}
+
+					position = orbitMat * (position - reference) + reference;
+
+					CalculateViewMatrix();
+					LookAt(reference);
+				}
+			}
+		}
+
+		!hasRotated ? lastDeltaX = lastDeltaY = 0.f : 0.f;
+		// ---------------------------------
 	}
-
-	!hasRotated ? lastDeltaX = lastDeltaY = 0.f : 0.f;
-	// ---------------------------------
-
 
 	// Update position
 	position += newPos;
