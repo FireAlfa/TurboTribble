@@ -55,7 +55,19 @@ void GameObject::OnGui()
 {
 	if (app->scene->root != this)
 	{
-		ImGui::Text("%s", name.c_str());
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", name.c_str());
+		if (ImGui::CollapsingHeader("Properties", ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			// Select all text when you enter the box and only modify it when Enter is pressed
+			ImGuiInputTextFlags textFlags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+			char text[32];
+			// Name box
+			strcpy_s(text, name.c_str());
+			if (ImGui::InputText("Name", text, IM_ARRAYSIZE(text), textFlags))
+			{
+				name = text;
+			}
+		}
 		ImGui::Separator();
 
 		for (Component* component : components)
@@ -63,6 +75,16 @@ void GameObject::OnGui()
 			component->OnGui();
 		}
 	}
+}
+
+void GameObject::Delete()
+{
+	while (components.size() != 0)
+		DeleteComponent(components.at(0));
+	while (children.size() != 0)
+		RemoveChild(children.at(0));
+
+	parent->RemoveChild(this);
 }
 
 void GameObject::DeleteComponent(Component* component) {

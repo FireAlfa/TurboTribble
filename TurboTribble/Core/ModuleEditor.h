@@ -75,6 +75,7 @@ private:
 	void InspectorWindow();
 	void InspectorGameObject();
 	void HierarchyWindow();
+	void PremadeObjectsMenu();
 	void GameWindow();
 	void SceneWindow();
 	// ------------------------

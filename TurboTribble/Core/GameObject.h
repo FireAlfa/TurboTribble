@@ -21,6 +21,8 @@ public:
 	void Update(float dt);
 	void OnGui();
 
+	void Delete();
+
 	template<class T> T* CreateComponent()
 	{
 		T* newComponent = new T(this);
@@ -44,6 +46,8 @@ public:
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 	void PropagateTransform();
+
+public:
 
 	std::string name;
 	GameObject* parent = nullptr;

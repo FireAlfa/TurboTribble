@@ -41,7 +41,6 @@ bool ModuleImport::Init()
 
 bool ModuleImport::LoadGeometry(const char* path)
 {
-
 	// Own structure	
 	GameObject* root = nullptr;
 	std::string newRootName(path);
@@ -93,7 +92,6 @@ bool ModuleImport::LoadGeometry(const char* path)
 							const TextureObject& textureObject = app->textures->Load(mesh->texturePath);							
 							ComponentMaterial* materialComp = newGameObject->CreateComponent<ComponentMaterial>();
 							materialComp->SetTexture(textureObject);
-							
 						}
 						else
 						{

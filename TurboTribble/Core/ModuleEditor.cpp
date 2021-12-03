@@ -22,6 +22,7 @@
 #include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_internal.h"
+#include "ImGui/imgui.h"
 #include "glew.h"
 #include <gl/GL.h>
 #include "Assimp/include/version.h"
@@ -395,18 +396,7 @@ void ModuleEditor::MenuBar()
 
             if (ImGui::BeginMenu("3D Objects"))
             {
-                if (ImGui::MenuItem("Cube")) {
-                    GameObject* newGameObject = app->scene->CreateGameObject("Cube");
-                    ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CUBE);
-                }
-                if (ImGui::MenuItem("Sphere")) {
-                    GameObject* newGameObject = app->scene->CreateGameObject("Sphere");
-                    ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::SPHERE);
-                }
-                if (ImGui::MenuItem("Cylinder")) {
-                    GameObject* newGameObject = app->scene->CreateGameObject("Cylinder");
-                    ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CYLINDER);
-                }
+                PremadeObjectsMenu();
                 ImGui::EndMenu();
             }
             ImGui::EndMenu();
@@ -568,16 +558,58 @@ void ModuleEditor::HierarchyWindow()
     ImGui::Begin("Hierarchy", &showHierarchyWindow);
 
     // Just cleaning gameObjects(not textures,buffers...)
-    if (ImGui::Button("Clear", { 60,20 }))
+    //if (ImGui::Button("Clear", { 60,20 }))
+    //{
+    //    app->editor->gameobjectSelected = nullptr;
+    //    app->scene->CleanUp(); //Clean GameObjects
+    //}
+    //ImGui::SameLine();
+    
+
+    // "+" Button with a drop down to add GameObjects
+    ImGui::SetNextItemWidth(35.f);
+    if(ImGui::BeginCombo(" ", "+", ImGuiComboFlags_PopupAlignLeft))
     {
-        app->editor->gameobjectSelected = nullptr;
-        app->scene->CleanUp(); //Clean GameObjects 
+        if (ImGui::Selectable("Create Empty"))
+            app->scene->CreateGameObject(app->scene->root);
+
+        if (ImGui::Selectable("Create Empty Child"))
+            app->scene->CreateGameObject(gameobjectSelected);
+
+        ImGui::Separator();
+
+        if (ImGui::BeginMenu("3D Objects"))
+        {
+            PremadeObjectsMenu();
+            ImGui::EndMenu();
+        }
+        
+        ImGui::EndCombo();
     }
-    ImGui::SameLine();
-    if (ImGui::Button("New", { 60,20 }))
+    
+    // Right click menu
+    if (ImGui::BeginPopupContextWindow())
     {
-        app->scene->CreateGameObject();
+        if (ImGui::MenuItem("Create Empty"))
+            app->scene->CreateGameObject();
+
+        ImGui::Separator();
+
+        if (gameobjectSelected != nullptr)
+        {
+            // Delete GameObject
+            if (ImGui::MenuItem("Delete"))
+            {
+                gameobjectSelected->Delete();
+                RELEASE(gameobjectSelected);
+            }
+        }
+
+        ImGui::EndPopup();
     }
+
+
+    // Reparenting and selecting
     std::stack<GameObject*> s;
     std::stack<uint> indents;
     s.push(app->scene->root);
@@ -599,18 +631,20 @@ void ModuleEditor::HierarchyWindow()
             ImGui::Indent();
         }
 
-        if (strcmp(go->name.c_str(), "Root") == 0)
+        if (strcmp(go->name.c_str(), "Root") == 0) // Root is open by default so you can see its children
         {
             nodeFlags |= ImGuiTreeNodeFlags_DefaultOpen;
         }
         if (ImGui::TreeNodeEx(go->name.c_str(), nodeFlags))
         {
-            
-            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+            if (strcmp(go->name.c_str(), "Root") != 0) // Root can not change parent
             {
-                ImGui::SetDragDropPayload("DragDropHierarchy", &go, sizeof(GameObject*), ImGuiCond_Once);
-                ImGui::Text("%s", go->name.c_str());
-                ImGui::EndDragDropSource();
+                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+                {
+                    ImGui::SetDragDropPayload("DragDropHierarchy", &go, sizeof(GameObject*), ImGuiCond_Once);
+                    ImGui::Text("%s", go->name.c_str());
+                    ImGui::EndDragDropSource();
+                }
             }
 
             if (ImGui::BeginDragDropTarget())
@@ -628,7 +662,7 @@ void ModuleEditor::HierarchyWindow()
                 ImGui::EndDragDropTarget();
             }
 
-            if (ImGui::IsItemClicked())
+            if ((ImGui::IsItemClicked(ImGuiMouseButton_Left)) || (ImGui::IsItemClicked(ImGuiMouseButton_Right)))
             {
                 gameobjectSelected ? gameobjectSelected->isSelected = !gameobjectSelected->isSelected : 0;
                 gameobjectSelected = go;
@@ -657,6 +691,22 @@ void ModuleEditor::HierarchyWindow()
         }
     }
     ImGui::End();
+}
+
+void ModuleEditor::PremadeObjectsMenu()
+{
+    if (ImGui::MenuItem("Cube")) {
+        GameObject* newGameObject = app->scene->CreateGameObject("Cube");
+        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CUBE);
+    }
+    if (ImGui::MenuItem("Sphere")) {
+        GameObject* newGameObject = app->scene->CreateGameObject("Sphere");
+        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::SPHERE);
+    }
+    if (ImGui::MenuItem("Cylinder")) {
+        GameObject* newGameObject = app->scene->CreateGameObject("Cylinder");
+        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CYLINDER);
+    }
 }
 
 void ModuleEditor::InspectorWindow()
