@@ -57,8 +57,10 @@ bool ModuleTextures::Start()
 
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_HEIGHT][4];
 
-	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
-		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+	for (int i = 0; i < CHECKERS_HEIGHT; i++)
+	{
+		for (int j = 0; j < CHECKERS_WIDTH; j++)
+		{
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
 			checkerImage[i][j][0] = (GLubyte)c;
 			checkerImage[i][j][1] = (GLubyte)c;

@@ -139,7 +139,8 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 			int dx = -app->input->GetMouseXMotion();
 			int dy = -app->input->GetMouseYMotion();
 
-			if (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) {
+			if (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+			{
 				if (app->editor->gameobjectSelected != nullptr)
 				{
 					const float newDeltaX = (float)dx * cameraSensitivity;

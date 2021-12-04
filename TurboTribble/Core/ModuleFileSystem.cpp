@@ -547,15 +547,18 @@ std::string ModuleFileSystem::SetNormalName(const char* path)
 	bool found = false;
 	for (size_t i = 0; i < name.size(); i++)
 	{
-		if (name.at(i) == 0x5c) {
+		if (name.at(i) == 0x5c)
+		{
 			found = true;
 		}
 	}
 
-	if (found) {
+	if (found)
+	{
 		new_name = name.substr(name.find_last_of(0x5c) + 1);
 	}
-	else {
+	else
+	{
 		new_name = name.substr(name.find_last_of('/') + 1);
 	}
 	return new_name;

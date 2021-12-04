@@ -126,7 +126,8 @@ UpdateStatus ModuleEditor::Update(float dt)
 {
     DrawGrid();
     // Creating MenuBar item as a root for docking windows
-    if (DockingRootItem("Viewport", ImGuiWindowFlags_MenuBar)) {
+    if (DockingRootItem("Viewport", ImGuiWindowFlags_MenuBar))
+    {
         MenuBar();
         ImGui::End();
     }
@@ -271,11 +272,13 @@ ModuleEditor::Grid::~Grid()
     glDeleteBuffers(1, &VAO);
 }
 
+// Add text to the console Log
 void ModuleEditor::UpdateText(const char* text)
 {
     consoleText.appendf(text);
 }
 
+/* ----- DOCKING ----- */
 bool ModuleEditor::DockingRootItem(char* id, ImGuiWindowFlags winFlags)
 {
     // Setting windows as viewport size
@@ -312,7 +315,7 @@ void ModuleEditor::BeginDock(char* dockSpaceId, ImGuiDockNodeFlags dockFlags, Im
     }
 }
 
-// Main Menu Bar
+/* ----- MENU BAR ----- */
 void ModuleEditor::MenuBar()
 {
     // Main Menu Bar
@@ -452,15 +455,18 @@ void ModuleEditor::MenuBar()
 // List with the premade 3D Objects, used to be inserted in Menus
 void ModuleEditor::PremadeObjectsMenu()
 {
-    if (ImGui::MenuItem("Cube")) {
+    if (ImGui::MenuItem("Cube"))
+    {
         GameObject* newGameObject = app->scene->CreateGameObject("Cube");
         ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CUBE);
     }
-    if (ImGui::MenuItem("Sphere")) {
+    if (ImGui::MenuItem("Sphere"))
+    {
         GameObject* newGameObject = app->scene->CreateGameObject("Sphere");
         ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::SPHERE);
     }
-    if (ImGui::MenuItem("Cylinder")) {
+    if (ImGui::MenuItem("Cylinder"))
+    {
         GameObject* newGameObject = app->scene->CreateGameObject("Cylinder");
         ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CYLINDER);
     }
@@ -497,7 +503,7 @@ void ModuleEditor::UpdateWindowStatus()
     if (showSceneWindow) SceneWindow();
 }
 
-/* ----- ABOUT WINDOW ----- */
+/* ---------- ABOUT WINDOW ---------- */
 void ModuleEditor::AboutWindow()
 {
 
@@ -541,7 +547,7 @@ void ModuleEditor::AboutWindow()
 
 }
 
-/* ----- CONFIGURATION WINDOW ----- */
+/* ---------- CONFIGURATION WINDOW ---------- */
 void ModuleEditor::ConfigurationWindow()
 {
     ImGui::Begin("Configuration", &showConfigWindow);
@@ -549,7 +555,7 @@ void ModuleEditor::ConfigurationWindow()
     ImGui::End();
 }
 
-/* ----- TEXTURES WINDOW ----- */
+/* ---------- TEXTURES WINDOW ---------- */
 void ModuleEditor::TexturesWindow()
 {
     ImGui::Begin("Textures", &showTexturesWindow);
@@ -574,7 +580,7 @@ void ModuleEditor::TexturesWindow()
     ImGui::End();
 }
 
-/* ----- CONSOLE WINDOW ----- */
+/* ---------- CONSOLE WINDOW ---------- */
 void ModuleEditor::ConsoleWindow()
 {
     ImGui::Begin("Console", &showConsoleWindow);
@@ -583,7 +589,7 @@ void ModuleEditor::ConsoleWindow()
     ImGui::End();
 }
 
-/* ----- INSPECTOR WINDOW ----- */
+/* ---------- INSPECTOR WINDOW ---------- */
 void ModuleEditor::InspectorWindow()
 {
     ImGui::Begin("Inspector", &showInspectorWindow);
@@ -600,7 +606,7 @@ void ModuleEditor::InspectorGameObject()
         gameobjectSelected->OnGui();
 }
 
-/* ----- HIERARCHY WINDOW ----- */
+/* ---------- HIERARCHY WINDOW ---------- */
 void ModuleEditor::HierarchyWindow()
 {
     ImGui::Begin("Hierarchy", &showHierarchyWindow);
@@ -751,14 +757,14 @@ void ModuleEditor::HierarchyWindow()
     ImGui::End();
 }
 
-/* ----- GAME WINDOW ----- */
+/* ---------- GAME WINDOW ---------- */
 void ModuleEditor::GameWindow()
 {
     ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
     ImGui::End();
 }
 
-/* ----- SCENE WINDOW ----- */
+/* ---------- SCENE WINDOW ---------- */
 void ModuleEditor::SceneWindow()
 {
     ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
@@ -786,7 +792,7 @@ void ModuleEditor::SceneWindow()
     ImGui::End();
 }
 
-
+// Do actions when Shortcuts are executed
 void ModuleEditor::CheckKeyboardInputs()
 {
     if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||

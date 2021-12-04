@@ -10,7 +10,8 @@
 
 
 
-ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent) {
+ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
+{
 	
 	position = float3::zero;
 	rotation = Quat::identity;
@@ -20,7 +21,8 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent) {
 	transformMatrixLocal.SetIdentity();
 }
 
-bool ComponentTransform::Update(float dt) {
+bool ComponentTransform::Update(float dt)
+{
 	if (isDirty)
 	{
 		transformMatrixLocal = float4x4::FromTRS(position, rotation, scale);

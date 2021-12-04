@@ -241,7 +241,8 @@ void Application::AddModule(Module* mod)
 	modules.push_back(mod);
 }
 
-void Application::DrawFPSDiagram() {
+void Application::DrawFPSDiagram()
+{
 
 	// Select all text when you enter the box and only modify it when Enter is pressed
 	ImGuiInputTextFlags textFlags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
@@ -285,7 +286,8 @@ void Application::DrawFPSDiagram() {
 	sprintf_s(title, 25, "Milliseconds %.1f", msLog[msLog.size() - 1]);
 	ImGui::PlotHistogram("##framerate", &msLog[0], msLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 
-	if (ImGui::Checkbox("VSYNC:", &renderer3D->vsyncActive)) {
+	if (ImGui::Checkbox("VSYNC:", &renderer3D->vsyncActive))
+	{
 
 		if (renderer3D->vsyncActive)
 			SDL_GL_SetSwapInterval(1);
@@ -298,7 +300,8 @@ void Application::DrawFPSDiagram() {
 	else { ImGui::TextColored(ImVec4(1, 1, 0, 1), "Off"); }
 }
 
-void Application::DrawHardwareConsole() {
+void Application::DrawHardwareConsole()
+{
 
 	SDL_version versionSDL;
 	SDL_GetVersion(&versionSDL);

@@ -173,7 +173,8 @@ void ModuleWindow::OnGui()
 		
 	if (ImGui::CollapsingHeader("Window"))
 	{
-		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f)) {
+		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
+		{
 			SDL_SetWindowBrightness(window, brightness);
 			SDL_UpdateWindowSurface(window);
 		};
@@ -183,7 +184,8 @@ void ModuleWindow::OnGui()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", app->fps);
 		
-		if (ImGui::Checkbox("FullScreen", &fullscreen)) {
+		if (ImGui::Checkbox("FullScreen", &fullscreen))
+		{
 			fullscreen ? fullDesktop = false : 0;
 			if (fullscreen)
 				SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
@@ -191,7 +193,8 @@ void ModuleWindow::OnGui()
 				SDL_SetWindowFullscreen(window, flags);
 		}
 		ImGui::SameLine();
-		if (!fullscreen && ! fullDesktop && ImGui::Checkbox("Resizable", &resizable)) {
+		if (!fullscreen && ! fullDesktop && ImGui::Checkbox("Resizable", &resizable))
+		{
 			if (resizable)
 				SDL_SetWindowResizable(window, SDL_TRUE);
 			else
@@ -199,14 +202,16 @@ void ModuleWindow::OnGui()
 		}
 
 		// Second Checkbox Row [BORDERLESS AND FULLDESKTOP]
-		if (!fullscreen && !fullDesktop && ImGui::Checkbox("Borderless", &borderless)) {
+		if (!fullscreen && !fullDesktop && ImGui::Checkbox("Borderless", &borderless))
+		{
 			if (borderless)
 				SDL_SetWindowBordered(window, SDL_FALSE);
 			else
 				SDL_SetWindowBordered(window, SDL_TRUE);
 		}
 		ImGui::SameLine();
-		if (ImGui::Checkbox("Full Desktop", &fullDesktop)) {
+		if (ImGui::Checkbox("Full Desktop", &fullDesktop))
+		{
 			fullDesktop ? fullscreen = false : 0;
 			if (fullDesktop)
 				SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);

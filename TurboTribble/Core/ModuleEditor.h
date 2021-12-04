@@ -54,7 +54,7 @@ private:
 
 	// Draw MenuBar
 	void MenuBar();
-
+	void PremadeObjectsMenu();
 
 	// ----- Background Grid -----
 	
@@ -75,7 +75,6 @@ private:
 	void InspectorWindow();
 	void InspectorGameObject();
 	void HierarchyWindow();
-	void PremadeObjectsMenu();
 	void GameWindow();
 	void SceneWindow();
 	// ------------------------

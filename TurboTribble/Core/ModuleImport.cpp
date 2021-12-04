@@ -55,19 +55,23 @@ bool ModuleImport::LoadGeometry(const char* path)
 	char* buffer = nullptr;
 	uint bytesFile = app->fileSystem->Load(path, &buffer);
 
-	if (buffer == nullptr) {
+	if (buffer == nullptr)
+	{
 		std::string normPathShort = "Assets/Models/" + app->fileSystem->SetNormalName(path);
 		bytesFile = app->fileSystem->Load(normPathShort.c_str(), &buffer);
 	}
-	if (buffer != nullptr) {
+	if (buffer != nullptr)
+	{
 		scene = aiImportFileFromMemory(buffer, bytesFile, aiProcessPreset_TargetRealtime_MaxQuality, NULL);
 	}
-	else {
+	else
+	{
 		scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	}
 
 
-	if (scene != nullptr && scene->HasMeshes()) {
+	if (scene != nullptr && scene->HasMeshes())
+	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (size_t i = 0; i < scene->mNumMeshes; i++)
 		{		
@@ -79,13 +83,16 @@ bool ModuleImport::LoadGeometry(const char* path)
 			ComponentMesh* mesh = newGameObject->CreateComponent<ComponentMesh>();
 			assimpMesh = scene->mMeshes[i];
 			
-			if (scene->HasMaterials()) {
+			if (scene->HasMaterials())
+			{
 				texture = scene->mMaterials[assimpMesh->mMaterialIndex];
 
-				if (texture != nullptr) {
+				if (texture != nullptr)
+				{
 					aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, assimpMesh->mMaterialIndex, &texturePath);
 					std::string newPath(texturePath.C_Str());
-					if (newPath.size() > 0) {
+					if (newPath.size() > 0)
+					{
 						mesh->texturePath = "Assets/Textures/" + newPath;
 						if (!app->textures->Find(mesh->texturePath))
 						{
@@ -110,23 +117,27 @@ bool ModuleImport::LoadGeometry(const char* path)
 			TTLOG("+++ New mesh with %d vertices +++\n", assimpMesh->mNumVertices);
 
 			// Copying faces
-			if (assimpMesh->HasFaces()) {
+			if (assimpMesh->HasFaces())
+			{
 				mesh->numIndices = assimpMesh->mNumFaces * 3;
 				mesh->indices.resize(mesh->numIndices);
 
 				for (size_t i = 0; i < assimpMesh->mNumFaces; i++)
 				{
-					if (assimpMesh->mFaces[i].mNumIndices != 3) {
+					if (assimpMesh->mFaces[i].mNumIndices != 3)
+					{
 						TTLOG("### WARNING, geometry face with != 3 indices! ###\n")
 					}
-					else {
+					else
+					{
 						memcpy(&mesh->indices[i * 3], assimpMesh->mFaces[i].mIndices, 3 * sizeof(uint));
 					}
 				}
 			}
 			
 			// Copying Normals info
-			if (assimpMesh->HasNormals()) {
+			if (assimpMesh->HasNormals())
+			{
 
 				mesh->normals.resize(assimpMesh->mNumVertices);
 				memcpy(&mesh->normals[0], assimpMesh->mNormals, sizeof(float3) * assimpMesh->mNumVertices);

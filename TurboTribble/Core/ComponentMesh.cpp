@@ -66,7 +66,8 @@ void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
 }
 
 
-void ComponentMesh::GenerateBuffers() {
+void ComponentMesh::GenerateBuffers()
+{
 	
 	//-- Generate Vertex
 	vertexBufferId = 0;

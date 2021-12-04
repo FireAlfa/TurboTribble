@@ -9,7 +9,8 @@
 
 
 
-GameObject::GameObject() {
+GameObject::GameObject()
+{
 
 	name = name + ("GameObject");
 	parent = nullptr;
@@ -27,9 +28,11 @@ GameObject::GameObject(const std::string name) : name(name)
 }
 
 
-GameObject::~GameObject() {
+GameObject::~GameObject()
+{
 
-	for (size_t i = 0; i < components.size(); i++) {
+	for (size_t i = 0; i < components.size(); i++)
+	{
 		RELEASE(components[i]);
 	}
 
@@ -89,7 +92,8 @@ void GameObject::Delete()
 	parent->RemoveChild(this);
 }
 
-void GameObject::DeleteComponent(Component* component) {
+void GameObject::DeleteComponent(Component* component)
+{
 
 	auto componentIt = std::find(components.begin(), components.end(), component);
 	if (componentIt != components.end())

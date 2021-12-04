@@ -208,7 +208,8 @@ void ModuleRenderer3D::OnGui()
 		if (ImGui::Checkbox("Texture Draw", &useTexture))
 			DrawingModes(useTexture, GL_TEXTURE_2D);
 
-		if (ImGui::Checkbox("Wireframe Mode", &wireframeMode)) {
+		if (ImGui::Checkbox("Wireframe Mode", &wireframeMode))
+		{
 			wireframeMode ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 	}
