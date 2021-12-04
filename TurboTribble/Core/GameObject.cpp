@@ -79,6 +79,8 @@ void GameObject::OnGui()
 
 void GameObject::Delete()
 {
+	TTLOG("--- Erasing GameObject %s ---", name.c_str());
+
 	while (components.size() != 0)
 		DeleteComponent(components.at(0));
 	while (children.size() != 0)

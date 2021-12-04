@@ -175,6 +175,7 @@ bool ModuleEditor::CleanUp()
 	return true;
 }
 
+/* ----- BACKGROUND GRID ----- */
 void ModuleEditor::CreateGridBuffer()
 {
     std::vector<float3> vertices;
@@ -225,7 +226,6 @@ void ModuleEditor::CreateGridBuffer()
 
     grid.length = (GLuint)indices.size() * 4;
 }
-
 void ModuleEditor::DrawGrid()
 {
     GLboolean isLightingOn, isDepthTestOn;
@@ -266,48 +266,9 @@ void ModuleEditor::DrawGrid()
     !isDepthTestOn ? glDisable(GL_DEPTH_TEST) : 0;
 
 }
-
-void ModuleEditor::AboutWindow()
+ModuleEditor::Grid::~Grid()
 {
-
-    ImGui::Begin("About TurboTribble Engine", &showAboutWindow);
-    ImGui::Text("TurboTribble is a C++ Game Engine developed as a class project.");
-    ImGui::Text("Version 0.1 - WIP");
-    ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM-UPC.");
-    ImGui::Separator();
-    ImGui::Text("3rd Party Libraries used:");
-    ImGui::BulletText("Compiled SDL %d.%d.%d", SDLCompiledVersion.major, SDLCompiledVersion.minor, SDLCompiledVersion.patch);
-    ImGui::BulletText("Linked SDL %d.%d.%d", SDLLinkedVersion.major, SDLLinkedVersion.minor, SDLLinkedVersion.patch);
-    ImGui::BulletText("Glew %s", glewGetString(GLEW_VERSION));
-    ImGui::BulletText("ImGui %s", imGuiVersion);
-    ImGui::BulletText("MathGeoLib 1.5");
-    ImGui::BulletText("OpenGL %d.%d", openGLMajorVersion, openGLMinorVersion);
-    ImGui::BulletText("Assimp %d.%d.%d", assimpVersion.major, assimpVersion.minor, assimpVersion.patch);
-    ImGui::Separator();
-    ImGui::Text("License:");
-    ImGui::Text("MIT License");
-    ImGui::Text("Copyright(c) 2021 Oscar Canales and Carles Garriga");
-    ImGui::TextWrapped(
-        "Permission is hereby granted, free of charge, to any person obtaining a copy "
-        "of this software and associated documentation files(the Software), to deal "
-        "in the Software without restriction, including without limitation the rights "
-        "to use, copy, modify, merge, publish, distribute, sublicense, and /or sell "
-        "copies of the Software, and to permit persons to whom the Software is "
-        "furnished to do so, subject to the following conditions:");
-    ImGui::TextWrapped(
-        "The above copyright notice and this permission notice shall be included in all "
-        "copies or substantial portions of the Software.");
-    ImGui::TextWrapped(
-        "THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR "
-        "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, "
-        "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE "
-        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER "
-        "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,"
-        "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE "
-        "SOFTWARE.");
-
-    ImGui::End();
-
+    glDeleteBuffers(1, &VAO);
 }
 
 void ModuleEditor::UpdateText(const char* text)
@@ -340,7 +301,6 @@ bool ModuleEditor::DockingRootItem(char* id, ImGuiWindowFlags winFlags)
 
     return temp;
 }
-
 void ModuleEditor::BeginDock(char* dockSpaceId, ImGuiDockNodeFlags dockFlags, ImVec2 size)
 {
     // DockSpace
@@ -352,13 +312,14 @@ void ModuleEditor::BeginDock(char* dockSpaceId, ImGuiDockNodeFlags dockFlags, Im
     }
 }
 
+// Main Menu Bar
 void ModuleEditor::MenuBar()
 {
-    /* ----- MAIN MENU BAR DOCKED ----- */
+    // Main Menu Bar
     if (ImGui::BeginMainMenuBar())
     {
 
-        /* ----- FILE ----- */
+        // File Tab
         if (ImGui::BeginMenu("File"))
         {
             if (ImGui::MenuItem("Save", "Ctrl + S"))
@@ -370,7 +331,7 @@ void ModuleEditor::MenuBar()
             ImGui::EndMenu();
         }
 
-        /* ----- EDIT ----- */
+        // Edit Tab
         if (ImGui::BeginMenu("Edit"))
         {
             if (ImGui::MenuItem("Frame Selected", "F"))
@@ -385,7 +346,7 @@ void ModuleEditor::MenuBar()
             ImGui::EndMenu();
         }
 
-        /* ----- GAMEOBJECTS ----- */
+        // GameObjects Tab
         if (ImGui::BeginMenu("GameObject"))
         {
 
@@ -402,7 +363,7 @@ void ModuleEditor::MenuBar()
             ImGui::EndMenu();
         }
 
-        /* ----- WINDOW ----- */
+        // Window Tab
         if (ImGui::BeginMenu("Window"))
         {
 
@@ -470,7 +431,7 @@ void ModuleEditor::MenuBar()
             ImGui::EndMenu();
         }
 
-        /* ----- HELP ----- */
+        // Help Tab
         if (ImGui::BeginMenu("Help"))
         {
             if (ImGui::MenuItem("About TurboTribble")) { showAboutWindow = !showAboutWindow, SW_SHOW; }
@@ -488,6 +449,24 @@ void ModuleEditor::MenuBar()
     ImGui::EndMainMenuBar();
 }
 
+// List with the premade 3D Objects, used to be inserted in Menus
+void ModuleEditor::PremadeObjectsMenu()
+{
+    if (ImGui::MenuItem("Cube")) {
+        GameObject* newGameObject = app->scene->CreateGameObject("Cube");
+        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CUBE);
+    }
+    if (ImGui::MenuItem("Sphere")) {
+        GameObject* newGameObject = app->scene->CreateGameObject("Sphere");
+        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::SPHERE);
+    }
+    if (ImGui::MenuItem("Cylinder")) {
+        GameObject* newGameObject = app->scene->CreateGameObject("Cylinder");
+        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CYLINDER);
+    }
+}
+
+/* ----- CHECK IF EACH WINDOW SHOULD BE DRAWN ----- */
 void ModuleEditor::UpdateWindowStatus()
 {
     // Demo
@@ -518,41 +497,110 @@ void ModuleEditor::UpdateWindowStatus()
     if (showSceneWindow) SceneWindow();
 }
 
-void ModuleEditor::SceneWindow()
+/* ----- ABOUT WINDOW ----- */
+void ModuleEditor::AboutWindow()
 {
-    ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-    ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
-    ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
-    if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
-    {
-        lastViewportSize = viewPortSize;
-        app->camera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
-        app->camera->RecalculateProjection();
-    }
-    ImGui::Image((ImTextureID)app->viewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::Begin("About TurboTribble Engine", &showAboutWindow);
+    ImGui::Text("TurboTribble is a C++ Game Engine developed as a class project.");
+    ImGui::Text("Version 0.1 - WIP");
+    ImGui::Text("By Oscar Canales & Carles Garriga. Students of CITM-UPC.");
+    ImGui::Separator();
+    ImGui::Text("3rd Party Libraries used:");
+    ImGui::BulletText("Compiled SDL %d.%d.%d", SDLCompiledVersion.major, SDLCompiledVersion.minor, SDLCompiledVersion.patch);
+    ImGui::BulletText("Linked SDL %d.%d.%d", SDLLinkedVersion.major, SDLLinkedVersion.minor, SDLLinkedVersion.patch);
+    ImGui::BulletText("Glew %s", glewGetString(GLEW_VERSION));
+    ImGui::BulletText("ImGui %s", imGuiVersion);
+    ImGui::BulletText("MathGeoLib 1.5");
+    ImGui::BulletText("OpenGL %d.%d", openGLMajorVersion, openGLMinorVersion);
+    ImGui::BulletText("Assimp %d.%d.%d", assimpVersion.major, assimpVersion.minor, assimpVersion.patch);
+    ImGui::Separator();
+    ImGui::Text("License:");
+    ImGui::Text("MIT License");
+    ImGui::Text("Copyright(c) 2021 Oscar Canales and Carles Garriga");
+    ImGui::TextWrapped(
+        "Permission is hereby granted, free of charge, to any person obtaining a copy "
+        "of this software and associated documentation files(the Software), to deal "
+        "in the Software without restriction, including without limitation the rights "
+        "to use, copy, modify, merge, publish, distribute, sublicense, and /or sell "
+        "copies of the Software, and to permit persons to whom the Software is "
+        "furnished to do so, subject to the following conditions:");
+    ImGui::TextWrapped(
+        "The above copyright notice and this permission notice shall be included in all "
+        "copies or substantial portions of the Software.");
+    ImGui::TextWrapped(
+        "THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR "
+        "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, "
+        "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE "
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER "
+        "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,"
+        "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE "
+        "SOFTWARE.");
 
-    /*ImGuiIO io = ImGui::GetIO();
-    ImVec2 posM = io.MousePos;*/
-    ImVec2 posW = ImGui::GetWindowPos();
-    if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(), ImVec2(posW.x + ImGui::GetWindowContentRegionMax().x, posW.y + ImGui::GetWindowContentRegionMax().y)))
-    {
-        app->camera->sceneHovered = true;
-    }
-    else
-    {
-        app->camera->sceneHovered = false;
-    }
-    
+    ImGui::End();
+
+}
+
+/* ----- CONFIGURATION WINDOW ----- */
+void ModuleEditor::ConfigurationWindow()
+{
+    ImGui::Begin("Configuration", &showConfigWindow);
+    app->OnGui();
     ImGui::End();
 }
 
-void ModuleEditor::GameWindow()
+/* ----- TEXTURES WINDOW ----- */
+void ModuleEditor::TexturesWindow()
 {
-    ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
+    ImGui::Begin("Textures", &showTexturesWindow);
+    for (auto& t : app->textures->textures)
+    {
+        ImGui::Image((ImTextureID)t.second.id, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::SameLine();
+        ImGui::PushID(t.second.id);
+        if (ImGui::Button("Assign to selected"))
+        {
+            if (gameobjectSelected)
+            {
+                ComponentMaterial* material = gameobjectSelected->GetComponent<ComponentMaterial>();
+                if (material)
+                {
+                    material->SetTexture(t.second);
+                }
+            }
+        }
+        ImGui::PopID();
+    }
     ImGui::End();
 }
 
+/* ----- CONSOLE WINDOW ----- */
+void ModuleEditor::ConsoleWindow()
+{
+    ImGui::Begin("Console", &showConsoleWindow);
+    ImGui::TextUnformatted(consoleText.begin(), consoleText.end());
+    //ImGui::SetScrollHere(1.0f);
+    ImGui::End();
+}
+
+/* ----- INSPECTOR WINDOW ----- */
+void ModuleEditor::InspectorWindow()
+{
+    ImGui::Begin("Inspector", &showInspectorWindow);
+    // Only shows info if any gameobject selected
+    if (gameobjectSelected != nullptr)
+        InspectorGameObject();
+
+    ImGui::End();
+}
+// Inspector info for the selected GameObject
+void ModuleEditor::InspectorGameObject()
+{
+    if (gameobjectSelected)
+        gameobjectSelected->OnGui();
+}
+
+/* ----- HIERARCHY WINDOW ----- */
 void ModuleEditor::HierarchyWindow()
 {
     ImGui::Begin("Hierarchy", &showHierarchyWindow);
@@ -564,11 +612,17 @@ void ModuleEditor::HierarchyWindow()
     //    app->scene->CleanUp(); //Clean GameObjects
     //}
     //ImGui::SameLine();
-    
+
+    // Deselect GameObject by clicking outside of the list
+    if (((ImGui::IsMouseClicked(ImGuiMouseButton_Left)) || (ImGui::IsMouseClicked(ImGuiMouseButton_Right))) && gameobjectSelected != nullptr && ImGui::IsWindowHovered() && gameobjectSelected->isSelected)
+    {
+        gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
+        gameobjectSelected = nullptr;
+    }
 
     // "+" Button with a drop down to add GameObjects
     ImGui::SetNextItemWidth(35.f);
-    if(ImGui::BeginCombo(" ", "+", ImGuiComboFlags_PopupAlignLeft))
+    if (ImGui::BeginCombo(" ", "+", ImGuiComboFlags_PopupAlignLeft))
     {
         if (ImGui::Selectable("Create Empty"))
             app->scene->CreateGameObject(app->scene->root);
@@ -583,20 +637,23 @@ void ModuleEditor::HierarchyWindow()
             PremadeObjectsMenu();
             ImGui::EndMenu();
         }
-        
+
         ImGui::EndCombo();
     }
-    
+
     // Right click menu
     if (ImGui::BeginPopupContextWindow())
     {
         if (ImGui::MenuItem("Create Empty"))
             app->scene->CreateGameObject();
 
-        ImGui::Separator();
-
         if (gameobjectSelected != nullptr)
         {
+            if (ImGui::MenuItem("Create Empty Child"))
+                app->scene->CreateGameObject(gameobjectSelected);
+
+            ImGui::Separator();
+
             // Delete GameObject
             if (ImGui::MenuItem("Delete"))
             {
@@ -621,7 +678,7 @@ void ModuleEditor::HierarchyWindow()
         s.pop();
         indents.pop();
 
-        ImGuiTreeNodeFlags nodeFlags = 0;
+        ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
         if (go->isSelected)
             nodeFlags |= ImGuiTreeNodeFlags_Selected;
         if (go->children.size() == 0)
@@ -690,84 +747,45 @@ void ModuleEditor::HierarchyWindow()
             ImGui::TreePop();
         }
     }
-    ImGui::End();
-}
-
-void ModuleEditor::PremadeObjectsMenu()
-{
-    if (ImGui::MenuItem("Cube")) {
-        GameObject* newGameObject = app->scene->CreateGameObject("Cube");
-        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CUBE);
-    }
-    if (ImGui::MenuItem("Sphere")) {
-        GameObject* newGameObject = app->scene->CreateGameObject("Sphere");
-        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::SPHERE);
-    }
-    if (ImGui::MenuItem("Cylinder")) {
-        GameObject* newGameObject = app->scene->CreateGameObject("Cylinder");
-        ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CYLINDER);
-    }
-}
-
-void ModuleEditor::InspectorWindow()
-{
-    ImGui::Begin("Inspector", &showInspectorWindow);
-    // Only shows info if any gameobject selected
-    if (gameobjectSelected != nullptr)
-        InspectorGameObject();
 
     ImGui::End();
 }
 
-void ModuleEditor::ConsoleWindow()
+/* ----- GAME WINDOW ----- */
+void ModuleEditor::GameWindow()
 {
-    ImGui::Begin("Console", &showConsoleWindow);
-    ImGui::TextUnformatted(consoleText.begin(), consoleText.end());
-    ImGui::SetScrollHere(1.0f);
+    ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
     ImGui::End();
 }
 
-void ModuleEditor::TexturesWindow()
+/* ----- SCENE WINDOW ----- */
+void ModuleEditor::SceneWindow()
 {
-    ImGui::Begin("Textures", &showTexturesWindow);
-    for (auto& t : app->textures->textures)
+    ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+    ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
+    ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
+    if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
     {
-        ImGui::Image((ImTextureID)t.second.id, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
-        ImGui::SameLine();
-        ImGui::PushID(t.second.id);
-        if (ImGui::Button("Assign to selected"))
-        {
-            if (gameobjectSelected)
-            {
-                ComponentMaterial* material = gameobjectSelected->GetComponent<ComponentMaterial>();
-                if (material)
-                {
-                    material->SetTexture(t.second);
-                }
-            }
-        }
-        ImGui::PopID();
+        lastViewportSize = viewPortSize;
+        app->camera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
+        app->camera->RecalculateProjection();
     }
+    ImGui::Image((ImTextureID)app->viewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
+
+    ImVec2 posW = ImGui::GetWindowPos();
+    if (ImGui::IsWindowHovered())
+    {
+        app->camera->sceneHovered = true;
+    }
+    else
+    {
+        app->camera->sceneHovered = false;
+    }
+    
     ImGui::End();
 }
 
-void ModuleEditor::ConfigurationWindow()
-{
-    ImGui::Begin("Configuration", &showConfigWindow);
-    app->OnGui();
-    ImGui::End();
-}
-
-void ModuleEditor::InspectorGameObject() 
-{
-    if (gameobjectSelected)
-        gameobjectSelected->OnGui();
-}
-
-ModuleEditor::Grid::~Grid()
-{
-    glDeleteBuffers(1, &VAO);
-}
 
 void ModuleEditor::CheckKeyboardInputs()
 {
@@ -833,5 +851,17 @@ void ModuleEditor::CheckKeyboardInputs()
         (app->input->GetKey(SDL_SCANCODE_N) == KeyState::KEY_DOWN))
     {
         app->scene->CreateGameObject();
+    }
+
+    if (app->input->GetKey(SDL_SCANCODE_DELETE) == KeyState::KEY_DOWN)
+    {
+        if (gameobjectSelected != nullptr)
+        {
+            if (strcmp(gameobjectSelected->name.c_str(), "Root") != 0)
+            {
+                gameobjectSelected->Delete();
+                RELEASE(gameobjectSelected);
+            }
+        }
     }
 }
