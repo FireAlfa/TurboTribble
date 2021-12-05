@@ -16,6 +16,7 @@
     <ClCompile Include="Core\ComponentMaterial.cpp" />
     <ClCompile Include="Core\ComponentMesh.cpp" />
     <ClCompile Include="Core\ComponentTransform.cpp" />
+    <ClCompile Include="Core\External\GPUDetect\DeviceId.cpp" />
     <ClCompile Include="Core\External\ImGui\imgui.cpp" />
     <ClCompile Include="Core\External\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Core\External\ImGui\imgui_draw.cpp" />
@@ -124,6 +125,8 @@
     <ClInclude Include="Core\External\DevIL\include\ilut_config.h" />
     <ClInclude Include="Core\External\DevIL\include\ilu_region.h" />
     <ClInclude Include="Core\External\DevIL\include\il_wrap.h" />
+    <ClInclude Include="Core\External\GPUDetect\DeviceId.h" />
+    <ClInclude Include="Core\External\GPUDetect\dxgi1_4.h" />
     <ClInclude Include="Core\External\ImGui\imconfig.h" />
     <ClInclude Include="Core\External\ImGui\imgui.h" />
     <ClInclude Include="Core\External\ImGui\imgui_impl_opengl3.h" />

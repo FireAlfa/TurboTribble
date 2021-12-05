@@ -4,8 +4,10 @@
 #include "ModuleScene.h"
 #include "ModuleFileSystem.h"
 #include "ComponentTransform.h"
+#include "ComponentMesh.h"
 
 #include "ImGui/imgui.h"
+#include "ImGui/imgui_internal.h"
 
 
 
@@ -76,6 +78,27 @@ void GameObject::OnGui()
 		for (Component* component : components)
 		{
 			component->OnGui();
+		}
+
+		ImGui::Separator();
+
+		ImGuiComboFlags addComponentFlags = ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_PopupAlignLeft;
+		float buttonWidth = ImGui::CalcTextSize("Add Component").x + 8;
+		ImGui::SetNextItemWidth(buttonWidth);
+		ImGui::SetCursorPosX(ImGui::GetWindowWidth()/2 - buttonWidth / 2);
+		if (ImGui::BeginCombo(" ", "Add Component", addComponentFlags))
+		{
+			if (ImGui::Selectable("Mesh"))
+			{
+				/*ComponentMesh* mesh = CreateComponent<ComponentMesh>();
+				AddComponent(mesh);*/
+			}
+			if (ImGui::Selectable("Texture"))
+			{
+
+			}
+
+			ImGui::EndCombo();
 		}
 	}
 }

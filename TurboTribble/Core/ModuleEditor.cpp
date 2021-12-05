@@ -597,6 +597,8 @@ void ModuleEditor::InspectorWindow()
     if (gameobjectSelected != nullptr)
         InspectorGameObject();
 
+
+
     ImGui::End();
 }
 // Inspector info for the selected GameObject
@@ -618,13 +620,6 @@ void ModuleEditor::HierarchyWindow()
     //    app->scene->CleanUp(); //Clean GameObjects
     //}
     //ImGui::SameLine();
-
-    // Deselect GameObject by clicking outside of the list
-    if (((ImGui::IsMouseClicked(ImGuiMouseButton_Left)) || (ImGui::IsMouseClicked(ImGuiMouseButton_Right))) && gameobjectSelected != nullptr && ImGui::IsWindowHovered() && gameobjectSelected->isSelected)
-    {
-        gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
-        gameobjectSelected = nullptr;
-    }
 
     // "+" Button with a drop down to add GameObjects
     ImGui::SetNextItemWidth(35.f);
@@ -671,6 +666,12 @@ void ModuleEditor::HierarchyWindow()
         ImGui::EndPopup();
     }
 
+    // Deselect GameObject by clicking outside of the list
+    if (((ImGui::IsMouseClicked(ImGuiMouseButton_Left)) || (ImGui::IsMouseClicked(ImGuiMouseButton_Right))) && gameobjectSelected != nullptr && ImGui::IsWindowHovered() && gameobjectSelected->isSelected)
+    {
+        gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
+        gameobjectSelected = nullptr;
+    }
 
     // Reparenting and selecting
     std::stack<GameObject*> s;
@@ -684,11 +685,14 @@ void ModuleEditor::HierarchyWindow()
         s.pop();
         indents.pop();
 
-        ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+        ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanFullWidth;
         if (go->isSelected)
             nodeFlags |= ImGuiTreeNodeFlags_Selected;
         if (go->children.size() == 0)
             nodeFlags |= ImGuiTreeNodeFlags_Leaf;
+        else
+            nodeFlags |= ImGuiTreeNodeFlags_DefaultOpen;
+
         for (uint i = 0; i < indentsAmount; ++i)
         {
             ImGui::Indent();

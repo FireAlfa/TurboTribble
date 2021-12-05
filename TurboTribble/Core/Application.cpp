@@ -15,6 +15,7 @@
 #include "Globals.h"
 
 #include "glew.h"
+#include "GPUDetect/DeviceId.h"
 
 
 
@@ -334,4 +335,27 @@ void Application::DrawHardwareConsole()
 	ImGui::Text("Brand:");
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_RENDERER));
+
+	uint vendor, device_id;
+	std::wstring brand;
+	unsigned __int64 video_mem_budget;
+	unsigned __int64 video_mem_usage;
+	unsigned __int64 video_mem_available;
+	unsigned __int64 video_mem_reserved;
+
+	if (getGraphicsDeviceInfo(&vendor, &device_id, &brand, &video_mem_budget, &video_mem_usage, &video_mem_available, &video_mem_reserved))
+	{
+		ImGui::Text("VRAM Budget: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1f GB", float(video_mem_budget) / 1073741824.0f);
+		ImGui::Text("VRAM Usage: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1f GB", float(video_mem_usage) / (1024.f * 1024.f * 1024.f));
+		ImGui::Text("VRAM Available: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1f GB", float(video_mem_available) / (1024.f * 1024.f * 1024.f));
+		ImGui::Text("VRAM Reserved: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1f GB", float(video_mem_reserved) / (1024.f * 1024.f * 1024.f));
+	}
 }

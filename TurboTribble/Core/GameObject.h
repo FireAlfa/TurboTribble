@@ -8,6 +8,7 @@
 
 class Component;
 class ComponentTransform;
+class ComponentMesh;
 
 class GameObject {
 

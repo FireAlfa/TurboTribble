@@ -179,6 +179,9 @@
     <ClCompile Include="Core\External\ParShapes\par_shapes.cpp">
       <Filter>ExternalLibraries\ParShapes</Filter>
     </ClCompile>
+    <ClCompile Include="Core\External\GPUDetect\DeviceId.cpp">
+      <Filter>ExternalLibraries\GPUDetect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Color.h">
@@ -703,6 +706,12 @@
     <ClInclude Include="Core\External\ParShapes\par_shapes.h">
       <Filter>ExternalLibraries\ParShapes</Filter>
     </ClInclude>
+    <ClInclude Include="Core\External\GPUDetect\DeviceId.h">
+      <Filter>ExternalLibraries\GPUDetect</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\External\GPUDetect\dxgi1_4.h">
+      <Filter>ExternalLibraries\GPUDetect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ExternalLibraries">
@@ -758,6 +767,9 @@
     </Filter>
     <Filter Include="Engine\Tools">
       <UniqueIdentifier>{3b33fd60-8311-4ddf-87d9-d36b91d2b082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalLibraries\GPUDetect">
+      <UniqueIdentifier>{ff92f6b0-f3fa-4283-9397-11bf93c3774c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
