@@ -27,6 +27,9 @@ ModuleFileSystem::ModuleFileSystem(Application* app, bool startEnabled) : Module
 	AddPath("./Assets");
 	AddPath("./Assets/Textures");
 	AddPath("./Assets/Models");
+	AddPath("./Library");
+	AddPath("./Library/Textures");
+	AddPath("./Library/Models");
 }
 
 // Destructor
@@ -128,6 +131,8 @@ void ModuleFileSystem::CreateLibraryDirectories()
 {
 	CreateDir("Assets/Models/");
 	CreateDir("Assets/Textures/");
+	CreateDir("Library/Models/");
+	CreateDir("Library/Textures");
 }
 
 // Add a new zip file or folder

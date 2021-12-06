@@ -20,6 +20,7 @@ public:
 
 	// Constructor
 	ModuleImport(Application* app, bool startEnabled = true);
+	~ModuleImport() {}
 
 	// Initialize the File Importer
 	bool Init() override;
@@ -35,6 +36,8 @@ public:
 	void ProcessNode(const aiMesh* mesh, aiNode* node, aiMatrix4x4& matrix, const aiScene* scene);
 
 	void SaveTexture(const char* path);
+
+	void SaveMesh(const char* path, ComponentMesh* mesh);
 };
 
 #endif // !__MODULE_IMPORT_H__

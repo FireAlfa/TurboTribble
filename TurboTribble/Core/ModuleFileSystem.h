@@ -73,7 +73,6 @@ public:
 	bool DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath);
 	bool DuplicateFile(const char* srcFile, const char* dstFile);
 	unsigned int Save(const char* file, const void* buffer, unsigned int size, bool append = false) const;
-	bool SaveData(const char* data, uint size, const char* path);
 	// ------------------
 
 

@@ -90,6 +90,7 @@ bool ModuleImport::LoadGeometry(const char* path)
 
 			ProcessNode(scene->mMeshes[i], scene->mRootNode, scene->mRootNode->mTransformation, scene);
 			
+			SaveMesh(path, mesh);
 			if (scene->HasMaterials())
 			{
 				texture = scene->mMaterials[assimpMesh->mMaterialIndex];
@@ -100,6 +101,8 @@ bool ModuleImport::LoadGeometry(const char* path)
 					std::string newPath(texturePath.C_Str());
 					std::string fileStr, extStr;
 					std::string libPath;
+					char* fileBuffer = nullptr;
+					unsigned int size = app->fileSystem->Size(path);
 					app->fileSystem->SplitFilePath(newPath.c_str(), nullptr, &fileStr, &extStr);
 					newPath = fileStr.append(".") + extStr;
 					if (newPath.size() > 0)
@@ -268,4 +271,34 @@ void ModuleImport::SaveTexture(const char* path)
 
 		delete[] data;
 	}
+}
+
+void ModuleImport::SaveMesh(const char* path, ComponentMesh* mesh)
+{
+	std::string libPath, tempPath, fileStr, extStr;
+	tempPath = path;
+	uint ranges[2] = { mesh->numIndices, mesh->numVertices };
+	uint size = sizeof(ranges) + sizeof(uint) * mesh->numIndices + sizeof(float) * mesh->numVertices * 3;
+	char* fileBuffer = new char[size]; // Allocate
+	char* cursor = fileBuffer;
+	app->fileSystem->SplitFilePath(tempPath.c_str(), nullptr, &fileStr, &extStr);
+	libPath = "Library/Models/" + fileStr + ".ffs";
+
+	uint bytes = sizeof(ranges); // First store ranges
+	memcpy(cursor, ranges, bytes);
+	cursor += bytes;
+
+	// Store indices
+	bytes = sizeof(uint) * mesh->numIndices;
+	memcpy(cursor, &mesh->indices, bytes);
+	cursor += bytes;
+
+	// Store vertices
+	bytes = sizeof(float3) * mesh->numVertices;
+	memcpy(cursor, &mesh->vertices, bytes);
+	cursor += bytes;
+
+	app->fileSystem->Save(tempPath.c_str(), fileBuffer, size, false);
+
+	delete[] fileBuffer;
 }
