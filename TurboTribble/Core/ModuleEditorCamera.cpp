@@ -243,10 +243,10 @@ void ModuleEditorCamera::RecalculateProjection()
 void ModuleEditorCamera::MousePicking()
 {
 	// Deselect by clicking
-	if (app->editor->gameobjectSelected != nullptr)
+	/*if (app->editor->gameobjectSelected != nullptr)
 		app->editor->gameobjectSelected->isSelected = false;
 
-
+*/
 
 }
 

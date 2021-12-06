@@ -175,7 +175,6 @@ bool ModuleImport::LoadGeometry(const char* path)
 			newGameObject->transform->SetRotation(Quat(rot.x, rot.y, rot.z, rot.w).ToEulerXYZ());
 			newGameObject->transform->SetScale(float3(sc.x, sc.y, sc.z));
 
-
 		}
 		aiReleaseImport(scene);		
 		RELEASE_ARRAY(buffer);

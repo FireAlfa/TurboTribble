@@ -26,6 +26,8 @@ public:
 		return true;
 	}
 
+	virtual void Draw() { };
+
 	virtual bool Enable() { active = true; return active; };
 	virtual bool Disable() { active = false; return active; };
 	virtual void OnGui() { }

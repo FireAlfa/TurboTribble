@@ -9,6 +9,7 @@
 #include <math.h>
 #include "ImGui/imgui.h"
 #include "SDL/include/SDL_opengl.h"
+#include "Geometry/LineSegment.h"
 
 
 
@@ -50,6 +51,24 @@ bool ComponentCamera::Update(float dt)
 	viewMatrix = cameraFrustum.ViewMatrix();
 
 	return true;
+}
+
+void ComponentCamera::Draw()
+{
+	// Debug Draw
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBegin(GL_LINES);
+	glLineWidth(3.0f);
+	glColor4f(0.25f, 1.0f, 0.0f, 1.0f);
+
+	for (uint i = 0; i < 12; i++)
+	{
+		glVertex3f(cameraFrustum.Edge(i).a.x, cameraFrustum.Edge(i).a.y, cameraFrustum.Edge(i).a.z);
+		glVertex3f(cameraFrustum.Edge(i).b.x, cameraFrustum.Edge(i).b.y, cameraFrustum.Edge(i).b.z);
+	}
+
+	glEnd();
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void ComponentCamera::LookAt(const float3& point)

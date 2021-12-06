@@ -54,6 +54,7 @@ void GameObject::Update(float dt)
 	for (Component* component : components)
 	{
 		component->Update(dt);
+		component->Draw();
 	}
 }
 
