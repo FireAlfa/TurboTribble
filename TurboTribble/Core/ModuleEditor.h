@@ -50,6 +50,9 @@ public:
 	// Console Text Pushback
 	void UpdateText(const char* consoleText);
 
+
+	void DrawGrid();
+
 private:
 
 	// Draw MenuBar
@@ -59,7 +62,6 @@ private:
 	// ----- Background Grid -----
 	
 	void CreateGridBuffer();
-	void DrawGrid();
 	// ---------------------------
 
 

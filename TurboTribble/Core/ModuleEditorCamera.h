@@ -1,5 +1,5 @@
-#ifndef __MODULE_CAMERA_3D_H__
-#define __MODULE_CAMERA_3D_H__
+#ifndef __MODULE_EDITOR_CAMERA_H__
+#define __MODULE_EDITOR_CAMERA_H__
 
 #include "Module.h"
 
@@ -11,14 +11,14 @@
 
 
 
-class ModuleCamera3D : public Module
+class ModuleEditorCamera : public Module
 {
 public:
 
 	// Constructor
-	ModuleCamera3D(Application* app, bool startEnabled = true);
+	ModuleEditorCamera(Application* app, bool startEnabled = true);
 	// Destructor
-	~ModuleCamera3D();
+	~ModuleEditorCamera();
 
 	// Start
 	bool Start() override;
@@ -57,7 +57,7 @@ private:
 
 	// ----- Camera Variables -----
 	
-	float3 x, y, z, reference;
+	float3 right, up, front, reference;
 	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
 	float farPlaneDistance = 5000.f;
@@ -69,4 +69,4 @@ private:
 
 };
 
-#endif // !__MODULE_CAMERA_3D_H__
+#endif // !__MODULE_EDITOR_CAMERA_H__

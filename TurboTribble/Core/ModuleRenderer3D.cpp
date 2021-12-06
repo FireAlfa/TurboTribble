@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "ModuleCamera3D.h"
+#include "ModuleEditorCamera.h"
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
 
@@ -151,15 +151,15 @@ UpdateStatus ModuleRenderer3D::PreUpdate(float dt)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Recalculate matrix -------------
-	app->camera->CalculateViewMatrix();
+	app->editorCamera->CalculateViewMatrix();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(app->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(app->editorCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(app->camera->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(app->editorCamera->viewMatrix.Transposed().ptr());
 
 	// light 0 on cam pos
-	lights[0].SetPos(app->camera->position.x, app->camera->position.y, app->camera->position.z);
+	lights[0].SetPos(app->editorCamera->position.x, app->editorCamera->position.y, app->editorCamera->position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -188,7 +188,7 @@ bool ModuleRenderer3D::CleanUp()
 void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
-	app->camera->RecalculateProjection();
+	app->editorCamera->RecalculateProjection();
 }
 
 void ModuleRenderer3D::OnGui()

@@ -3,10 +3,12 @@
 #include "Application.h"
 #include "ModuleImport.h"
 #include "ModuleTextures.h"
-#include "ModuleCamera3D.h"
+#include "ModuleEditorCamera.h"
 #include "ModuleEditor.h"
 #include "Component.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
+#include "ModuleViewportFrameBuffer.h"
 
 #include "Globals.h"
 
@@ -32,6 +34,11 @@ bool ModuleScene::Start()
 	bool ret = true;
 	
 	root = new GameObject("Root");
+
+	mainCamera = CreateGameObject("Main Camera", root);
+	mainCamera->CreateComponent<ComponentCamera>();
+	mainCamera->transform->SetPosition(float3(0.0f, 5.0f, -15.0f));
+	mainCamera->GetComponent<ComponentCamera>()->LookAt(float3::zero);
 
 	// Loading house and textures since beginning
 	app->import->LoadGeometry("Assets/Models/baker_house.fbx");
@@ -69,6 +76,9 @@ bool ModuleScene::CleanUp()
 
 UpdateStatus ModuleScene::Update(float dt)
 {
+	// ----- Update Stuff on Scene Window -----
+	
+	app->sceneViewportBuffer->PreUpdate(dt);
 	std::queue<GameObject*> s;
 	for (GameObject* child : root->children)
 	{
@@ -85,6 +95,38 @@ UpdateStatus ModuleScene::Update(float dt)
 			s.push(child);
 		}
 	}
+
+	app->editor->DrawGrid();
+	app->sceneViewportBuffer->PostUpdate(dt);
+	// ----------------------------------------
+
+
+	// ----- Update Stuff on Game Window -----
+	
+	if (mainCamera != nullptr)
+	{
+		mainCamera->GetComponent<ComponentCamera>()->PreUpdate(dt);
+
+		std::queue<GameObject*> g;
+		for (GameObject* child : root->children)
+		{
+			g.push(child);
+		}
+
+		while (!g.empty())
+		{
+			GameObject* go = g.front();
+			go->Update(dt);
+			g.pop();
+			for (GameObject* child : go->children)
+			{
+				g.push(child);
+			}
+		}
+
+		app->gameViewportBuffer->PostUpdate(dt);
+	}
+	// ---------------------------------------
 
 	glDisable(GL_DEPTH_TEST);
 

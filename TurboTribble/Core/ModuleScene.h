@@ -35,6 +35,9 @@ public:
 
 	// Root
 	GameObject* root;
+
+	// Main Camera
+	GameObject* mainCamera;
 };
 
 #endif // !__MODULE_SCENE_H__

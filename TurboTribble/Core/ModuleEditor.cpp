@@ -8,11 +8,12 @@
 #include "ModuleImport.h"
 #include "ModuleScene.h"
 #include "ModuleViewportFrameBuffer.h"
-#include "ModuleCamera3D.h"
+#include "ModuleEditorCamera.h"
 #include "ModuleTextures.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 
 #include "Globals.h"
 
@@ -339,7 +340,7 @@ void ModuleEditor::MenuBar()
         {
             if (ImGui::MenuItem("Frame Selected", "F"))
             {
-                app->camera->FrameSelected();
+                app->editorCamera->FrameSelected();
             }
             ImGui::Separator();
             if (ImGui::MenuItem("Configuration", "Ctrl+Shift+O", showConfigWindow))
@@ -765,6 +766,18 @@ void ModuleEditor::HierarchyWindow()
 void ModuleEditor::GameWindow()
 {
     ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
+
+    ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
+    ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
+    if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
+    {
+        lastViewportSize = viewPortSize;
+        app->editorCamera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
+        app->scene->mainCamera->GetComponent<ComponentCamera>()->aspectRatio = viewPortSize.x / viewPortSize.y;
+        app->scene->mainCamera->GetComponent<ComponentCamera>()->RecalculateProjection();
+    }
+    ImGui::Image((ImTextureID)app->gameViewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
+
     ImGui::End();
 }
 
@@ -778,19 +791,19 @@ void ModuleEditor::SceneWindow()
     if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
     {
         lastViewportSize = viewPortSize;
-        app->camera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
-        app->camera->RecalculateProjection();
+        app->editorCamera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
+        app->editorCamera->RecalculateProjection();
     }
-    ImGui::Image((ImTextureID)app->viewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::Image((ImTextureID)app->sceneViewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
 
     ImVec2 posW = ImGui::GetWindowPos();
     if (ImGui::IsWindowHovered())
     {
-        app->camera->sceneHovered = true;
+        app->editorCamera->sceneHovered = true;
     }
     else
     {
-        app->camera->sceneHovered = false;
+        app->editorCamera->sceneHovered = false;
     }
     
     ImGui::End();

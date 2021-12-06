@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Color.cpp" />
+    <ClCompile Include="Core\ComponentCamera.cpp" />
     <ClCompile Include="Core\ComponentMaterial.cpp" />
     <ClCompile Include="Core\ComponentMesh.cpp" />
     <ClCompile Include="Core\ComponentTransform.cpp" />
@@ -61,7 +62,7 @@
     <ClCompile Include="Core\ModuleFileSystem.cpp" />
     <ClCompile Include="Core\Light.cpp" />
     <ClCompile Include="Core\Main.cpp" />
-    <ClCompile Include="Core\ModuleCamera3D.cpp" />
+    <ClCompile Include="Core\ModuleEditorCamera.cpp" />
     <ClCompile Include="Core\ModuleEditor.cpp" />
     <ClCompile Include="Core\ModuleImport.cpp" />
     <ClCompile Include="Core\ModuleInput.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Component.h" />
+    <ClInclude Include="Core\ComponentCamera.h" />
     <ClInclude Include="Core\ComponentMaterial.h" />
     <ClInclude Include="Core\ComponentMesh.h" />
     <ClInclude Include="Core\ComponentTransform.h" />
@@ -237,7 +239,7 @@
     <ClInclude Include="Core\ModuleFileSystem.h" />
     <ClInclude Include="Core\Light.h" />
     <ClInclude Include="Core\Module.h" />
-    <ClInclude Include="Core\ModuleCamera3D.h" />
+    <ClInclude Include="Core\ModuleEditorCamera.h" />
     <ClInclude Include="Core\ModuleEditor.h" />
     <ClInclude Include="Core\ModuleImport.h" />
     <ClInclude Include="Core\ModuleInput.h" />

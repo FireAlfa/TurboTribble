@@ -11,7 +11,7 @@
     <ClCompile Include="Core\Timer.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ModuleCamera3D.cpp">
+    <ClCompile Include="Core\ModuleEditorCamera.cpp">
       <Filter>Engine\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Core\ModuleInput.cpp">
@@ -182,6 +182,9 @@
     <ClCompile Include="Core\External\GPUDetect\DeviceId.cpp">
       <Filter>ExternalLibraries\GPUDetect</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ComponentCamera.cpp">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Color.h">
@@ -199,7 +202,7 @@
     <ClInclude Include="Core\ModuleWindow.h">
       <Filter>Engine\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ModuleCamera3D.h">
+    <ClInclude Include="Core\ModuleEditorCamera.h">
       <Filter>Engine\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Core\ModuleInput.h">
@@ -711,6 +714,9 @@
     </ClInclude>
     <ClInclude Include="Core\External\GPUDetect\dxgi1_4.h">
       <Filter>ExternalLibraries\GPUDetect</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentCamera.h">
+      <Filter>Engine\GameObjects - Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
