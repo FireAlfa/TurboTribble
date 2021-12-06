@@ -32,7 +32,7 @@ ModuleEditorCamera::~ModuleEditorCamera()
 // -----------------------------------------------------------------
 bool ModuleEditorCamera::Start()
 {
-	TTLOG("+++++ Loading Camera Module +++++\n");
+	TTLOG("+++++ Loading Editor Camera Module +++++\n");
 
 	LookAt(float3::zero);
 
@@ -44,7 +44,7 @@ bool ModuleEditorCamera::Start()
 // -----------------------------------------------------------------
 bool ModuleEditorCamera::CleanUp()
 {
-	TTLOG("+++++ Quitting Camera Module +++++\n");
+	TTLOG("+++++ Quitting Editor Camera Module +++++\n");
 
 	return true;
 }

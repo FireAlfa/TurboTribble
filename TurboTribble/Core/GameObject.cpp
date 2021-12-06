@@ -13,14 +13,12 @@
 
 GameObject::GameObject()
 {
-
 	name = name + ("GameObject");
 	parent = nullptr;
 
 	transform = CreateComponent<ComponentTransform>();
 
 	active = true;
-
 }
 
 GameObject::GameObject(const std::string name) : name(name) 
@@ -29,6 +27,7 @@ GameObject::GameObject(const std::string name) : name(name)
 
 	active = true;
 
+	TTLOG("+++ Creating GameObject with name %s +++\n", this->name.c_str());
 }
 
 
@@ -107,7 +106,7 @@ void GameObject::OnGui()
 
 void GameObject::Delete()
 {
-	TTLOG("--- Erasing GameObject %s ---", name.c_str());
+	TTLOG("--- Destroying GameObject with name %s ---\n", this->name.c_str());
 
 	while (components.size() != 0)
 		DeleteComponent(components.at(0));
