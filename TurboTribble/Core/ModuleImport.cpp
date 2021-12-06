@@ -90,7 +90,7 @@ bool ModuleImport::LoadGeometry(const char* path)
 
 			ProcessNode(scene->mMeshes[i], scene->mRootNode, scene->mRootNode->mTransformation, scene);
 			
-			SaveMesh(path, mesh);
+			//SaveMesh(path, mesh);
 			if (scene->HasMaterials())
 			{
 				texture = scene->mMaterials[assimpMesh->mMaterialIndex];

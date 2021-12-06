@@ -64,7 +64,14 @@ public:
 	// ----- Camera Flags -----
 	
 	bool cullingActivated = false;
+	bool drawMousePickRayCast = true;
 	// ------------------------
+
+
+	// ----- Mouse Picking -----
+
+	LineSegment rayPicking;
+	// -------------------------
 
 private:
 
@@ -80,11 +87,6 @@ private:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 	// ----------------------------
 
-
-	// ----- Mouse Picking -----
-	 
-	LineSegment rayPicking;
-	// -------------------------
 };
 
 #endif // !__MODULE_EDITOR_CAMERA_H__

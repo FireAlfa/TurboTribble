@@ -4,6 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleEditor.h"
 #include "ModuleScene.h"
+#include "ModuleRenderer3D.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "GameObject.h"
@@ -244,6 +245,8 @@ void ModuleEditorCamera::RecalculateProjection()
 	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
 }
 
+
+// -----------------------------------------------------------------
 void ModuleEditorCamera::MousePicking()
 {
 	// Deselect by clicking
@@ -329,6 +332,8 @@ void ModuleEditorCamera::OnGui()
 	if (ImGui::CollapsingHeader("Editor Camera"))
 	{
 		if (ImGui::Checkbox("Camera Culling", &cullingActivated));
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Mouse Pick Ray Cast", &drawMousePickRayCast));
 
 		ImGui::Separator();
 

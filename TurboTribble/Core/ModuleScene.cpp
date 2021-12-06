@@ -5,6 +5,7 @@
 #include "ModuleTextures.h"
 #include "ModuleEditorCamera.h"
 #include "ModuleEditor.h"
+#include "ModuleRenderer3D.h"
 #include "Component.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
@@ -95,7 +96,8 @@ UpdateStatus ModuleScene::Update(float dt)
 			s.push(child);
 		}
 	}
-
+	if (app->editorCamera->drawMousePickRayCast)
+		app->renderer3D->DrawRayCast(app->editorCamera->rayPicking);
 	app->editor->DrawGrid();
 	app->sceneViewportBuffer->PostUpdate(dt);
 	// ----------------------------------------
