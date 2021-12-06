@@ -41,7 +41,7 @@ bool ModuleScene::Start()
 	mainCamera->GetComponent<ComponentCamera>()->LookAt(float3::zero);
 
 	// Loading house and textures since beginning
-	app->import->LoadGeometry("Assets/Models/baker_house.fbx");
+	app->import->LoadGeometry("Assets/Models/street.fbx");
 	
 	return ret;
 }

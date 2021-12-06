@@ -2,9 +2,13 @@
 #define __MODULE_IMPORT_H__
 
 #include "Module.h"
+#include "Assimp/include/matrix4x4.h"
 
 #include <string>
 
+struct aiMesh;
+struct aiNode;
+struct aiScene;
 
 
 class ComponentMesh;
@@ -27,6 +31,8 @@ public:
 	bool LoadGeometry(const char* path);
 	// Find nodw in given scene
 	void FindNodeName(const aiScene* scene, const size_t i, std::string& name);
+
+	void ProcessNode(const aiMesh* mesh, aiNode* node, aiMatrix4x4& matrix, const aiScene* scene);
 
 };
 

@@ -58,6 +58,7 @@ bool ModuleImport::LoadGeometry(const char* path)
 	if (buffer == nullptr)
 	{
 		std::string normPathShort = "Assets/Models/" + app->fileSystem->SetNormalName(path);
+		app->fileSystem->NormalizePath(normPathShort.c_str());
 		bytesFile = app->fileSystem->Load(normPathShort.c_str(), &buffer);
 	}
 	if (buffer != nullptr)
@@ -77,6 +78,7 @@ bool ModuleImport::LoadGeometry(const char* path)
 		{		
 			bool nameFound = false;
 			std::string name;
+			aiMatrix4x4 matrix;
 			FindNodeName(scene, i, name);
 
 			GameObject* newGameObject = app->scene->CreateGameObject(name);
@@ -89,8 +91,11 @@ bool ModuleImport::LoadGeometry(const char* path)
 
 				if (texture != nullptr)
 				{
-					aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, assimpMesh->mMaterialIndex, &texturePath);
+					texture->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
 					std::string newPath(texturePath.C_Str());
+					std::string fileStr, extStr;
+					app->fileSystem->SplitFilePath(newPath.c_str(), nullptr, &fileStr, &extStr);
+					newPath = fileStr.append(".") + extStr;
 					if (newPath.size() > 0)
 					{
 						mesh->texturePath = "Assets/Textures/" + newPath;
@@ -192,6 +197,27 @@ void ModuleImport::FindNodeName(const aiScene* scene, const size_t i, std::strin
 			{
 				Q.push(node->mChildren[j]);
 			}
+		}
+	}
+}
+
+void ModuleImport::ProcessNode(const aiMesh* mesh, aiNode* node, aiMatrix4x4& matrix, const aiScene* scene)
+{
+	for (int i = 0; i < node->mNumChildren; i++)
+	{
+		if (node->mChildren[i]->mNumMeshes > 0)
+		{
+			for (int j = 0; j < node->mChildren[i]->mNumMeshes; j++)
+			{
+				if (scene->mMeshes[node->mChildren[i]->mMeshes[j]] == mesh)
+				{
+					matrix = node->mChildren[i]->mTransformation;
+				}
+			}
+		}
+		if (node->mChildren[i]->mNumChildren > 0)
+		{
+			ProcessNode(mesh, node->mChildren[i], matrix, scene);
 		}
 	}
 }
