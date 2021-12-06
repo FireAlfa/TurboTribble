@@ -2,14 +2,18 @@
 
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleScene.h"
+#include "ModuleEditorCamera.h"
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 #include "GameObject.h"
 
 #include "glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include "ImGui/imgui.h"
 #include "Geometry/Sphere.h"
+#include "Geometry/Plane.h"
 #include "ParShapes/par_shapes.h"
 
 
@@ -175,9 +179,21 @@ float3 ComponentMesh::GetCenterPointInWorldCoords() const
 
 bool ComponentMesh::Update(float dt)
 {
+	if(app->editorCamera->cullingActivated)
+		drawable = CameraCulling(&app->scene->mainCamera->GetComponent<ComponentCamera>()->GetCameraFrustum());
 
+	if (drawable)
+		Render();
+
+	if (drawFaceNormals || drawVertexNormals)
+		DrawNormals();
+
+	return true;
+}
+
+void ComponentMesh::Render()
+{
 	drawWireframe || app->renderer3D->wireframeMode ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		//app->renderer3D->wireframeMode ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -196,7 +212,7 @@ bool ComponentMesh::Update(float dt)
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	if (ComponentMaterial* material = owner->GetComponent<ComponentMaterial>())
-	{	
+	{
 		drawWireframe || !app->renderer3D->useTexture || app->renderer3D->wireframeMode ? 0 : glBindTexture(GL_TEXTURE_2D, material->GetTextureId());
 	}
 
@@ -224,9 +240,38 @@ bool ComponentMesh::Update(float dt)
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	app->renderer3D->wireframeMode ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
 
-	if (drawFaceNormals || drawVertexNormals)
-		DrawNormals();
+bool ComponentMesh::CameraCulling(Frustum* cameraFrustum)
+{
+	float3 obb[8];
+	Plane frustum[6];
+
+	int totalInPoints = 0;
+	cameraFrustum->GetPlanes(frustum);
+	globalAABB.GetCornerPoints(obb);
+
+	for (size_t i = 0; i < 6; i++)
+	{
+		int inPointCount = 8;
+		int inTotalPoints = 1;
+
+		for (size_t k = 0; k < 8; k++)
+		{
+			if (frustum[i].IsOnPositiveSide(obb[k]))
+			{
+				inTotalPoints = 0;
+				--inPointCount;
+			}
+			if (inPointCount == 0)
+				return false;
+
+			totalInPoints += inTotalPoints;
+		}
+	}
+
+	if (totalInPoints == 6)
+		return true;
 
 	return true;
 }

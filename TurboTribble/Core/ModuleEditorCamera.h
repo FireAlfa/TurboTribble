@@ -42,6 +42,10 @@ public:
 	// Calculate View Matrix
 	void CalculateViewMatrix();
 
+private:
+
+	void MousePicking();
+
 public:
 
 	// ----- Camera Variables -----
@@ -52,6 +56,12 @@ public:
 	float3 position;
 	bool sceneHovered;
 	// ----------------------------
+
+
+	// ----- Camera Flags -----
+	
+	bool cullingActivated = false;
+	// ------------------------
 
 private:
 

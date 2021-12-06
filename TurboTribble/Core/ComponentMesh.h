@@ -10,6 +10,7 @@
 #include "Math/float2.h"
 #include "Geometry/AABB.h"
 #include "Geometry/OBB.h"
+#include "Geometry/Frustum.h"
 #include "ParShapes/par_shapes.h"
 
 
@@ -42,6 +43,13 @@ public:
 	bool Update(float dt) override;
 	void OnGui() override;
 
+private:
+
+	void Render();
+	bool CameraCulling(Frustum* cameraFrustum);
+
+public:
+
 	uint vertexBufferId = 0, indexBufferId = 0, textureBufferId = 0;
 	std::string texturePath;
 
@@ -62,6 +70,7 @@ public:
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;
 	float normalScale = 1.f;
+	bool drawable = true;
 
 private:
 

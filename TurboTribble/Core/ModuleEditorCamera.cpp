@@ -59,7 +59,11 @@ UpdateStatus ModuleEditorCamera::Update(float dt)
 	// ---- Keyboard Camera Control -----
 	if (sceneHovered)
 	{
-	// Hold shift to move faster
+		// Mouse Picking
+		if (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
+				MousePicking();
+
+		// Hold shift to move faster
 		if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
 			speed = speed * 2.5;
 
@@ -236,10 +240,25 @@ void ModuleEditorCamera::RecalculateProjection()
 	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
 }
 
+void ModuleEditorCamera::MousePicking()
+{
+	// Deselect by clicking
+	if (app->editor->gameobjectSelected != nullptr)
+		app->editor->gameobjectSelected->isSelected = false;
+
+
+
+}
+
+
 void ModuleEditorCamera::OnGui()
 {
 	if (ImGui::CollapsingHeader("Editor Camera"))
 	{
+		if (ImGui::Checkbox("Camera Culling", &cullingActivated));
+
+		ImGui::Separator();
+
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
 		{
 			projectionIsDirty = true;
