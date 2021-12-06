@@ -32,7 +32,7 @@ public:
 	// Calculate View Matrix
 	void CalculateViewMatrix();
 
-
+	void Draw() override;
 	void OnGui() override;
 
 	// ----- Getters -----
