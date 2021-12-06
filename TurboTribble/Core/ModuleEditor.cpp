@@ -822,6 +822,39 @@ void ModuleEditor::ResourcesWindow()
 {
     ImGui::Begin("Resources", &showResourcesWindow);
 
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
+
+    if (ImGui::TreeNodeEx("Assets"))
+    {
+        if (ImGui::TreeNodeEx("Models"))
+        {
+            ImGui::TreePop();
+        }
+        if (ImGui::TreeNodeEx("Meshes"))
+        {
+            ImGui::Text("scene.fbx");
+
+            ImGui::TreePop();
+        }        
+        if (ImGui::TreeNodeEx("Materials"))
+        {
+            ImGui::Text("building 01_c.dds");
+            ImGui::Text("building 06_c.dds");
+            ImGui::Text("building 016_c.dds");
+            ImGui::Text("building_025_c.dds");
+            ImGui::Text("Building_V01_C.dds");
+            ImGui::Text("Building_V02_C.dds");
+            ImGui::Text("building03_c.dds");
+            ImGui::Text("building05_c.dds");
+            ImGui::TreePop();
+        }
+
+        ImGui::TreePop();
+    }
+
+
+
+
     ImGui::End();
 }
 
