@@ -79,6 +79,7 @@ private:
 	void HierarchyWindow();
 	void GameWindow();
 	void SceneWindow();
+	void ResourcesWindow();
 	// ------------------------
 
 
@@ -107,6 +108,7 @@ private:
 	bool showGameWindow;
 	bool showTexturesWindow;
 	bool showConsoleWindow;
+	bool showResourcesWindow;
 	// ---------------------------------
 
 

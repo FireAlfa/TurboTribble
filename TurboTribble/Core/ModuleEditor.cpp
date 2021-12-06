@@ -44,6 +44,7 @@ ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, st
     showGameWindow = true;
     showTexturesWindow = true;
     showConsoleWindow = true;
+    showResourcesWindow = true;
 
     darkStyle = true;
     classicStyle = false;
@@ -384,6 +385,8 @@ void ModuleEditor::MenuBar()
                 if (ImGui::MenuItem("Project", "Ctrl+5", false, false)) {}
                 if (ImGui::MenuItem("Textures", "Ctrl+6", showTexturesWindow))
                     showTexturesWindow = !showTexturesWindow;
+                if (ImGui::MenuItem("Resources", "Ctrl+7", showResourcesWindow))
+                    showResourcesWindow = !showResourcesWindow;
                 if (ImGui::MenuItem("Console", "Ctrl+Shift+C", showConsoleWindow))
                     showConsoleWindow = !showConsoleWindow;
                 
@@ -502,6 +505,9 @@ void ModuleEditor::UpdateWindowStatus()
     
     // Scene
     if (showSceneWindow) SceneWindow();
+
+    // Resources
+    if (showResourcesWindow) ResourcesWindow();
 }
 
 /* ---------- ABOUT WINDOW ---------- */
@@ -810,6 +816,15 @@ void ModuleEditor::SceneWindow()
     ImGui::End();
 }
 
+/* ---------- RESOURCES WINDOW ---------- */
+
+void ModuleEditor::ResourcesWindow()
+{
+    ImGui::Begin("Resources", &showResourcesWindow);
+
+    ImGui::End();
+}
+
 // Do actions when Shortcuts are executed
 void ModuleEditor::CheckKeyboardInputs()
 {
@@ -848,6 +863,12 @@ void ModuleEditor::CheckKeyboardInputs()
         (app->input->GetKey(SDL_SCANCODE_6) == KeyState::KEY_DOWN))
     {
         showTexturesWindow = !showTexturesWindow;
+    }
+    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
+        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
+        (app->input->GetKey(SDL_SCANCODE_7) == KeyState::KEY_DOWN))
+    {
+        showResourcesWindow = !showResourcesWindow;
     }
 
     if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
