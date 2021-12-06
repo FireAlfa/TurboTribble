@@ -13,6 +13,7 @@
 
 ModuleEditorCamera::ModuleEditorCamera(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
+	aspectRatio = 16 / 9;
 
 	right = float3(1.0f, 0.0f, 0.0f);
 	up = float3(0.0f, 1.0f, 0.0f);
@@ -55,10 +56,9 @@ UpdateStatus ModuleEditorCamera::Update(float dt)
 	float3 newPos(0, 0, 0);
 	float speed = cameraSpeed * dt;
 
+	// ---- Keyboard Camera Control -----
 	if (sceneHovered)
 	{
-		// ---- Keyboard Camera Control -----
-
 	// Hold shift to move faster
 		if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
 			speed = speed * 2.5 * dt;
