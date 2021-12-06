@@ -34,6 +34,9 @@ public:
 
 	void ProcessNode(const aiMesh* mesh, aiNode* node, aiMatrix4x4& matrix, const aiScene* scene);
 
+	void SetScene();
+	void Resize();
+
 };
 
 #endif // !__MODULE_IMPORT_H__

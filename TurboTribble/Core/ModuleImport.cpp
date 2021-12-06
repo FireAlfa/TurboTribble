@@ -7,6 +7,7 @@
 #include "ModuleScene.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentTransform.h"
 #include "GameObject.h"
 
 #include "Globals.h"
@@ -84,6 +85,8 @@ bool ModuleImport::LoadGeometry(const char* path)
 			GameObject* newGameObject = app->scene->CreateGameObject(name);
 			ComponentMesh* mesh = newGameObject->CreateComponent<ComponentMesh>();
 			assimpMesh = scene->mMeshes[i];
+
+			ProcessNode(scene->mMeshes[i], scene->mRootNode, matrix, scene);
 			
 			if (scene->HasMaterials())
 			{
@@ -161,6 +164,19 @@ bool ModuleImport::LoadGeometry(const char* path)
 			mesh->GenerateBuffers();
 			mesh->GenerateBounds();
 			mesh->ComputeNormals();
+
+
+			// Place houses where to their pose
+			aiVector3D position, scale;
+			aiQuaternion rotation;
+			// Decompose the transform mat
+			matrix.Decompose(scale, rotation, position);
+			// Set the pos, rot and scale
+			newGameObject->transform->SetPosition(float3(position.x, position.y, position.z));
+			newGameObject->transform->SetRotation(Quat(rotation.x, rotation.y, rotation.z, rotation.w).ToEulerXYZ());
+			newGameObject->transform->SetScale(float3(scale.x, scale.y, scale.z));
+
+
 		}
 		aiReleaseImport(scene);		
 		RELEASE_ARRAY(buffer);
