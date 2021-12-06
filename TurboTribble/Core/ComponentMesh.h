@@ -43,6 +43,8 @@ public:
 	bool Update(float dt) override;
 	void OnGui() override;
 
+	void DrawDebug() override;
+
 private:
 
 	void Render();
@@ -72,16 +74,16 @@ public:
 	float normalScale = 1.f;
 	bool drawable = true;
 
+	// Bounding Box
+	AABB localAABB;
+	OBB globalOBB;
+	AABB globalAABB;
+
 private:
 
 	// Bounding Sphere
 	float3 centerPoint = float3::zero;
 	float radius;
-
-	// Bounding Box
-	AABB localAABB;
-	OBB globalOBB;
-	AABB globalAABB;
 
 };
 

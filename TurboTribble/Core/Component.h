@@ -27,6 +27,7 @@ public:
 	}
 
 	virtual void Draw() { };
+	virtual void DrawDebug() { };
 
 	virtual bool Enable() { active = true; return active; };
 	virtual bool Disable() { active = false; return active; };

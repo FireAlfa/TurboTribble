@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include "Light.h"
 #include "SDL/include/SDL.h"
+#include "Math/float3.h"
 
 #define MAX_LIGHTS 8
 
@@ -42,6 +43,8 @@ public:
 	void OnLoad(const JSONReader& reader) override;
 	// Save Renderer Info
 	void OnSave(JSONWriter& writer) const override;
+
+	void DrawBox(float3* points, float3 color);
 
 private:
 

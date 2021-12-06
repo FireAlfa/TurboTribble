@@ -8,8 +8,10 @@
 #include "Math/float3.h"
 #include "Math/float4x4.h"
 #include "Geometry/Frustum.h"
+#include "Geometry/LineSegment.h"
 
 
+class GameObject;
 
 class ModuleEditorCamera : public Module
 {
@@ -45,6 +47,7 @@ public:
 private:
 
 	void MousePicking();
+	GameObject* RayHitResult(const LineSegment& rayPicking);
 
 public:
 
@@ -77,6 +80,11 @@ private:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 	// ----------------------------
 
+
+	// ----- Mouse Picking -----
+	 
+	LineSegment rayPicking;
+	// -------------------------
 };
 
 #endif // !__MODULE_EDITOR_CAMERA_H__

@@ -215,6 +215,27 @@ void ModuleRenderer3D::OnGui()
 	}
 }
 
+void ModuleRenderer3D::DrawBox(float3* points, float3 color)
+{
+	glColor3fv(&color.x);
+	glLineWidth(2.f);
+	glBegin(GL_LINES);
+	std::vector<int> ind =
+	{
+		0,2,2,6,6,4,4,0,
+		0,1,1,3,3,2,4,5,
+		6,7,5,7,3,7,1,5,
+	};
+	for (const auto& i : ind)
+	{
+		glVertex3fv(&points[i].x);
+	}
+
+	glEnd();
+	glLineWidth(1.f);
+	glColor3f(1.f, 1.f, 1.f);
+}
+
 void ModuleRenderer3D::OnLoad(const JSONReader& reader)
 {
 	if (reader.HasMember("render"))

@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include "ModuleFileSystem.h"
+#include "ModuleEditor.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 
@@ -55,6 +56,11 @@ void GameObject::Update(float dt)
 	{
 		component->Update(dt);
 		component->Draw();
+
+		if (app->editor->gameobjectSelected == this)
+		{
+			component->DrawDebug();
+		}
 	}
 }
 

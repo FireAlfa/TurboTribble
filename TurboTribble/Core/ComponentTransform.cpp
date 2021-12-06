@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "ModuleScene.h"
+#include "ComponentMesh.h"
 
 #include "Math/TransformOps.h"
 #include "glew.h"
@@ -109,5 +110,12 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	else
 	{
 		transformMatrix = transformMatrixLocal;
+	}
+	if (owner->GetComponent<ComponentMesh>() != nullptr)
+	{
+		owner->GetComponent<ComponentMesh>()->globalOBB = owner->GetComponent<ComponentMesh>()->localAABB;
+		owner->GetComponent<ComponentMesh>()->globalOBB.Transform(transformMatrix);
+		owner->GetComponent<ComponentMesh>()->globalAABB.SetNegativeInfinity();
+		owner->GetComponent<ComponentMesh>()->globalAABB.Enclose(owner->GetComponent<ComponentMesh>()->globalOBB);
 	}
 }

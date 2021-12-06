@@ -142,6 +142,13 @@ void ComponentMesh::GenerateBounds()
 	centerPoint = sphere.pos;
 }
 
+void ComponentMesh::DrawDebug()
+{
+	float3 points[8];
+	globalAABB.GetCornerPoints(points);
+	app->renderer3D->DrawBox(points, float3(1.f, 1.f, 0.f));
+}
+
 void ComponentMesh::DrawNormals() const
 {
 	if (drawFaceNormals)

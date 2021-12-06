@@ -3,11 +3,15 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleEditor.h"
+#include "ModuleScene.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "GameObject.h"
 
 #include "Globals.h"
+
+#include <map>
+#include "Geometry/Triangle.h"
 
 
 
@@ -243,13 +247,82 @@ void ModuleEditorCamera::RecalculateProjection()
 void ModuleEditorCamera::MousePicking()
 {
 	// Deselect by clicking
-	/*if (app->editor->gameobjectSelected != nullptr)
+	if (app->editor->gameobjectSelected != nullptr)
 		app->editor->gameobjectSelected->isSelected = false;
 
-*/
+	// Normalize mouse position
+	ImVec2 normalizedMousePosition;
+	normalizedMousePosition.x = (ImGui::GetMousePos().x - ImGui::GetWindowPos().x) / ImGui::GetWindowSize().x;
+	normalizedMousePosition.y = (ImGui::GetMousePos().y - (ImGui::GetWindowPos().y + ImGui::GetFrameHeight())) / (ImGui::GetWindowSize().y - ImGui::GetFrameHeight());
+	normalizedMousePosition.x = (normalizedMousePosition.x - 0.51f) / 0.5f;
+	normalizedMousePosition.y = -((normalizedMousePosition.y - 0.52f) / 0.5f);
 
+	// Get the ray inside the frustum
+	rayPicking = cameraFrustum.UnProjectLineSegment(normalizedMousePosition.x, normalizedMousePosition.y);
+
+	// Get the GameObject if the ray hits it
+	GameObject* g = RayHitResult(rayPicking);
+
+
+	app->editor->gameobjectSelected = g;
+
+	if (app->editor->gameobjectSelected != nullptr)
+		app->editor->gameobjectSelected->isSelected = true;
 }
 
+GameObject* ModuleEditorCamera::RayHitResult(const LineSegment& rayPicking)
+{
+	std::map<float, GameObject*> rayHitList;
+	float nHit = 0;
+	float fHit = 0;
+	bool selected = false;
+
+	for (std::vector<GameObject*>::iterator i = app->scene->root->children.begin(); i != app->scene->root->children.end(); i++)
+	{
+		if ((*i)->name != "Camera" && (*i)->GetComponent<ComponentMesh>() != nullptr)
+		{
+			if (rayPicking.Intersects((*i)->GetComponent<ComponentMesh>()->globalAABB, nHit, fHit))
+				rayHitList[nHit] = (*i);
+		}
+	}
+
+	std::map<float, GameObject*> dist;
+
+	for (auto i = rayHitList.begin(); i != rayHitList.end(); i++)
+	{
+		const ComponentMesh* mesh = (*i).second->GetComponent<ComponentMesh>();
+		if (mesh)
+		{
+			LineSegment local = rayPicking;
+			local.Transform((*i).second->GetComponent<ComponentTransform>()->transformMatrix.Inverted());
+
+			if (mesh->numVertices >= 9)
+			{
+				for (uint j = 0; j < mesh->numIndices; j += 3)
+				{
+					float distance = 0;
+					if (local.Intersects(Triangle(mesh->vertices.at(mesh->indices.at(j)), mesh->vertices.at(mesh->indices.at(j + 1)), mesh->vertices.at(mesh->indices.at(j + 2))), &distance, nullptr))
+					{
+						dist[distance] = (*i).second;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	rayHitList.clear();
+
+	if (dist.begin() != dist.end())
+	{
+		return (*dist.begin()).second;
+		selected = true;
+	}
+
+	dist.clear();
+
+	if (!selected) return nullptr;
+}
 
 void ModuleEditorCamera::OnGui()
 {
