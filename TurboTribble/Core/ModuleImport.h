@@ -34,9 +34,7 @@ public:
 
 	void ProcessNode(const aiMesh* mesh, aiNode* node, aiMatrix4x4& matrix, const aiScene* scene);
 
-	void SetScene();
-	void Resize();
-
+	void SaveTexture(const char* path);
 };
 
 #endif // !__MODULE_IMPORT_H__

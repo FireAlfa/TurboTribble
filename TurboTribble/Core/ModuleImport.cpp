@@ -21,6 +21,9 @@
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/mesh.h"
+// Devil
+#include "DevIL\include\ilu.h"
+#include "DevIL\include\ilut.h"
 
 
 
@@ -96,6 +99,7 @@ bool ModuleImport::LoadGeometry(const char* path)
 					texture->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
 					std::string newPath(texturePath.C_Str());
 					std::string fileStr, extStr;
+					std::string libPath;
 					app->fileSystem->SplitFilePath(newPath.c_str(), nullptr, &fileStr, &extStr);
 					newPath = fileStr.append(".") + extStr;
 					if (newPath.size() > 0)
@@ -106,6 +110,8 @@ bool ModuleImport::LoadGeometry(const char* path)
 							const TextureObject& textureObject = app->textures->Load(mesh->texturePath);							
 							ComponentMaterial* materialComp = newGameObject->CreateComponent<ComponentMaterial>();
 							materialComp->SetTexture(textureObject);
+							libPath = "Library/Textures/" + fileStr + ".dds";
+							SaveTexture(libPath.c_str());
 						}
 						else
 						{
@@ -174,8 +180,6 @@ bool ModuleImport::LoadGeometry(const char* path)
 			newGameObject->transform->SetPosition(float3(pos.x, pos.y, pos.z));
 			newGameObject->transform->SetRotation(Quat(rot.x, rot.y, rot.z, rot.w).ToEulerXYZ());
 			newGameObject->transform->SetScale(float3(sc.x, sc.y, sc.z));
-
-
 		}
 		aiReleaseImport(scene);		
 		RELEASE_ARRAY(buffer);
@@ -216,6 +220,17 @@ void ModuleImport::FindNodeName(const aiScene* scene, const size_t i, std::strin
 	}
 }
 
+// Called before quitting
+bool ModuleImport::CleanUp()
+{
+	TTLOG("+++++ Quitting Import Module +++++\n");
+
+	// Detach log stream
+	aiDetachAllLogStreams();
+
+	return true;
+}
+
 void ModuleImport::ProcessNode(const aiMesh* mesh, aiNode* node, aiMatrix4x4& matrix, const aiScene* scene)
 {
 	for (int i = 0; i < node->mNumChildren; i++)
@@ -237,13 +252,20 @@ void ModuleImport::ProcessNode(const aiMesh* mesh, aiNode* node, aiMatrix4x4& ma
 	}
 }
 
-// Called before quitting
-bool ModuleImport::CleanUp()
+void ModuleImport::SaveTexture(const char* path)
 {
-	TTLOG("+++++ Quitting Import Module +++++\n");
+	ILuint size;
+	ILubyte* data;
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+	size = ilSaveL(IL_DDS, NULL, 0);
+	if (size > 0) {
+		data = new ILubyte[size];
+		if (ilSaveL(IL_DDS, data, size) > 0)
+		{
+			std::string path(path);
+			app->fileSystem->Save(path.c_str(), (char*)data,size, false);
+		}
 
-	// Detach log stream
-	aiDetachAllLogStreams();
-
-	return true;
+		delete[] data;
+	}
 }
