@@ -24,7 +24,7 @@ ModuleEditorCamera::ModuleEditorCamera(Application* app, bool startEnabled) : Mo
 	up = float3(0.0f, 1.0f, 0.0f);
 	front = float3(0.0f, 0.0f, 1.0f);
 
-	position = float3(0.0f, 5.0f, -15.0f);
+	position = float3(-100.0f, 50.0f, -100.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 	
 	CalculateViewMatrix();
@@ -40,7 +40,7 @@ bool ModuleEditorCamera::Start()
 {
 	TTLOG("+++++ Loading Editor Camera Module +++++\n");
 
-	LookAt(float3::zero);
+	LookAt(float3(0.0f, 0.0f, 50.0f));
 
 	bool ret = true;
 
@@ -241,7 +241,7 @@ void ModuleEditorCamera::RecalculateProjection()
 	cameraFrustum.type = FrustumType::PerspectiveFrustum;
 	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
 	cameraFrustum.farPlaneDistance = farPlaneDistance;
-	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
+	cameraFrustum.verticalFov = verticalFOV * DEGTORAD;
 	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
 }
 

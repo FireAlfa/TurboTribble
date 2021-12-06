@@ -3,6 +3,8 @@
 
 #include "Component.h"
 
+#include "Globals.h"
+
 #include "Math/float3.h"
 #include "Math/float4x4.h"
 #include "Geometry/Frustum.h"
@@ -53,9 +55,9 @@ private:
 
 	float3 right, up, front, reference;
 	float4x4 viewMatrix;
-	float verticalFOV = 60.f;
-	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 5000.f;
+	float verticalFOV = 60.0f * DEGTORAD;
+	float nearPlaneDistance = 20.0f;
+	float farPlaneDistance = 200.0f;
 	float cameraSensitivity = 0.25f;
 	float cameraSpeed = 5.f;
 	bool projectionIsDirty = false;
