@@ -382,11 +382,10 @@ void ModuleEditor::MenuBar()
                     showInspectorWindow = !showInspectorWindow;
                 if (ImGui::MenuItem("Hierarchy", "Ctrl+4", showHierarchyWindow))
                     showHierarchyWindow = !showHierarchyWindow;
-                if (ImGui::MenuItem("Project", "Ctrl+5", false, false)) {}
+                if (ImGui::MenuItem("Resources", "Ctrl+5", showResourcesWindow))
+                    showResourcesWindow = !showResourcesWindow;
                 if (ImGui::MenuItem("Textures", "Ctrl+6", showTexturesWindow))
                     showTexturesWindow = !showTexturesWindow;
-                if (ImGui::MenuItem("Resources", "Ctrl+7", showResourcesWindow))
-                    showResourcesWindow = !showResourcesWindow;
                 if (ImGui::MenuItem("Console", "Ctrl+Shift+C", showConsoleWindow))
                     showConsoleWindow = !showConsoleWindow;
                 
@@ -889,19 +888,13 @@ void ModuleEditor::CheckKeyboardInputs()
         app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
         (app->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN))
     {
-        //showProjectWindow = !showProjectWindow;
+        showResourcesWindow = !showResourcesWindow;
     }
     if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
         app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
         (app->input->GetKey(SDL_SCANCODE_6) == KeyState::KEY_DOWN))
     {
         showTexturesWindow = !showTexturesWindow;
-    }
-    if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
-        app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_REPEAT) &&
-        (app->input->GetKey(SDL_SCANCODE_7) == KeyState::KEY_DOWN))
-    {
-        showResourcesWindow = !showResourcesWindow;
     }
 
     if ((app->input->GetKey(SDL_SCANCODE_LCTRL) == KeyState::KEY_DOWN ||
