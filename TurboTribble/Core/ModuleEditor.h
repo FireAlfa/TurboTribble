@@ -135,7 +135,8 @@ private:
 
 	// Scene
 	ImGuiWindowFlags sceneWindow = 0;
-	ImVec2 lastViewportSize;
+	ImVec2 sceneLastViewportSize;
+	ImVec2 gameLastViewportSize;
 
 };
 

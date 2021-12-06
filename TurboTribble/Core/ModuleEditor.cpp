@@ -769,11 +769,10 @@ void ModuleEditor::GameWindow()
 
     ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
     ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
-    if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
+    if (viewPortSize.x != gameLastViewportSize.x || viewPortSize.y != gameLastViewportSize.y)
     {
-        lastViewportSize = viewPortSize;
-        app->editorCamera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
-        app->scene->mainCamera->GetComponent<ComponentCamera>()->aspectRatio = viewPortSize.x / viewPortSize.y;
+        gameLastViewportSize = viewPortSize;
+        app->scene->mainCamera->GetComponent<ComponentCamera>()->aspectRatio = viewPortRegion.x / viewPortRegion.y;
         app->scene->mainCamera->GetComponent<ComponentCamera>()->RecalculateProjection();
     }
     ImGui::Image((ImTextureID)app->gameViewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
@@ -788,9 +787,9 @@ void ModuleEditor::SceneWindow()
 
     ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
     ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
-    if (viewPortSize.x != lastViewportSize.x || viewPortSize.y != lastViewportSize.y)
+    if (viewPortSize.x != sceneLastViewportSize.x || viewPortSize.y != sceneLastViewportSize.y)
     {
-        lastViewportSize = viewPortSize;
+        sceneLastViewportSize = viewPortSize;
         app->editorCamera->aspectRatio = viewPortRegion.x / viewPortRegion.y;
         app->editorCamera->RecalculateProjection();
     }
@@ -805,7 +804,7 @@ void ModuleEditor::SceneWindow()
     {
         app->editorCamera->sceneHovered = false;
     }
-    
+
     ImGui::End();
 }
 

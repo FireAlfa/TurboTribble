@@ -13,6 +13,7 @@
 
 ModuleEditorCamera::ModuleEditorCamera(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
+	aspectRatio = 16 / 9;
 
 	right = float3(1.0f, 0.0f, 0.0f);
 	up = float3(0.0f, 1.0f, 0.0f);
@@ -32,7 +33,7 @@ ModuleEditorCamera::~ModuleEditorCamera()
 // -----------------------------------------------------------------
 bool ModuleEditorCamera::Start()
 {
-	TTLOG("+++++ Loading Camera Module +++++\n");
+	TTLOG("+++++ Loading Editor Camera Module +++++\n");
 
 	LookAt(float3::zero);
 
@@ -44,7 +45,7 @@ bool ModuleEditorCamera::Start()
 // -----------------------------------------------------------------
 bool ModuleEditorCamera::CleanUp()
 {
-	TTLOG("+++++ Quitting Camera Module +++++\n");
+	TTLOG("+++++ Quitting Editor Camera Module +++++\n");
 
 	return true;
 }
@@ -55,10 +56,9 @@ UpdateStatus ModuleEditorCamera::Update(float dt)
 	float3 newPos(0, 0, 0);
 	float speed = cameraSpeed * dt;
 
+	// ---- Keyboard Camera Control -----
 	if (sceneHovered)
 	{
-		// ---- Keyboard Camera Control -----
-
 	// Hold shift to move faster
 		if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
 			speed = speed * 2.5 * dt;
