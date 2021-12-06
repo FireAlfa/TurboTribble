@@ -767,6 +767,7 @@ void ModuleEditor::GameWindow()
 {
     ImGui::Begin("Game", &showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
 
+    // Draw Game in View Port
     ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
     ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
     if (viewPortSize.x != gameLastViewportSize.x || viewPortSize.y != gameLastViewportSize.y)
@@ -785,6 +786,7 @@ void ModuleEditor::SceneWindow()
 {
     ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
+    // Draw Scene in View Port
     ImVec2 viewPortSize = ImGui::GetCurrentWindow()->Size;
     ImVec2 viewPortRegion = ImVec2(ImGui::GetWindowContentRegionMax().x - 10, ImGui::GetWindowContentRegionMax().y - 30);
     if (viewPortSize.x != sceneLastViewportSize.x || viewPortSize.y != sceneLastViewportSize.y)
@@ -795,7 +797,7 @@ void ModuleEditor::SceneWindow()
     }
     ImGui::Image((ImTextureID)app->sceneViewportBuffer->texture, viewPortRegion, ImVec2(0, 1), ImVec2(1, 0));
 
-    ImVec2 posW = ImGui::GetWindowPos();
+    // Control if Window is Hovered for Camera Control and Mouse Picking
     if (ImGui::IsWindowHovered())
     {
         app->editorCamera->sceneHovered = true;

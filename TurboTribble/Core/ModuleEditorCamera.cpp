@@ -61,7 +61,7 @@ UpdateStatus ModuleEditorCamera::Update(float dt)
 	{
 	// Hold shift to move faster
 		if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KeyState::KEY_REPEAT)
-			speed = speed * 2.5 * dt;
+			speed = speed * 2.5;
 
 		// Arrow Movement
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KeyState::KEY_REPEAT) newPos += front * speed;
