@@ -24,7 +24,6 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	cameraFrustum.front = owner->transform->Front();
 	cameraFrustum.up = owner->transform->Up();
 	cameraFrustum.pos = owner->transform->GetPosition();
-	cameraFrustum.farPlaneDistance = 5000.0f;
 	viewMatrix = cameraFrustum.ViewMatrix();
 
 	LookAt(float3::zero);
