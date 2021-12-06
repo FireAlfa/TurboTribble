@@ -14,7 +14,8 @@
 
 
 
-class ComponentMesh : public Component {
+class ComponentMesh : public Component
+{
 
 public:
 

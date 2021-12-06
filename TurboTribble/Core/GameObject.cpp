@@ -47,8 +47,6 @@ GameObject::~GameObject()
 		RELEASE(go);
 	}
 
-	RELEASE(transform);
-
 	parent = nullptr;
 }
 
