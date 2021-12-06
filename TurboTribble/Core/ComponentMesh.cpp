@@ -116,10 +116,19 @@ void ComponentMesh::ComputeNormals()
 
 void ComponentMesh::GenerateBounds()
 {
-	
+	// Local Axis-Aligned Bounding Box
 	localAABB.SetNegativeInfinity();
 	localAABB.Enclose(&vertices[0], vertices.size());
-		
+
+	// Oriented Bounding Box
+	globalOBB = localAABB;
+	globalOBB.Transform(owner->parent->transform->transformMatrixLocal);
+
+	// Global Axis-Aligned Bounding Box
+	globalAABB.SetNegativeInfinity();
+	globalAABB.Enclose(globalOBB);
+
+
 	Sphere sphere;	
 	sphere.r = 0.f;
 	sphere.pos = localAABB.CenterPoint();

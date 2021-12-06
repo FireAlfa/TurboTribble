@@ -20,6 +20,7 @@ GameObject::GameObject()
 	transform = CreateComponent<ComponentTransform>();
 
 	active = true;
+
 }
 
 GameObject::GameObject(const std::string name) : name(name) 
@@ -27,6 +28,7 @@ GameObject::GameObject(const std::string name) : name(name)
 	transform = CreateComponent<ComponentTransform>();
 
 	active = true;
+
 }
 
 
@@ -44,6 +46,8 @@ GameObject::~GameObject()
 	{
 		RELEASE(go);
 	}
+
+	RELEASE(transform);
 
 	parent = nullptr;
 }

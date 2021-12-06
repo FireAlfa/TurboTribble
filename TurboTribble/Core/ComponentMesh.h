@@ -9,6 +9,7 @@
 #include "Math/float3.h"
 #include "Math/float2.h"
 #include "Geometry/AABB.h"
+#include "Geometry/OBB.h"
 #include "ParShapes/par_shapes.h"
 
 
@@ -63,12 +64,14 @@ public:
 
 private:
 
-	//Bounding sphere
+	// Bounding Sphere
 	float3 centerPoint = float3::zero;
 	float radius;
 
-	//Local coords AABB
+	// Bounding Box
 	AABB localAABB;
+	OBB globalOBB;
+	AABB globalAABB;
 
 };
 
