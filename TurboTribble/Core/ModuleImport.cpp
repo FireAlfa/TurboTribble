@@ -79,14 +79,13 @@ bool ModuleImport::LoadGeometry(const char* path)
 		{		
 			bool nameFound = false;
 			std::string name;
-			aiMatrix4x4 matrix;
 			FindNodeName(scene, i, name);
 
 			GameObject* newGameObject = app->scene->CreateGameObject(name);
 			ComponentMesh* mesh = newGameObject->CreateComponent<ComponentMesh>();
 			assimpMesh = scene->mMeshes[i];
 
-			ProcessNode(scene->mMeshes[i], scene->mRootNode, matrix, scene);
+			ProcessNode(scene->mMeshes[i], scene->mRootNode, scene->mRootNode->mTransformation, scene);
 			
 			if (scene->HasMaterials())
 			{
@@ -167,14 +166,14 @@ bool ModuleImport::LoadGeometry(const char* path)
 
 
 			// Place houses where to their pose
-			aiVector3D position, scale;
-			aiQuaternion rotation;
+			aiVector3D pos, sc;
+			aiQuaternion rot;
 			// Decompose the transform mat
-			matrix.Decompose(scale, rotation, position);
+			scene->mRootNode->mTransformation.Decompose(sc, rot, pos);
 			// Set the pos, rot and scale
-			newGameObject->transform->SetPosition(float3(position.x, position.y, position.z));
-			newGameObject->transform->SetRotation(Quat(rotation.x, rotation.y, rotation.z, rotation.w).ToEulerXYZ());
-			newGameObject->transform->SetScale(float3(scale.x, scale.y, scale.z));
+			newGameObject->transform->SetPosition(float3(pos.x, pos.y, pos.z));
+			newGameObject->transform->SetRotation(Quat(rot.x, rot.y, rot.z, rot.w).ToEulerXYZ());
+			newGameObject->transform->SetScale(float3(sc.x, sc.y, sc.z));
 
 
 		}
