@@ -113,7 +113,7 @@ bool ModuleImport::LoadGeometry(const char* path)
 							const TextureObject& textureObject = app->textures->Load(mesh->texturePath);							
 							ComponentMaterial* materialComp = newGameObject->CreateComponent<ComponentMaterial>();
 							materialComp->SetTexture(textureObject);
-							libPath = "Library/Textures/" + fileStr + ".dds";
+							libPath = "Library/Textures/" + fileStr + "dds";
 							SaveTexture(libPath.c_str());
 						}
 						else
@@ -282,7 +282,7 @@ void ModuleImport::SaveMesh(const char* path, ComponentMesh* mesh)
 	char* fileBuffer = new char[size]; // Allocate
 	char* cursor = fileBuffer;
 	app->fileSystem->SplitFilePath(tempPath.c_str(), nullptr, &fileStr, &extStr);
-	libPath = "Library/Models/" + fileStr + ".ffs";
+	libPath = "Library/Models/" + fileStr + "ffs";
 
 	uint bytes = sizeof(ranges); // First store ranges
 	memcpy(cursor, ranges, bytes);
